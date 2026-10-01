@@ -1,4 +1,4 @@
-# 🥑 PantryBuddy (Home Buddy Smart Pantry)
+# PantryBuddy (Home Buddy Smart Pantry)
 
 > **A Java Android application that suggests recipes based *strictly* on leftover ingredients to eradicate food waste.**
 
@@ -11,7 +11,7 @@
 
 ---
 
-## 🌟 The Core Value: The Strict-Matching Rule
+## The Core Value: The Strict-Matching Rule
 
 Most cooking applications ask what ingredients you have, then recommend a recipe that still requires a trip to the supermarket for 3 missing items.
 
@@ -24,7 +24,7 @@ Most cooking applications ask what ingredients you have, then recommend a recipe
 
 ---
 
-## 📋 Course Rubric & Brief Compliance Checklist
+## Course Rubric & Brief Compliance Checklist
 
 | Required Feature | Brief Specification | PantryBuddy Implementation |
 | :--- | :--- | :--- |
@@ -41,7 +41,7 @@ Most cooking applications ask what ingredients you have, then recommend a recipe
 
 ---
 
-## 📱 The 13 Screen Panels (From Figma Specification)
+## The 13 Screen Panels (From Figma Specification)
 
 PantryBuddy implements the visual identity and user flows designed in [Figma Prototype](https://www.figma.com/design/4spg0re3UtponEqYMZZxdr/Home-Buddy-Smart-Pantry?node-id=0-1):
 
@@ -63,7 +63,7 @@ PantryBuddy implements the visual identity and user flows designed in [Figma Pro
 
 ---
 
-## 🎨 Visual Design Tokens
+## Visual Design Tokens
 
 - **Canvas Background (`#F7F2EA`):** Warm oatmeal / cream background.
 - **Card Surfaces (`#FFFCF7`):** Soft ivory elevated containers with subtle `#EDE2D6` warm borders.
@@ -78,7 +78,7 @@ PantryBuddy implements the visual identity and user flows designed in [Figma Pro
 
 ---
 
-## 🍲 Pre-Loaded Seed Recipes (18 Catalog Items)
+## Pre-Loaded Seed Recipes (18 Catalog Items)
 
 PantryBuddy pre-seeds 18 realistic leftover-focused recipes directly into the local SQLite database on first launch:
 
@@ -105,7 +105,7 @@ PantryBuddy pre-seeds 18 realistic leftover-focused recipes directly into the lo
 
 ---
 
-## 🔬 The Normalization & Matching Engine
+## The Normalization & Matching Engine
 
 The core business logic is encapsulated in `com.example.pantrybuddy.domain.engine`:
 
@@ -122,7 +122,7 @@ The core business logic is encapsulated in `com.example.pantrybuddy.domain.engin
 
 ---
 
-## 🛠️ Technology Stack
+## ️ Technology Stack
 
 | Layer | Component | Version / Library | Purpose |
 | :--- | :--- | :--- | :--- |
@@ -137,7 +137,7 @@ The core business logic is encapsulated in `com.example.pantrybuddy.domain.engin
 
 ---
 
-## 🔒 Privacy & Zero-Location Guarantee
+## Privacy & Zero-Location Guarantee
 
 In strict compliance with the project brief:
 - **No Google Maps SDK:** Zero map libraries are imported.
@@ -146,7 +146,7 @@ In strict compliance with the project brief:
 
 ---
 
-## 🧪 Marker Testing & Demonstration Guide
+## Marker Testing & Demonstration Guide
 
 To quickly verify and grade the application against all rubric requirements:
 
@@ -168,7 +168,7 @@ To quickly verify and grade the application against all rubric requirements:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - **Android Studio** (Ladybug, Hedgehog, or newer)
@@ -186,5 +186,5 @@ To quickly verify and grade the application against all rubric requirements:
 
 ---
 
-## 📄 Design Attribution
+## Design Attribution
 Designed in Figma: [Home Buddy Smart Pantry Prototype](https://www.figma.com/design/4spg0re3UtponEqYMZZxdr/Home-Buddy-Smart-Pantry?node-id=0-1) by Michael.

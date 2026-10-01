@@ -1,4 +1,4 @@
-# 🥑 PantryBuddy (Home Buddy Smart Pantry)
+# PantryBuddy (Home Buddy Smart Pantry)
 ## Architectural & UI/UX Technical Design Document
 
 ---
@@ -7,7 +7,7 @@
 
 **PantryBuddy** is a native Android application written in **Java** engineered to eradicate household food waste. Unlike conventional recipe applications that suggest meals requiring a trip to the supermarket, PantryBuddy enforces a non-negotiable **Strict-Matching Business Rule**:
 
-> ### 🛑 The Strict-Matching Rule (The Core Metric)
+> ### The Strict-Matching Rule (The Core Metric)
 > A recipe is **only** suggested to the user if **100% of its required ingredients already exist in the user's pantry in sufficient quantity**. 
 > 
 > **Zero Assumptions Policy:** Pantry staples—such as cooking oil, table salt, black pepper, butter, and seasonings—are **never taken for granted**. They are explicitly tracked in the pantry inventory. If a recipe requires 4 eggs and the user has 3, or if it requires 10 ml of olive oil and the pantry has none, that recipe is **strictly disqualified** from the cookable feed.
@@ -177,7 +177,7 @@ flowchart TD
   - Column 2: **BEFORE**
   - Column 3: **ACTUALLY USED** (Editable number fields in case user used slightly more/less).
   - Column 4: **WILL REMAIN** (Auto-computed in real time).
-- **Explicit Checkbox:** ☑ *"I checked these amounts. They reflect what I actually used, including oil, salt and pepper."*
+- **Explicit Checkbox:**  *"I checked these amounts. They reflect what I actually used, including oil, salt and pepper."*
 - **Action:** "Confirm quantities & update pantry".
 
 ### Panel 9: Confirmed Pantry Update Success (`PantryUpdateSuccessActivity`)
@@ -323,7 +323,7 @@ To earn bonus marks without violating the strict-matching rule:
 - **Strict Quarantine Rule:** The primary suggested recipes feed displays **only** recipes with `missingCount == 0`.
 - **Secondary Tier:** If a recipe has `missingCount == 1` (or sufficient ingredients for all items except 1 having insufficient quantity), it is placed into an isolated "Almost There" list.
 - **Visual Distinction:** Cards in this section feature an amber header banner:
-  - ⚠️ *"Missing 1 Ingredient: 10 ml Olive Oil"*
+  - ️ *"Missing 1 Ingredient: 10 ml Olive Oil"*
   - Clear notice: *"Requires shopping trip. Not cookable right now."*
 
 ---
