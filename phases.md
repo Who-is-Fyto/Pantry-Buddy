@@ -10,7 +10,7 @@
 | Phase | Phase Name | Focus Area | Status | Target Git Commit Message |
 | :---: | :--- | :--- | :---: | :--- |
 | **Phase 1** | **Dependencies & Build Config** | Gradle, Room, M3, Glide, WorkManager | ✅ Completed | `chore: configure Gradle dependencies and Java 11/17 compatibility` |
-| **Phase 2** | **Figma Design System & Themes** | Colors, Lora & Inter fonts, styles, shapes | ⏳ Pending | `feat(ui): implement Figma color tokens, typography, and component styles` |
+| **Phase 2** | **Figma Design System & Themes** | Colors, Lora & Inter fonts, styles, shapes | ✅ Completed | `feat(ui): implement Figma color tokens, typography, and component styles` |
 | **Phase 3** | **Database Schema & Room Entities** | `PantryItem`, `Recipe`, `RecipeIngredient`, DAOs | ⏳ Pending | `feat(db): implement Room database schema, entities, and DAOs` |
 | **Phase 4** | **18 Pre-Seeded Recipes & Callback** | JSON asset, DB seeding callback, staples | ⏳ Pending | `feat(data): seed 18 zero-waste recipes with itemized staples into Room` |
 | **Phase 5** | **Normalization & Unit Conversion** | `IngredientNormalizer`, `UnitConverter`, Unit Tests | ⏳ Pending | `feat(engine): add ingredient lemmatization and multi-unit conversion engine` |
@@ -53,14 +53,14 @@
 ---
 
 ### Phase 2: Figma Design System, Themes & Custom UI Tokens
-- [ ] **Objective:** Implement the visual foundation from the Figma canvas (`Node 0:1`).
-- [ ] **Deliverables:**
+- [x] **Objective:** Implement the visual foundation from the Figma canvas (`Node 0:1`).
+- [x] **Deliverables:**
   - `res/values/colors.xml`: Base oatmeal (`#F7F2EA`), card surface (`#FFFCF7`), border stroke (`#EDE2D6`), espresso text (`#34251F`), taupe secondary (`#82746A`), sage green (`#4D6650` & `#E8EEDF`), terracotta action (`#795642`), caramel amber (`#95622E`), rose danger (`#D9534F`).
   - `res/font/`: Download and embed `Lora` (SemiBold) and `Inter` (Regular, SemiBold, Bold) font families.
   - `res/values/themes.xml`: Set Material 3 light theme using Figma palette and typography scales.
   - `res/drawable/`: Create background shapes with rounded corners (`20dp` cards, `12dp` buttons, `100dp` status pills) and subtle borders.
-- [ ] **Verification:** Visual preview of sample themed card and button in Android Studio layout editor.
-- [ ] **Commit Command:**
+- [x] **Verification:** Visual preview of sample themed card and button in Android Studio layout editor.
+- [x] **Commit Command:**
   ```bash
   git add app/src/main/res/
   git commit -m "feat(ui): implement Figma color tokens, typography, and component styles"
