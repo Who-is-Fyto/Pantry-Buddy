@@ -11,7 +11,7 @@
 | :---: | :--- | :--- | :---: | :--- |
 | **Phase 1** | **Dependencies & Build Config** | Gradle, Room, M3, Glide, WorkManager | ✅ Completed | `configured gradle dependencies and compatibility` |
 | **Phase 2** | **Figma Design System & Themes** | Colors, Lora & Inter fonts, styles, shapes | ✅ Completed | `added figma colors, fonts, drawables and themes` |
-| **Phase 3** | **Database Schema & Room Entities** | `PantryItem`, `Recipe`, `RecipeIngredient`, DAOs | ⏳ Pending | `added room entities and daos for pantry items and recipes` |
+| **Phase 3** | **Database Schema & Room Entities** | `PantryItem`, `Recipe`, `RecipeIngredient`, DAOs | ✅ Completed | `added room entities and daos for pantry items and recipes` |
 | **Phase 4** | **18 Pre-Seeded Recipes & Callback** | JSON asset, DB seeding callback, staples | ⏳ Pending | `added 18 seeded recipes and database prepopulate callback` |
 | **Phase 5** | **Normalization & Unit Conversion** | `IngredientNormalizer`, `UnitConverter`, Unit Tests | ⏳ Pending | `created ingredient normalizer and unit converter with tests` |
 | **Phase 6** | **Strict Matcher & "Almost There"** | 100% strict matching algorithm & isolated tier | ⏳ Pending | `implemented strict matching algorithm and almost there logic` |
@@ -69,8 +69,8 @@
 ---
 
 ### Phase 3: Room Database Schema & Entities
-- [ ] **Objective:** Establish the local SQLite schema for pantry items, recipes, and recipe ingredients.
-- [ ] **Deliverables:**
+- [x] **Objective:** Establish the local SQLite schema for pantry items, recipes, and recipe ingredients.
+- [x] **Deliverables:**
   - `data/local/entity/PantryItem.java`: Entity with `itemId`, `name`, `normalizedName`, `quantity`, `unit`, `expiryDate`, `category`, `dateAdded`.
   - `data/local/entity/Recipe.java`: Entity with `recipeId`, `title`, `description`, `cookTimeMinutes`, `defaultServings`, `instructionsJson`, `difficulty`.
   - `data/local/entity/RecipeIngredient.java`: Entity with foreign key cascading from `Recipe`, `ingredientName`, `normalizedName`, `amountPerServing`, `unit`.
@@ -78,11 +78,11 @@
   - `data/local/dao/PantryDao.java`: Query methods for reactive `LiveData<List<PantryItem>>`, insert, update, delete, and find.
   - `data/local/dao/RecipeDao.java`: Query methods for all recipes with ingredients.
   - `data/local/AppDatabase.java`: Room database definition.
-- [ ] **Verification:** Room compiles successfully without annotation processing or schema migration errors.
-- [ ] **Commit Command:**
+- [x] **Verification:** Room compiles successfully without annotation processing or schema migration errors.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/java/com/example/pantrybuddy/data/
-  git commit -m "feat(db): implement Room database schema, entities, and DAOs"
+  git add app/src/main/java/com/example/pantrybuddy/data/ app/src/main/java/com/example/pantrybuddy/domain/model/
+  git commit -m "added room entities and daos for pantry items and recipes"
   ```
 
 ---
