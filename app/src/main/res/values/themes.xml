@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme with Figma Design Tokens. -->
+    <!-- App theme based on figma styles -->
     <style name="Base.Theme.PantryBuddy" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Figma Primary Brand & Canvas Colors -->
+        <!-- Main brand and background colors -->
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="colorPrimary">@color/colorAccentClay</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -12,12 +12,12 @@
         <item name="colorOutline">@color/colorBorder</item>
         <item name="colorError">@color/colorDangerRose</item>
 
-        <!-- Android Text Colors -->
+        <!-- Text colors and fonts -->
         <item name="android:textColorPrimary">@color/colorTextPrimary</item>
         <item name="android:textColorSecondary">@color/colorTextSecondary</item>
         <item name="android:fontFamily">@font/inter</item>
 
-        <!-- Status & Navigation Bars -->
+        <!-- Status and nav bar colors -->
         <item name="android:statusBarColor">@color/colorBackground</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/colorSurface</item>
@@ -26,7 +26,7 @@
 
     <style name="Theme.PantryBuddy" parent="Base.Theme.PantryBuddy" />
 
-    <!-- Typography Styles -->
+    <!-- Text styles -->
     <style name="TextAppearance.PantryBuddy.Display" parent="TextAppearance.Material3.DisplayMedium">
         <item name="fontFamily">@font/lora</item>
         <item name="android:fontFamily">@font/lora</item>
@@ -82,7 +82,7 @@
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
-    <!-- Component Widget Styles -->
+    <!-- Component styles like cards and buttons -->
     <style name="Widget.PantryBuddy.Card" parent="Widget.Material3.CardView.Elevated">
         <item name="cardCornerRadius">@dimen/radius_card</item>
         <item name="cardBackgroundColor">@color/colorSurface</item>

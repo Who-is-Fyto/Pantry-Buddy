@@ -16,15 +16,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Handles database pre-population from assets and sample demo scenarios.
- */
+// Populates starter recipes and demo pantry items
 public class DatabaseInitializer {
     private static final String TAG = "DatabaseInitializer";
 
-    /**
-     * Reads recipes_seed.json from assets and populates the database if empty.
-     */
+    // Reads recipes_seed.json and adds recipes to SQLite if empty
     public static void populateInitialRecipes(AppDatabase db, Context context) {
         if (db.recipeDao().getRecipeCount() > 0) {
             Log.d(TAG, "Recipes already seeded, skipping.");
@@ -76,9 +72,7 @@ public class DatabaseInitializer {
         }
     }
 
-    /**
-     * Seeds the standard Figma demo pantry items for marker testing.
-     */
+    // Adds standard demo items to pantry for marker testing
     public static void populateSamplePantry(AppDatabase db) {
         long now = System.currentTimeMillis();
 
@@ -105,9 +99,7 @@ public class DatabaseInitializer {
         Log.d(TAG, "Seeded 6 sample pantry items.");
     }
 
-    /**
-     * Resets database with sample pantry and ensures initial recipes are loaded.
-     */
+    // Resets pantry and ensures starter recipes are loaded
     public static void resetAllToSampleData(AppDatabase db, Context context) {
         db.runInTransaction(() -> {
             db.pantryDao().deleteAll();

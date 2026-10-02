@@ -6,9 +6,7 @@ import com.example.pantrybuddy.data.local.entity.Recipe;
 import com.example.pantrybuddy.data.local.entity.RecipeIngredient;
 import java.util.List;
 
-/**
- * Composite model binding a Recipe with its full list of RecipeIngredients.
- */
+// Combines recipe with its ingredient list
 public class RecipeWithIngredients {
     @Embedded
     public Recipe recipe;

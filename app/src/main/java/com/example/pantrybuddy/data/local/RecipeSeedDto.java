@@ -2,9 +2,7 @@ package com.example.pantrybuddy.data.local;
 
 import java.util.List;
 
-/**
- * Data transfer object matching the schema of recipes_seed.json in assets.
- */
+// Model for reading recipe seed JSON file
 public class RecipeSeedDto {
     public String title;
     public String description;

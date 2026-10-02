@@ -9,25 +9,25 @@
 
 | Phase | Phase Name | Focus Area | Status | Target Git Commit Message |
 | :---: | :--- | :--- | :---: | :--- |
-| **Phase 1** | **Dependencies & Build Config** | Gradle, Room, M3, Glide, WorkManager | ✅ Completed | `configured gradle dependencies and compatibility` |
-| **Phase 2** | **Figma Design System & Themes** | Colors, Lora & Inter fonts, styles, shapes | ✅ Completed | `added figma colors, fonts, drawables and themes` |
-| **Phase 3** | **Database Schema & Room Entities** | `PantryItem`, `Recipe`, `RecipeIngredient`, DAOs | ✅ Completed | `added room entities and daos for pantry items and recipes` |
-| **Phase 4** | **18 Pre-Seeded Recipes & Callback** | JSON asset, DB seeding callback, staples | ✅ Completed | `added 18 seeded recipes and database prepopulate callback` |
-| **Phase 5** | **Normalization & Unit Conversion** | `IngredientNormalizer`, `UnitConverter`, Unit Tests | ✅ Completed | `created ingredient normalizer and unit converter with tests` |
-| **Phase 6** | **Strict Matcher & "Almost There"** | 100% strict matching algorithm & isolated tier | ⏳ Pending | `implemented strict matching algorithm and almost there logic` |
-| **Phase 7** | **Repository & ViewModel Architecture**| Repositories, LiveData, ViewModels | ⏳ Pending | `added repositories and viewmodels for pantry and recipes` |
-| **Phase 8** | **Navigation Shell & Home Dashboard** | Bottom navigation bar, `HomeFragment` | ⏳ Pending | `setup bottom navigation and home dashboard screen` |
-| **Phase 9** | **Pantry Inventory List** | `RecyclerView`, search, filter chips, expiry pills | ⏳ Pending | `created pantry inventory list with recyclerview and expiry pills` |
-| **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | ⏳ Pending | `implemented add, edit, and delete for pantry items` |
-| **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | ⏳ Pending | `built suggested recipes screen with strict and almost there lists` |
-| **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | ⏳ Pending | `added empty state feedback screen when zero recipes match` |
-| **Phase 13**| **Recipe Detail & 3-Column Check** | 3-column table, dynamic serving scaler | ⏳ Pending | `built recipe detail screen with 3 column ingredient check` |
-| **Phase 14**| **Cooking Guide & Stock Deduction** | Step timer, meal review, atomic inventory deduction | ⏳ Pending | `created cooking guide with timer and meal review pantry deduction` |
-| **Phase 15**| **Settings, Expiry Alerts & Audit** | Preferences, sample reset button, WorkManager | ⏳ Pending | `added settings screen, expiry alerts, and sample data reset button` |
+| **Phase 1** | **Dependencies & Build Config** | Gradle, Room, M3, Glide, WorkManager | Done | `configured gradle dependencies and compatibility` |
+| **Phase 2** | **Figma Design System & Themes** | Colors, Lora & Inter fonts, styles, shapes | Done | `added figma colors, fonts, drawables and themes` |
+| **Phase 3** | **Database Schema & Room Entities** | `PantryItem`, `Recipe`, `RecipeIngredient`, DAOs | Done | `added room entities and daos for pantry items and recipes` |
+| **Phase 4** | **18 Pre-Seeded Recipes & Callback** | JSON asset, DB seeding callback, staples | Done | `added 18 seeded recipes and database prepopulate callback` |
+| **Phase 5** | **Normalization & Unit Conversion** | `IngredientNormalizer`, `UnitConverter`, Unit Tests | Done | `created ingredient normalizer and unit converter with tests` |
+| **Phase 6** | **Strict Matcher & "Almost There"** | 100% strict matching algorithm & isolated tier | Done | `implemented strict matching algorithm and almost there logic` |
+| **Phase 7** | **Repository & ViewModel Architecture**| Repositories, LiveData, ViewModels | Pending | `added repositories and viewmodels for pantry and recipes` |
+| **Phase 8** | **Navigation Shell & Home Dashboard** | Bottom navigation bar, `HomeFragment` | Pending | `setup bottom navigation and home dashboard screen` |
+| **Phase 9** | **Pantry Inventory List** | `RecyclerView`, search, filter chips, expiry pills | Pending | `created pantry inventory list with recyclerview and expiry pills` |
+| **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | Pending | `implemented add, edit, and delete for pantry items` |
+| **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | Pending | `built suggested recipes screen with strict and almost there lists` |
+| **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | Pending | `added empty state feedback screen when zero recipes match` |
+| **Phase 13**| **Recipe Detail & 3-Column Check** | 3-column table, dynamic serving scaler | Pending | `built recipe detail screen with 3 column ingredient check` |
+| **Phase 14**| **Cooking Guide & Stock Deduction** | Step timer, meal review, atomic inventory deduction | Pending | `created cooking guide with timer and meal review pantry deduction` |
+| **Phase 15**| **Settings, Expiry Alerts & Audit** | Preferences, sample reset button, WorkManager | Pending | `added settings screen, expiry alerts, and sample data reset button` |
 
 ---
 
-## ️ Detailed Phase Specifications
+## Detailed Phase Specifications
 
 ---
 
@@ -123,8 +123,8 @@
 ---
 
 ### Phase 6: Strict Recipe Matching Engine & Isolated "Almost There" Logic
-- [ ] **Objective:** Build the core business logic enforcing the 100% strict matching rule, plus the segregated 1-missing bonus stretch.
-- [ ] **Deliverables:**
+- [x] **Objective:** Build the core business logic enforcing the 100% strict matching rule, plus the segregated 1-missing bonus stretch.
+- [x] **Deliverables:**
   - `domain/model/MatchResult.java`: Result model (`isCookable`, `missingIngredientCount`, `missingIngredientsList`, `maxServingsPossible`).
   - `domain/engine/StrictRecipeMatcher.java`:
     - Evaluates required ingredients against pantry items.
@@ -134,11 +134,11 @@
   - `domain/engine/AlmostThereMatcher.java`:
     - Analyzes non-qualifying recipes to isolate those missing **exactly 1 ingredient** (or short on 1 quantity).
   - `src/test/java/com/example/pantrybuddy/StrictRecipeMatcherTest.java`: Unit tests testing complete pantry, 1-missing pantry, and insufficient quantity scenarios.
-- [ ] **Verification:** Unit tests confirm 4 eggs out of 5 required rejects the recipe from strict suggestions; missing 1 ingredient flags into "Almost There".
-- [ ] **Commit Command:**
+- [x] **Verification:** Unit tests confirm 4 eggs out of 5 required rejects the recipe from strict suggestions; missing 1 ingredient flags into "Almost There".
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/java/com/example/pantrybuddy/domain/ app/src/test/
-  git commit -m "feat(engine): implement strict-matching rule and isolated almost-there logic"
+  git add app/src/main/java/com/example/pantrybuddy/domain/ app/src/test/ phases.md
+  git commit -m "implemented strict matching algorithm and almost there logic"
   ```
 
 ---
@@ -222,7 +222,7 @@
 - [ ] **Deliverables:**
   - `res/layout/fragment_recipes.xml`: Header banner (*"Dinner is already here • You have everything for these recipes"*), filter tags, and dual-section list.
   - `res/layout/item_recipe_card.xml`: Recipe card with image thumbnail, title, cook time, servings, badge *"6 of 6 ingredients at home"*, and tag *"Uses spinach today"*.
-  - `res/layout/item_almost_there_card.xml`: Distinct card with amber banner: ️ *"Missing 1 Ingredient: 10 ml Olive Oil"*.
+  - `res/layout/item_almost_there_card.xml`: Distinct card with amber banner:  *"Missing 1 Ingredient: 10 ml Olive Oil"*.
   - `ui/recipes/RecipesAdapter.java`: Multi-view type adapter rendering strictly cookable cards and clearly segregated "Almost There" cards.
 - [ ] **Verification:** Strict list contains only 100% matched recipes; missing 1 item falls exclusively into the lower "Almost There" container.
 - [ ] **Commit Command:**

@@ -18,15 +18,15 @@ This specification strictly conforms to all academic and operational rubric crit
 
 | Rubric Requirement | Implementation Strategy in PantryBuddy | Status |
 | :--- | :--- | :---: |
-| **1. Pantry Management (CRUD)** | Complete database-backed Add, Edit, Delete, and View operations for pantry items (name, quantity, unit, and optional expiry date). | ✅ Full Compliance |
-| **2. Reactive Pantry List** | Fast, reactive `RecyclerView` bound via Android Architecture Components (`Room`, `ViewModel`, `LiveData`) with real-time expiration badges. | ✅ Full Compliance |
-| **3. Seeded Recipe Collection (15–20 Recipes)** | Pre-loaded Room database seeded on first run with **18 curated zero-waste recipes**, complete with itemized staples (salt, oil, pepper) and preparation steps. | ✅ Full Compliance (18 Recipes) |
-| **4. Strict-Matching Rule** | A recipe appears in "Suggested Recipes" **only** if every single required ingredient is present in the pantry in at least the required quantity. No partial matches in main feed. | ✅ Full Compliance (Core Rule) |
-| **5. Bonus Stretch ("Almost There" Tier)** | An isolated, clearly segregated secondary tier displaying recipes missing **exactly 1 ingredient**, tagged with what is missing, without contaminating strict results. | ✅ Full Compliance (Bonus Stretch) |
-| **6. Robust Real-World Matching** | An intelligent normalizer that handles singular/plural names (`tomato` vs `tomatoes`, `egg` vs `eggs`), whitespace/case insensitivity, and metric/imperial unit conversions (`g` ↔ `kg`, `ml` ↔ `l`). | ✅ Full Compliance |
-| **7. Zero-Matches Feedback** | Warm, diagnostic empty-state UI (*"No recipes match your pantry yet — add more ingredients"*) with remaining stock audits, preventing blank screens. | ✅ Full Compliance |
-| **8. Settings / Profile Screen** | Screen with expiry reminder toggles (9 AM / 5 PM), measurement unit preferences (Metric/Imperial), and a **"Reset Sample Data" marker button**. | ✅ Full Compliance |
-| **9. Strict Location Restriction** | **Zero** Google Maps SDK, zero GPS, zero location permissions, zero nearby store lookups. Scope is strictly localized to the user's pantry. | ✅ Full Compliance |
+| **1. Pantry Management (CRUD)** | Complete database-backed Add, Edit, Delete, and View operations for pantry items (name, quantity, unit, and optional expiry date). | Full Compliance |
+| **2. Reactive Pantry List** | Fast, reactive `RecyclerView` bound via Android Architecture Components (`Room`, `ViewModel`, `LiveData`) with real-time expiration badges. | Full Compliance |
+| **3. Seeded Recipe Collection (15–20 Recipes)** | Pre-loaded Room database seeded on first run with **18 curated zero-waste recipes**, complete with itemized staples (salt, oil, pepper) and preparation steps. | Full Compliance (18 Recipes) |
+| **4. Strict-Matching Rule** | A recipe appears in "Suggested Recipes" **only** if every single required ingredient is present in the pantry in at least the required quantity. No partial matches in main feed. | Full Compliance (Core Rule) |
+| **5. Bonus Stretch ("Almost There" Tier)** | An isolated, clearly segregated secondary tier displaying recipes missing **exactly 1 ingredient**, tagged with what is missing, without contaminating strict results. | Full Compliance (Bonus Stretch) |
+| **6. Robust Real-World Matching** | An intelligent normalizer that handles singular/plural names (`tomato` vs `tomatoes`, `egg` vs `eggs`), whitespace/case insensitivity, and metric/imperial unit conversions (`g` ↔ `kg`, `ml` ↔ `l`). | Full Compliance |
+| **7. Zero-Matches Feedback** | Warm, diagnostic empty-state UI (*"No recipes match your pantry yet — add more ingredients"*) with remaining stock audits, preventing blank screens. | Full Compliance |
+| **8. Settings / Profile Screen** | Screen with expiry reminder toggles (9 AM / 5 PM), measurement unit preferences (Metric/Imperial), and a **"Reset Sample Data" marker button**. | Full Compliance |
+| **9. Strict Location Restriction** | **Zero** Google Maps SDK, zero GPS, zero location permissions, zero nearby store lookups. Scope is strictly localized to the user's pantry. | Full Compliance |
 
 ---
 
@@ -323,7 +323,7 @@ To earn bonus marks without violating the strict-matching rule:
 - **Strict Quarantine Rule:** The primary suggested recipes feed displays **only** recipes with `missingCount == 0`.
 - **Secondary Tier:** If a recipe has `missingCount == 1` (or sufficient ingredients for all items except 1 having insufficient quantity), it is placed into an isolated "Almost There" list.
 - **Visual Distinction:** Cards in this section feature an amber header banner:
-  - ️ *"Missing 1 Ingredient: 10 ml Olive Oil"*
+  -  *"Missing 1 Ingredient: 10 ml Olive Oil"*
   - Clear notice: *"Requires shopping trip. Not cookable right now."*
 
 ---
@@ -493,12 +493,12 @@ This testing guide allows markers to quickly verify that all rubric requirements
 
 | Test Case | Scenario / Steps | Expected Behavior | Rubric Verification |
 | :---: | :--- | :--- | :--- |
-| **Test 1** | Tap **"Reset Sample Data"** in Settings.<br>Pantry now has: 4 eggs, 300g tomatoes, 100g spinach, 40ml olive oil, 10g salt, 6g black pepper. | Home and Recipes screens suggest **"Tomato & spinach scramble"** (6 of 6 ingredients present). | ✅ Strict-Matching Rule |
-| **Test 2** | Go to Pantry $\to$ Edit Eggs $\to$ Reduce quantity from 4 to **1 pc**. Return to Recipes. | **Tomato & spinach scramble completely disappears** from suggested recipes (needs 4 eggs for 2 servings). | ✅ No Partial Matches in Main Feed |
-| **Test 3** | Check the separate **"Almost There"** section. | Tomato & spinach scramble now appears under "Almost There" with amber badge: *"Missing 3 Eggs"*. Main list remains strict. | ✅ Bonus Stretch Isolated |
-| **Test 4** | Add a new item named **"tomato"** (singular) or **"tomatoes"** (plural). | Recipe matcher correctly lemmatizes and recognizes them as identical ingredients. | ✅ Robust Normalization |
-| **Test 5** | Delete all pantry items. | Screen displays warm **Zero-Match Feedback** view (*"No recipes match your pantry yet"*), not a blank screen. | ✅ Zero-Matches UI |
-| **Test 6** | Open `AndroidManifest.xml`. | Search for `ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION`, or Google Maps dependencies. | **Zero results found**. | ✅ Location Restriction Compliance |
+| **Test 1** | Tap **"Reset Sample Data"** in Settings.<br>Pantry now has: 4 eggs, 300g tomatoes, 100g spinach, 40ml olive oil, 10g salt, 6g black pepper. | Home and Recipes screens suggest **"Tomato & spinach scramble"** (6 of 6 ingredients present). | Strict-Matching Rule |
+| **Test 2** | Go to Pantry $\to$ Edit Eggs $\to$ Reduce quantity from 4 to **1 pc**. Return to Recipes. | **Tomato & spinach scramble completely disappears** from suggested recipes (needs 4 eggs for 2 servings). |  No Partial Matches in Main Feed |
+| **Test 3** | Check the separate **"Almost There"** section. | Tomato & spinach scramble now appears under "Almost There" with amber badge: *"Missing 3 Eggs"*. Main list remains strict. |  Bonus Stretch Isolated |
+| **Test 4** | Add a new item named **"tomato"** (singular) or **"tomatoes"** (plural). | Recipe matcher correctly lemmatizes and recognizes them as identical ingredients. |  Robust Normalization |
+| **Test 5** | Delete all pantry items. | Screen displays warm **Zero-Match Feedback** view (*"No recipes match your pantry yet"*), not a blank screen. |  Zero-Matches UI |
+| **Test 6** | Open `AndroidManifest.xml`. | Search for `ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION`, or Google Maps dependencies. | **Zero results found**. |  Location Restriction Compliance |
 
 ---
 

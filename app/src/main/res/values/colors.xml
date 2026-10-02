@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Figma Base Surfaces & Borders -->
-    <color name="colorBackground">#F7F2EA</color> <!-- Warm Oatmeal Base Canvas -->
-    <color name="colorSurface">#FFFCF7</color>    <!-- Ivory Elevated Card Surface -->
-    <color name="colorBorder">#EDE2D6</color>     <!-- Warm Subtle Card Border / Divider -->
+    <!-- Background and card colors -->
+    <color name="colorBackground">#F7F2EA</color>
+    <color name="colorSurface">#FFFCF7</color>
+    <color name="colorBorder">#EDE2D6</color>
     <color name="colorBorderLight">#F2EBE2</color>
 
-    <!-- Figma Typography Colors -->
-    <color name="colorTextPrimary">#34251F</color>   <!-- Deep Espresso Roast Text -->
-    <color name="colorTextSecondary">#82746A</color> <!-- Warm Taupe Subtitles & Secondary -->
-    <color name="colorTextTertiary">#AA9E94</color>  <!-- Muted Helper Text -->
+    <!-- Text colors -->
+    <color name="colorTextPrimary">#34251F</color>
+    <color name="colorTextSecondary">#82746A</color>
+    <color name="colorTextTertiary">#AA9E94</color>
 
-    <!-- Figma Accent & Brand Colors -->
-    <color name="colorAccentGreen">#4D6650</color>   <!-- Sage Forest Green (Primary Accent) -->
-    <color name="colorPillGreen">#E8EEDF</color>     <!-- Soft Sage Pill Background ("Use today") -->
-    <color name="colorAccentClay">#795642</color>    <!-- Terracotta Clay (Primary Buttons) -->
-    <color name="colorAccentClayPressed">#634331</color> <!-- Darker Terracotta (Pressed State) -->
-    <color name="colorAccentAmber">#95622E</color>   <!-- Caramel Amber ("Use tomorrow", "Almost there") -->
-    <color name="colorPillAmber">#FDF3E7</color>     <!-- Soft Amber Pill Background -->
-    <color name="colorDangerRose">#D9534F</color>    <!-- Rose Red (Expired items / Delete) -->
-    <color name="colorPillDanger">#FBEAEA</color>    <!-- Soft Rose Pill Background -->
-    <color name="colorPillNeutral">#EFE8DF</color>   <!-- Neutral Shelf-life Pill Background -->
+    <!-- UI accent colors -->
+    <color name="colorAccentGreen">#4D6650</color>
+    <color name="colorPillGreen">#E8EEDF</color>
+    <color name="colorAccentClay">#795642</color>
+    <color name="colorAccentClayPressed">#634331</color>
+    <color name="colorAccentAmber">#95622E</color>
+    <color name="colorPillAmber">#FDF3E7</color>
+    <color name="colorDangerRose">#D9534F</color>
+    <color name="colorPillDanger">#FBEAEA</color>
+    <color name="colorPillNeutral">#EFE8DF</color>
 
-    <!-- Material 3 Color System Mapping -->
+    <!-- Material theme colors -->
     <color name="md_theme_light_primary">#795642</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
     <color name="md_theme_light_primaryContainer">#E8EEDF</color>

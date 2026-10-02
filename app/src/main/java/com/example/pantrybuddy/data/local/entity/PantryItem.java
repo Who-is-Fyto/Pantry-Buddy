@@ -4,9 +4,7 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-/**
- * Entity representing an item currently in the user's pantry.
- */
+// Pantry item stored in SQLite
 @Entity(
     tableName = "pantry_items",
     indices = {

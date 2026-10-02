@@ -3,9 +3,7 @@ package com.example.pantrybuddy.data.local.entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/**
- * Entity representing a recipe header in the database.
- */
+// Recipe table for storing cook time, servings, and steps
 @Entity(tableName = "recipes")
 public class Recipe {
     @PrimaryKey(autoGenerate = true)

@@ -122,7 +122,7 @@ The core business logic is encapsulated in `com.example.pantrybuddy.domain.engin
 
 ---
 
-## ️ Technology Stack
+## Technology Stack
 
 | Layer | Component | Version / Library | Purpose |
 | :--- | :--- | :--- | :--- |

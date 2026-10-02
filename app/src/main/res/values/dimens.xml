@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Figma Spacing Tokens -->
+    <!-- Spacing -->
     <dimen name="spacing_2xs">2dp</dimen>
     <dimen name="spacing_xs">4dp</dimen>
     <dimen name="spacing_sm">8dp</dimen>
@@ -11,20 +11,20 @@
     <dimen name="spacing_3xl">32dp</dimen>
     <dimen name="spacing_4xl">40dp</dimen>
 
-    <!-- Figma Corner Radiuses -->
+    <!-- Corner radiuses -->
     <dimen name="radius_card">20dp</dimen>
     <dimen name="radius_sheet">24dp</dimen>
     <dimen name="radius_button">12dp</dimen>
     <dimen name="radius_input">12dp</dimen>
     <dimen name="radius_pill">100dp</dimen>
 
-    <!-- Figma Elevation & Stroke -->
+    <!-- Elevation and stroke -->
     <dimen name="stroke_border">1dp</dimen>
     <dimen name="elevation_flat">0dp</dimen>
     <dimen name="elevation_card">2dp</dimen>
     <dimen name="elevation_floating">6dp</dimen>
 
-    <!-- Figma Typography Sizes -->
+    <!-- Font sizes -->
     <dimen name="text_display">26sp</dimen>
     <dimen name="text_headline">22sp</dimen>
     <dimen name="text_subtitle">16sp</dimen>

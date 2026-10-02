@@ -5,9 +5,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-/**
- * Entity representing an individual ingredient requirement for a Recipe.
- */
+// Ingredients needed for each recipe
 @Entity(
     tableName = "recipe_ingredients",
     foreignKeys = @ForeignKey(
