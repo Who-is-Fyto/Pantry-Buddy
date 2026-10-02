@@ -13,7 +13,7 @@
 | **Phase 2** | **Figma Design System & Themes** | Colors, Lora & Inter fonts, styles, shapes | ✅ Completed | `added figma colors, fonts, drawables and themes` |
 | **Phase 3** | **Database Schema & Room Entities** | `PantryItem`, `Recipe`, `RecipeIngredient`, DAOs | ✅ Completed | `added room entities and daos for pantry items and recipes` |
 | **Phase 4** | **18 Pre-Seeded Recipes & Callback** | JSON asset, DB seeding callback, staples | ✅ Completed | `added 18 seeded recipes and database prepopulate callback` |
-| **Phase 5** | **Normalization & Unit Conversion** | `IngredientNormalizer`, `UnitConverter`, Unit Tests | ⏳ Pending | `created ingredient normalizer and unit converter with tests` |
+| **Phase 5** | **Normalization & Unit Conversion** | `IngredientNormalizer`, `UnitConverter`, Unit Tests | ✅ Completed | `created ingredient normalizer and unit converter with tests` |
 | **Phase 6** | **Strict Matcher & "Almost There"** | 100% strict matching algorithm & isolated tier | ⏳ Pending | `implemented strict matching algorithm and almost there logic` |
 | **Phase 7** | **Repository & ViewModel Architecture**| Repositories, LiveData, ViewModels | ⏳ Pending | `added repositories and viewmodels for pantry and recipes` |
 | **Phase 8** | **Navigation Shell & Home Dashboard** | Bottom navigation bar, `HomeFragment` | ⏳ Pending | `setup bottom navigation and home dashboard screen` |
@@ -102,8 +102,8 @@
 ---
 
 ### Phase 5: Normalization Engine & Unit Conversion
-- [ ] **Objective:** Implement the real-world string normalizer and unit equivalence engine to prevent exact-string match penalties.
-- [ ] **Deliverables:**
+- [x] **Objective:** Implement the real-world string normalizer and unit equivalence engine to prevent exact-string match penalties.
+- [x] **Deliverables:**
   - `domain/engine/IngredientNormalizer.java`:
     - Trims whitespace, removes non-alphanumeric punctuation, converts to lower case.
     - Suffix stemming: `-es` (`tomatoes` $\to$ `tomato`), `-s` (`eggs` $\to$ `egg`, `onions` $\to$ `onion`), `-ies` (`strawberries` $\to$ `strawberry`).
@@ -113,11 +113,11 @@
     - Volume: `ml` $\leftrightarrow$ `l`, `tbsp`, `tsp`
     - Count: `pcs`, `piece`, `item`
   - `src/test/java/com/example/pantrybuddy/IngredientNormalizerTest.java`: JUnit test cases verifying singular/plural normalization and unit conversion accuracy.
-- [ ] **Verification:** All JUnit test cases pass cleanly in terminal (`./gradlew test`).
-- [ ] **Commit Command:**
+- [x] **Verification:** All JUnit test cases pass cleanly in terminal (`./gradlew test`).
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/java/com/example/pantrybuddy/domain/engine/ app/src/test/
-  git commit -m "feat(engine): add ingredient lemmatization and multi-unit conversion engine"
+  git add app/src/main/java/com/example/pantrybuddy/domain/engine/ app/src/test/ phases.md
+  git commit -m "created ingredient normalizer and unit converter with tests"
   ```
 
 ---
