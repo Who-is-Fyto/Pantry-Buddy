@@ -15,7 +15,7 @@
 | **Phase 4** | **18 Pre-Seeded Recipes & Callback** | JSON asset, DB seeding callback, staples | Done | `added 18 seeded recipes and database prepopulate callback` |
 | **Phase 5** | **Normalization & Unit Conversion** | `IngredientNormalizer`, `UnitConverter`, Unit Tests | Done | `created ingredient normalizer and unit converter with tests` |
 | **Phase 6** | **Strict Matcher & "Almost There"** | 100% strict matching algorithm & isolated tier | Done | `implemented strict matching algorithm and almost there logic` |
-| **Phase 7** | **Repository & ViewModel Architecture**| Repositories, LiveData, ViewModels | Pending | `added repositories and viewmodels for pantry and recipes` |
+| **Phase 7** | **Repository & ViewModel Architecture**| Repositories, LiveData, ViewModels | Done | `added repositories and viewmodels for pantry and recipes` |
 | **Phase 8** | **Navigation Shell & Home Dashboard** | Bottom navigation bar, `HomeFragment` | Pending | `setup bottom navigation and home dashboard screen` |
 | **Phase 9** | **Pantry Inventory List** | `RecyclerView`, search, filter chips, expiry pills | Pending | `created pantry inventory list with recyclerview and expiry pills` |
 | **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | Pending | `implemented add, edit, and delete for pantry items` |
@@ -144,17 +144,17 @@
 ---
 
 ### Phase 7: Repository & ViewModel Architecture
-- [ ] **Objective:** Connect the local Room database and matching engine to reactive Android Jetpack ViewModels.
-- [ ] **Deliverables:**
+- [x] **Objective:** Connect the local Room database and matching engine to reactive Android Jetpack ViewModels.
+- [x] **Deliverables:**
   - `data/repository/PantryRepository.java`: Manages pantry CRUD operations via background thread executors; exposes `LiveData<List<PantryItem>>`.
   - `data/repository/RecipeRepository.java`: Loads recipes with ingredients, runs `StrictRecipeMatcher` and `AlmostThereMatcher`, and exposes results.
   - `ui/pantry/PantryViewModel.java`: Exposes pantry items, active category filters, and search queries.
   - `ui/recipes/RecipeViewModel.java`: Exposes strictly cookable recipes, "Almost There" recipes, and zero-match state.
-- [ ] **Verification:** ViewModels successfully emit database state updates via LiveData observers.
-- [ ] **Commit Command:**
+- [x] **Verification:** ViewModels successfully emit database state updates via LiveData observers.
+- [x] **Commit Command:**
   ```bash
   git add app/src/main/java/com/example/pantrybuddy/data/repository/ app/src/main/java/com/example/pantrybuddy/ui/
-  git commit -m "feat(arch): implement Repository and ViewModel layers with LiveData"
+  git commit -m "added repositories and viewmodels for pantry and recipes"
   ```
 
 ---

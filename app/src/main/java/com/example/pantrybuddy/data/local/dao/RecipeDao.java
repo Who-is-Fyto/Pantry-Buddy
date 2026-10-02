@@ -34,6 +34,10 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE recipeId = :recipeId LIMIT 1")
     RecipeWithIngredients getRecipeWithIngredientsById(long recipeId);
 
+    @Transaction
+    @Query("SELECT * FROM recipes WHERE recipeId = :recipeId LIMIT 1")
+    LiveData<RecipeWithIngredients> getRecipeWithIngredientsByIdLive(long recipeId);
+
     @Query("SELECT COUNT(*) FROM recipes")
     int getRecipeCount();
 

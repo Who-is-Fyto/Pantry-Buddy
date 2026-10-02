@@ -50,4 +50,10 @@ public interface PantryDao {
 
     @Query("SELECT COUNT(*) FROM pantry_items")
     int getItemCount();
+
+    @Query("SELECT COUNT(*) FROM pantry_items")
+    LiveData<Integer> getItemCountLive();
+
+    @Query("SELECT * FROM pantry_items WHERE expiryDate IS NOT NULL AND expiryDate <= :thresholdTime ORDER BY expiryDate ASC")
+    LiveData<List<PantryItem>> getItemsExpiringBefore(long thresholdTime);
 }
