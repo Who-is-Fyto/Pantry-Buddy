@@ -12,7 +12,7 @@
 | **Phase 1** | **Dependencies & Build Config** | Gradle, Room, M3, Glide, WorkManager | ✅ Completed | `configured gradle dependencies and compatibility` |
 | **Phase 2** | **Figma Design System & Themes** | Colors, Lora & Inter fonts, styles, shapes | ✅ Completed | `added figma colors, fonts, drawables and themes` |
 | **Phase 3** | **Database Schema & Room Entities** | `PantryItem`, `Recipe`, `RecipeIngredient`, DAOs | ✅ Completed | `added room entities and daos for pantry items and recipes` |
-| **Phase 4** | **18 Pre-Seeded Recipes & Callback** | JSON asset, DB seeding callback, staples | ⏳ Pending | `added 18 seeded recipes and database prepopulate callback` |
+| **Phase 4** | **18 Pre-Seeded Recipes & Callback** | JSON asset, DB seeding callback, staples | ✅ Completed | `added 18 seeded recipes and database prepopulate callback` |
 | **Phase 5** | **Normalization & Unit Conversion** | `IngredientNormalizer`, `UnitConverter`, Unit Tests | ⏳ Pending | `created ingredient normalizer and unit converter with tests` |
 | **Phase 6** | **Strict Matcher & "Almost There"** | 100% strict matching algorithm & isolated tier | ⏳ Pending | `implemented strict matching algorithm and almost there logic` |
 | **Phase 7** | **Repository & ViewModel Architecture**| Repositories, LiveData, ViewModels | ⏳ Pending | `added repositories and viewmodels for pantry and recipes` |
@@ -88,15 +88,15 @@
 ---
 
 ### Phase 4: Pre-Seeded Recipe Asset & Database Initializer
-- [ ] **Objective:** Pre-seed the local Room SQLite database on first app launch with **18 curated zero-waste recipes**.
-- [ ] **Deliverables:**
+- [x] **Objective:** Pre-seed the local Room SQLite database on first app launch with **18 curated zero-waste recipes**.
+- [x] **Deliverables:**
   - `app/src/main/assets/recipes_seed.json`: JSON catalog containing all 18 recipes specified in `DESIGN.md` Section 6, with itemized staples (salt, oil, pepper) and preparation instructions.
   - `data/local/AppDatabase.java`: Add `RoomDatabase.Callback` on `onCreate()` to parse `recipes_seed.json` with Gson and insert all recipes and ingredients in an asynchronous transaction.
-- [ ] **Verification:** Run app once on emulator; inspect SQLite with Database Inspector to verify all 18 recipes and their itemized ingredients exist.
-- [ ] **Commit Command:**
+- [x] **Verification:** Run app once on emulator; inspect SQLite with Database Inspector to verify all 18 recipes and their itemized ingredients exist.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/assets/recipes_seed.json app/src/main/java/com/example/pantrybuddy/data/
-  git commit -m "feat(data): seed 18 zero-waste recipes with itemized staples into Room"
+  git add app/src/main/assets/recipes_seed.json app/src/main/java/com/example/pantrybuddy/data/ app/src/test/
+  git commit -m "added 18 seeded recipes and database prepopulate callback"
   ```
 
 ---

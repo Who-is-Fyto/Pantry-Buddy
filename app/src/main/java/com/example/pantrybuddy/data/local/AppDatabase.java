@@ -1,9 +1,11 @@
 package com.example.pantrybuddy.data.local;
 
 import android.content.Context;
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.pantrybuddy.data.local.dao.PantryDao;
 import com.example.pantrybuddy.data.local.dao.RecipeDao;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
@@ -30,12 +32,24 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
+                    Context appContext = context.getApplicationContext();
                     INSTANCE = Room.databaseBuilder(
-                        context.getApplicationContext(),
+                        appContext,
                         AppDatabase.class,
                         "pantry_buddy_database"
-                    ).fallbackToDestructiveMigration()
-                     .build();
+                    )
+                    .fallbackToDestructiveMigration()
+                    .addCallback(new RoomDatabase.Callback() {
+                        @Override
+                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                            super.onCreate(db);
+                            databaseWriteExecutor.execute(() -> {
+                                DatabaseInitializer.populateInitialRecipes(getDatabase(appContext), appContext);
+                                DatabaseInitializer.populateSamplePantry(getDatabase(appContext));
+                            });
+                        }
+                    })
+                    .build();
                 }
             }
         }

@@ -1,0 +1,394 @@
+[
+  {
+    "title": "Tomato & Spinach Scramble",
+    "description": "A quick, nourishing skillet scramble utilizing fresh greens and juicy tomatoes.",
+    "cookTimeMinutes": 15,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Dice tomatoes and wash spinach.",
+      "Heat olive oil in a skillet over medium heat.",
+      "Sauté tomatoes and spinach for 2 min until wilted.",
+      "Whisk eggs with salt and pepper; pour into skillet.",
+      "Gently scramble for 3 min until softly set."
+    ],
+    "ingredients": [
+      { "name": "Eggs", "normalizedName": "egg", "amount": 4.0, "unit": "pcs" },
+      { "name": "Tomatoes", "normalizedName": "tomato", "amount": 200.0, "unit": "g" },
+      { "name": "Spinach", "normalizedName": "spinach", "amount": 80.0, "unit": "g" },
+      { "name": "Olive Oil", "normalizedName": "oil", "amount": 10.0, "unit": "ml" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 2.0, "unit": "g" },
+      { "name": "Black Pepper", "normalizedName": "black pepper", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Classic Vegetable Frittata",
+    "description": "Golden baked Italian omelette loaded with tender potatoes and savory onions.",
+    "cookTimeMinutes": 20,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Sauté diced potatoes and onions in oil until tender (8 min).",
+      "Whisk eggs with salt and pepper.",
+      "Pour eggs over vegetables and cook on low heat until bottom sets.",
+      "Flip or broil until golden and cooked through."
+    ],
+    "ingredients": [
+      { "name": "Eggs", "normalizedName": "egg", "amount": 4.0, "unit": "pcs" },
+      { "name": "Potatoes", "normalizedName": "potato", "amount": 100.0, "unit": "g" },
+      { "name": "Onions", "normalizedName": "onion", "amount": 60.0, "unit": "g" },
+      { "name": "Cooking Oil", "normalizedName": "oil", "amount": 15.0, "unit": "ml" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 2.0, "unit": "g" },
+      { "name": "Black Pepper", "normalizedName": "black pepper", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Garlic & Egg Fried Rice",
+    "description": "The ultimate leftover rice makeover with fragrant garlic and fluffy scrambled eggs.",
+    "cookTimeMinutes": 15,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Heat oil in a pan; fry minced garlic until golden.",
+      "Push garlic to side, crack eggs in pan and scramble.",
+      "Add cold cooked rice and break up any clumps.",
+      "Season with soy sauce and salt; toss on high heat for 3 min."
+    ],
+    "ingredients": [
+      { "name": "Cooked Rice", "normalizedName": "rice", "amount": 300.0, "unit": "g" },
+      { "name": "Eggs", "normalizedName": "egg", "amount": 2.0, "unit": "pcs" },
+      { "name": "Garlic", "normalizedName": "garlic", "amount": 3.0, "unit": "pcs" },
+      { "name": "Cooking Oil", "normalizedName": "oil", "amount": 15.0, "unit": "ml" },
+      { "name": "Soy Sauce", "normalizedName": "soy sauce", "amount": 10.0, "unit": "ml" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Rustic Potato & Onion Hash",
+    "description": "Crispy pan-fried potato cubes with caramelized onions seasoned simply.",
+    "cookTimeMinutes": 25,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Dice potatoes into small 1 cm cubes; slice onion.",
+      "Parboil potatoes for 5 min, then drain well.",
+      "Crisp potatoes and onions in hot oil for 12-15 min.",
+      "Season generously with salt and pepper; serve crisp."
+    ],
+    "ingredients": [
+      { "name": "Potatoes", "normalizedName": "potato", "amount": 350.0, "unit": "g" },
+      { "name": "Onions", "normalizedName": "onion", "amount": 100.0, "unit": "g" },
+      { "name": "Cooking Oil", "normalizedName": "oil", "amount": 20.0, "unit": "ml" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 3.0, "unit": "g" },
+      { "name": "Black Pepper", "normalizedName": "black pepper", "amount": 2.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Mediterranean Chickpea Salad",
+    "description": "Refreshing pantry salad combining plump chickpeas, crisp vegetables, and zesty lemon dressing.",
+    "cookTimeMinutes": 10,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Rinse and drain canned chickpeas.",
+      "Dice tomatoes and cucumber into bite-sized pieces.",
+      "Combine chickpeas and vegetables in a mixing bowl.",
+      "Whisk olive oil, lemon juice, and salt; toss gently."
+    ],
+    "ingredients": [
+      { "name": "Chickpeas", "normalizedName": "chickpea", "amount": 240.0, "unit": "g" },
+      { "name": "Tomatoes", "normalizedName": "tomato", "amount": 150.0, "unit": "g" },
+      { "name": "Cucumber", "normalizedName": "cucumber", "amount": 80.0, "unit": "g" },
+      { "name": "Olive Oil", "normalizedName": "oil", "amount": 15.0, "unit": "ml" },
+      { "name": "Lemon Juice", "normalizedName": "lemon juice", "amount": 10.0, "unit": "ml" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 2.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Simple Garlic Aglio e Olio Pasta",
+    "description": "Traditional Italian pasta coated in rich, fragrant garlic and chili infused olive oil.",
+    "cookTimeMinutes": 15,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Boil pasta in salted water until al dente.",
+      "Thinly slice garlic cloves.",
+      "Gently warm olive oil in pan; sauté garlic and chili until fragrant.",
+      "Toss drained pasta into garlic oil with 2 tbsp pasta water."
+    ],
+    "ingredients": [
+      { "name": "Pasta", "normalizedName": "pasta", "amount": 200.0, "unit": "g" },
+      { "name": "Garlic", "normalizedName": "garlic", "amount": 4.0, "unit": "pcs" },
+      { "name": "Olive Oil", "normalizedName": "oil", "amount": 30.0, "unit": "ml" },
+      { "name": "Chili Flakes", "normalizedName": "chili", "amount": 1.0, "unit": "g" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 4.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Creamy Lentil & Spinach Dhal",
+    "description": "Hearty spiced red lentils simmered with tender spinach leaves and warming aromatics.",
+    "cookTimeMinutes": 25,
+    "defaultServings": 3,
+    "difficulty": "Medium",
+    "imageUrl": "",
+    "instructions": [
+      "Rinse red lentils and simmer in water for 15 min until soft.",
+      "In a pan, fry chopped onion and garlic in oil until translucent.",
+      "Add curry powder, then stir fried onions into lentils.",
+      "Fold in spinach and salt; simmer 3 min until wilted."
+    ],
+    "ingredients": [
+      { "name": "Red Lentils", "normalizedName": "lentil", "amount": 200.0, "unit": "g" },
+      { "name": "Spinach", "normalizedName": "spinach", "amount": 100.0, "unit": "g" },
+      { "name": "Onions", "normalizedName": "onion", "amount": 1.0, "unit": "pcs" },
+      { "name": "Garlic", "normalizedName": "garlic", "amount": 2.0, "unit": "pcs" },
+      { "name": "Cooking Oil", "normalizedName": "oil", "amount": 15.0, "unit": "ml" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 4.0, "unit": "g" },
+      { "name": "Curry Powder", "normalizedName": "curry powder", "amount": 5.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Cheese & Herb Omelette",
+    "description": "A velvety French-style folded omelette with a gooey melted cheese center.",
+    "cookTimeMinutes": 10,
+    "defaultServings": 1,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Whisk eggs with salt and pepper in a bowl.",
+      "Melt butter in a non-stick pan over medium heat.",
+      "Pour in eggs; let edges set then draw cooked egg to center.",
+      "Sprinkle cheese over half, fold in half, and slide onto plate."
+    ],
+    "ingredients": [
+      { "name": "Eggs", "normalizedName": "egg", "amount": 3.0, "unit": "pcs" },
+      { "name": "Cheese", "normalizedName": "cheese", "amount": 40.0, "unit": "g" },
+      { "name": "Butter", "normalizedName": "butter", "amount": 10.0, "unit": "g" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 1.0, "unit": "g" },
+      { "name": "Black Pepper", "normalizedName": "black pepper", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Crispy Pan-Roasted Rosemary Potatoes",
+    "description": "Golden skillet roasted potato wedges scented with rosemary and crushed garlic.",
+    "cookTimeMinutes": 25,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Cut potatoes into wedges.",
+      "Heat olive oil in a heavy skillet.",
+      "Arrange potatoes cut-side down; fry for 15 min turning once.",
+      "Add crushed garlic, rosemary, and salt; toss until fragrant and crisp."
+    ],
+    "ingredients": [
+      { "name": "Potatoes", "normalizedName": "potato", "amount": 400.0, "unit": "g" },
+      { "name": "Olive Oil", "normalizedName": "oil", "amount": 20.0, "unit": "ml" },
+      { "name": "Garlic", "normalizedName": "garlic", "amount": 2.0, "unit": "pcs" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 3.0, "unit": "g" },
+      { "name": "Rosemary", "normalizedName": "rosemary", "amount": 2.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Quick Tomato & Cannellini Bean Stew",
+    "description": "Rich tomato stew simmered with tender cannellini beans, onions, and sweet garlic.",
+    "cookTimeMinutes": 20,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Sauté diced onion and garlic in olive oil for 4 min.",
+      "Add tomatoes and bring to a gentle simmer.",
+      "Stir in drained white beans and salt.",
+      "Simmer for 10 min until thick and rich."
+    ],
+    "ingredients": [
+      { "name": "White Beans", "normalizedName": "white bean", "amount": 240.0, "unit": "g" },
+      { "name": "Tomatoes", "normalizedName": "tomato", "amount": 250.0, "unit": "g" },
+      { "name": "Onions", "normalizedName": "onion", "amount": 1.0, "unit": "pcs" },
+      { "name": "Garlic", "normalizedName": "garlic", "amount": 2.0, "unit": "pcs" },
+      { "name": "Olive Oil", "normalizedName": "oil", "amount": 15.0, "unit": "ml" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 3.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Stir-Fried Egg Noodles with Vegetables",
+    "description": "Speedy wok tossed egg noodles with crunchy carrots and cabbage in savory soy sauce.",
+    "cookTimeMinutes": 15,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Cook egg noodles according to package, drain.",
+      "Heat oil in a wok; stir-fry sliced carrot and cabbage for 3 min.",
+      "Add drained noodles into wok.",
+      "Drizzle with soy sauce and black pepper; toss over high heat for 2 min."
+    ],
+    "ingredients": [
+      { "name": "Egg Noodles", "normalizedName": "noodles", "amount": 200.0, "unit": "g" },
+      { "name": "Cabbage", "normalizedName": "cabbage", "amount": 100.0, "unit": "g" },
+      { "name": "Carrots", "normalizedName": "carrot", "amount": 1.0, "unit": "pcs" },
+      { "name": "Cooking Oil", "normalizedName": "oil", "amount": 15.0, "unit": "ml" },
+      { "name": "Soy Sauce", "normalizedName": "soy sauce", "amount": 15.0, "unit": "ml" },
+      { "name": "Black Pepper", "normalizedName": "black pepper", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "French Onion Melt Toast",
+    "description": "Crusty toasted bread loaded with sweet caramelized onions and bubbling cheese.",
+    "cookTimeMinutes": 15,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Melt half the butter in a pan; caramelize sliced onions with salt (10 min).",
+      "Butter outer sides of bread slices.",
+      "Fill bread with caramelized onions and cheese.",
+      "Toast both sides in a hot skillet until golden and cheese melts."
+    ],
+    "ingredients": [
+      { "name": "Bread", "normalizedName": "bread", "amount": 2.0, "unit": "pcs" },
+      { "name": "Onions", "normalizedName": "onion", "amount": 150.0, "unit": "g" },
+      { "name": "Cheese", "normalizedName": "cheese", "amount": 40.0, "unit": "g" },
+      { "name": "Butter", "normalizedName": "butter", "amount": 15.0, "unit": "g" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Curried Fried Egg with Steamed Rice",
+    "description": "Crispy fried eggs in bubbling curry oil served hot over warm leftover rice.",
+    "cookTimeMinutes": 10,
+    "defaultServings": 1,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Heat cooking oil in a small frying pan.",
+      "Add curry powder and bloom for 15 seconds.",
+      "Crack in eggs; spoon spiced oil over whites until crispy.",
+      "Serve over warm steamed rice and sprinkle with salt."
+    ],
+    "ingredients": [
+      { "name": "Eggs", "normalizedName": "egg", "amount": 2.0, "unit": "pcs" },
+      { "name": "Cooked Rice", "normalizedName": "rice", "amount": 180.0, "unit": "g" },
+      { "name": "Cooking Oil", "normalizedName": "oil", "amount": 15.0, "unit": "ml" },
+      { "name": "Curry Powder", "normalizedName": "curry powder", "amount": 3.0, "unit": "g" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Sautéed Garlic Spinach with Butter",
+    "description": "Tender fresh spinach leaves quickly sautéed with golden garlic slices and rich butter.",
+    "cookTimeMinutes": 8,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Melt butter in a wide pan over medium heat.",
+      "Sauté sliced garlic until lightly golden.",
+      "Add spinach in batches, tossing until just wilted.",
+      "Season with salt and black pepper; drain excess liquid and serve."
+    ],
+    "ingredients": [
+      { "name": "Spinach", "normalizedName": "spinach", "amount": 250.0, "unit": "g" },
+      { "name": "Garlic", "normalizedName": "garlic", "amount": 3.0, "unit": "pcs" },
+      { "name": "Butter", "normalizedName": "butter", "amount": 15.0, "unit": "g" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 2.0, "unit": "g" },
+      { "name": "Black Pepper", "normalizedName": "black pepper", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Mushroom & Garlic Pan Sauté",
+    "description": "Seared button mushrooms with browned garlic, butter, and cracked black pepper.",
+    "cookTimeMinutes": 12,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Wipe mushrooms clean and slice in halves or quarters.",
+      "Heat olive oil and butter in a skillet over high heat.",
+      "Sauté mushrooms without crowding for 6 min until golden brown.",
+      "Add minced garlic, salt, and pepper; toss for 1 min."
+    ],
+    "ingredients": [
+      { "name": "Mushrooms", "normalizedName": "mushroom", "amount": 250.0, "unit": "g" },
+      { "name": "Garlic", "normalizedName": "garlic", "amount": 2.0, "unit": "pcs" },
+      { "name": "Olive Oil", "normalizedName": "oil", "amount": 15.0, "unit": "ml" },
+      { "name": "Butter", "normalizedName": "butter", "amount": 10.0, "unit": "g" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 2.0, "unit": "g" },
+      { "name": "Black Pepper", "normalizedName": "black pepper", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Sweet Cinnamon French Toast",
+    "description": "Stale bread revived in a rich spiced egg batter and pan-toasted until caramelized.",
+    "cookTimeMinutes": 12,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Whisk eggs, milk, cinnamon, and sugar in a shallow dish.",
+      "Dip bread slices into mixture, soaking both sides.",
+      "Melt butter in a skillet over medium heat.",
+      "Cook bread slices for 3 min per side until golden brown."
+    ],
+    "ingredients": [
+      { "name": "Bread", "normalizedName": "bread", "amount": 4.0, "unit": "pcs" },
+      { "name": "Eggs", "normalizedName": "egg", "amount": 2.0, "unit": "pcs" },
+      { "name": "Milk", "normalizedName": "milk", "amount": 60.0, "unit": "ml" },
+      { "name": "Butter", "normalizedName": "butter", "amount": 15.0, "unit": "g" },
+      { "name": "Cinnamon", "normalizedName": "cinnamon", "amount": 2.0, "unit": "g" },
+      { "name": "Sugar", "normalizedName": "sugar", "amount": 10.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Zesty Tuna & Sweetcorn Salad",
+    "description": "Flaked tuna and sweet sweetcorn tossed in a creamy lemon and pepper dressing.",
+    "cookTimeMinutes": 10,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Drain canned tuna and sweetcorn.",
+      "Flake tuna into a bowl and mix with sweetcorn.",
+      "Stir in mayonnaise, lemon juice, salt, and pepper.",
+      "Toss thoroughly and serve chilled or as a sandwich filling."
+    ],
+    "ingredients": [
+      { "name": "Canned Tuna", "normalizedName": "tuna", "amount": 160.0, "unit": "g" },
+      { "name": "Sweetcorn", "normalizedName": "sweetcorn", "amount": 150.0, "unit": "g" },
+      { "name": "Mayonnaise", "normalizedName": "mayonnaise", "amount": 40.0, "unit": "g" },
+      { "name": "Lemon Juice", "normalizedName": "lemon juice", "amount": 10.0, "unit": "ml" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 1.0, "unit": "g" },
+      { "name": "Black Pepper", "normalizedName": "black pepper", "amount": 1.0, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Shakshuka-Style Poached Eggs in Tomato",
+    "description": "Eggs gently poached in a spiced, simmering garlic and cumin tomato reduction.",
+    "cookTimeMinutes": 20,
+    "defaultServings": 2,
+    "difficulty": "Easy",
+    "imageUrl": "",
+    "instructions": [
+      "Sauté diced onion and minced garlic in olive oil for 4 min.",
+      "Add tomatoes, salt, and cumin; simmer 10 min until sauce thickens.",
+      "Make 3 small wells in the tomato sauce.",
+      "Crack an egg into each well; cover pan and simmer 5 min until whites set."
+    ],
+    "ingredients": [
+      { "name": "Eggs", "normalizedName": "egg", "amount": 3.0, "unit": "pcs" },
+      { "name": "Tomatoes", "normalizedName": "tomato", "amount": 300.0, "unit": "g" },
+      { "name": "Onions", "normalizedName": "onion", "amount": 1.0, "unit": "pcs" },
+      { "name": "Garlic", "normalizedName": "garlic", "amount": 2.0, "unit": "pcs" },
+      { "name": "Olive Oil", "normalizedName": "oil", "amount": 15.0, "unit": "ml" },
+      { "name": "Salt", "normalizedName": "salt", "amount": 2.0, "unit": "g" },
+      { "name": "Cumin", "normalizedName": "cumin", "amount": 2.0, "unit": "g" }
+    ]
+  }
+]
