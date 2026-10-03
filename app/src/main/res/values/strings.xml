@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Pantry Buddy</string>
+
+    <!-- Navigation Labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_pantry">Pantry</string>
+    <string name="nav_recipes">Recipes</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home Dashboard -->
+    <string name="home_header_format">SMART PANTRY • %1$s</string>
+    <string name="items_to_use_soon">%1$d to use soon</string>
+    <string name="cook_time_mins">%1$d min</string>
+    <string name="servings_format">%1$d servings</string>
+    <string name="uses_expiring_soon">Uses expiring item</string>
+
+    <plurals name="pantry_ingredients_count">
+        <item quantity="one">%1$d ingredient at home</item>
+        <item quantity="other">%1$d ingredients at home</item>
+    </plurals>
 </resources>

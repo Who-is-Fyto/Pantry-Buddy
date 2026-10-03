@@ -16,7 +16,7 @@
 | **Phase 5** | **Normalization & Unit Conversion** | `IngredientNormalizer`, `UnitConverter`, Unit Tests | Done | `created ingredient normalizer and unit converter with tests` |
 | **Phase 6** | **Strict Matcher & "Almost There"** | 100% strict matching algorithm & isolated tier | Done | `implemented strict matching algorithm and almost there logic` |
 | **Phase 7** | **Repository & ViewModel Architecture**| Repositories, LiveData, ViewModels | Done | `added repositories and viewmodels for pantry and recipes` |
-| **Phase 8** | **Navigation Shell & Home Dashboard** | Bottom navigation bar, `HomeFragment` | Pending | `setup bottom navigation and home dashboard screen` |
+| **Phase 8** | **Navigation Shell & Home Dashboard** | Bottom navigation bar, `HomeFragment` | Done | `setup bottom navigation and home dashboard screen` |
 | **Phase 9** | **Pantry Inventory List** | `RecyclerView`, search, filter chips, expiry pills | Pending | `created pantry inventory list with recyclerview and expiry pills` |
 | **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | Pending | `implemented add, edit, and delete for pantry items` |
 | **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | Pending | `built suggested recipes screen with strict and almost there lists` |
@@ -160,8 +160,8 @@
 ---
 
 ### Phase 8: App Navigation Shell & Home Dashboard
-- [ ] **Objective:** Build the main activity container, bottom navigation bar, and Figma Panel 1 (`HomeFragment`).
-- [ ] **Deliverables:**
+- [x] **Objective:** Build the main activity container, bottom navigation bar, and Figma Panel 1 (`HomeFragment`).
+- [x] **Deliverables:**
   - `res/menu/bottom_nav_menu.xml`: 4 navigation tabs (`Home`, `Pantry`, `Recipes`, `Settings`).
   - `ui/MainActivity.java` and `res/layout/activity_main.xml`: Bottom navigation host container.
   - `ui/home/HomeFragment.java` and `res/layout/fragment_home.xml`:
@@ -169,11 +169,11 @@
     - Pantry summary card ("X ingredients in your pantry · before cooking").
     - Urgent expiry alert card ("A little love, soon · items to use soon").
     - Featured cookable recipe preview card with quick link to recipe detail.
-- [ ] **Verification:** App launches into Home Dashboard; bottom navigation switches smoothly between tabs.
-- [ ] **Commit Command:**
+- [x] **Verification:** App launches into Home Dashboard; bottom navigation switches smoothly between tabs.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/
-  git commit -m "feat(ui): build bottom navigation shell and Figma Home Dashboard"
+  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/ phases.md
+  git commit -m "setup bottom navigation and home dashboard screen"
   ```
 
 ---
