@@ -18,7 +18,7 @@
 | **Phase 7** | **Repository & ViewModel Architecture**| Repositories, LiveData, ViewModels | Done | `added repositories and viewmodels for pantry and recipes` |
 | **Phase 8** | **Navigation Shell & Home Dashboard** | Bottom navigation bar, `HomeFragment` | Done | `setup bottom navigation and home dashboard screen` |
 | **Phase 9** | **Pantry Inventory List** | `RecyclerView`, search, filter chips, expiry pills | Done | `created pantry inventory list with recyclerview and expiry pills` |
-| **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | Pending | `implemented add, edit, and delete for pantry items` |
+| **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | Done | `implemented add, edit, and delete for pantry items` |
 | **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | Pending | `built suggested recipes screen with strict and almost there lists` |
 | **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | Pending | `added empty state feedback screen when zero recipes match` |
 | **Phase 13**| **Recipe Detail & 3-Column Check** | 3-column table, dynamic serving scaler | Pending | `built recipe detail screen with 3 column ingredient check` |
@@ -196,8 +196,8 @@
 ---
 
 ### Phase 10: Pantry Item Management (Add, Edit, Delete CRUD)
-- [ ] **Objective:** Complete full CRUD functionality for pantry items (Figma Panels 3 & 4).
-- [ ] **Deliverables:**
+- [x] **Objective:** Complete full CRUD functionality for pantry items (Figma Panels 3 & 4).
+- [x] **Deliverables:**
   - `ui/pantry/AddIngredientBottomSheet.java` and `res/layout/bottom_sheet_add_ingredient.xml`:
     - Autocomplete ingredient name input.
     - Numeric quantity input with unit chip selector (`g`, `ml`, `pcs`, `tbsp`, `tsp`).
@@ -208,11 +208,11 @@
     - Edit existing quantity, unit, or expiry date.
     - Cross-reference banner: *"Your tomatoes are included in X recipes you can make right now."*
     - Delete button with confirmation dialog.
-- [ ] **Verification:** Add an ingredient, view it in the inventory, edit its quantity, and delete it. Database updates verified.
-- [ ] **Commit Command:**
+- [x] **Verification:** Add an ingredient, view it in the inventory, edit its quantity, and delete it. Database updates verified.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/pantry/
-  git commit -m "feat(pantry): add, edit, and delete pantry item management flows"
+  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/pantry/ phases.md
+  git commit -m "implemented add, edit, and delete for pantry items"
   ```
 
 ---

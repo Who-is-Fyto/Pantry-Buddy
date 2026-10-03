@@ -18,4 +18,12 @@
         <item quantity="one">%1$d ingredient at home</item>
         <item quantity="other">%1$d ingredients at home</item>
     </plurals>
+
+    <!-- Pantry Item Management -->
+    <string name="add_ingredient_title">Add an Ingredient</string>
+    <string name="ingredient_details_title">Ingredient Details</string>
+    <string name="delete_ingredient_title">Delete ingredient?</string>
+    <string name="delete_ingredient_confirm">Are you sure you want to remove %1$s from your pantry?</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
 </resources>

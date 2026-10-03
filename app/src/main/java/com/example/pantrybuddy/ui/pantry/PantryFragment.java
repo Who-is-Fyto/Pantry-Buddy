@@ -49,8 +49,9 @@ public class PantryFragment extends Fragment {
 
     private void setupRecyclerView() {
         adapter = new PantryAdapter(item -> {
-            // Item click: placeholder until Phase 10 Edit/Detail flow
-            Toast.makeText(requireContext(), item.getName() + ": " + item.getQuantity() + " " + item.getUnit(), Toast.LENGTH_SHORT).show();
+            android.content.Intent intent = new android.content.Intent(requireContext(), IngredientDetailActivity.class);
+            intent.putExtra(IngredientDetailActivity.EXTRA_ITEM_ID, item.getItemId());
+            startActivity(intent);
         });
 
         binding.rvPantryItems.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -135,8 +136,8 @@ public class PantryFragment extends Fragment {
 
     private void setupFab() {
         binding.fabAddIngredient.setOnClickListener(v -> {
-            // Launches Add Ingredient flow (Phase 10)
-            Toast.makeText(requireContext(), "Add Ingredient will be added in Phase 10", Toast.LENGTH_SHORT).show();
+            AddIngredientBottomSheet bottomSheet = new AddIngredientBottomSheet();
+            bottomSheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
         });
     }
 
