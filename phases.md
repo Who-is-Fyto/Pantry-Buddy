@@ -17,7 +17,7 @@
 | **Phase 6** | **Strict Matcher & "Almost There"** | 100% strict matching algorithm & isolated tier | Done | `implemented strict matching algorithm and almost there logic` |
 | **Phase 7** | **Repository & ViewModel Architecture**| Repositories, LiveData, ViewModels | Done | `added repositories and viewmodels for pantry and recipes` |
 | **Phase 8** | **Navigation Shell & Home Dashboard** | Bottom navigation bar, `HomeFragment` | Done | `setup bottom navigation and home dashboard screen` |
-| **Phase 9** | **Pantry Inventory List** | `RecyclerView`, search, filter chips, expiry pills | Pending | `created pantry inventory list with recyclerview and expiry pills` |
+| **Phase 9** | **Pantry Inventory List** | `RecyclerView`, search, filter chips, expiry pills | Done | `created pantry inventory list with recyclerview and expiry pills` |
 | **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | Pending | `implemented add, edit, and delete for pantry items` |
 | **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | Pending | `built suggested recipes screen with strict and almost there lists` |
 | **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | Pending | `added empty state feedback screen when zero recipes match` |
@@ -179,18 +179,18 @@
 ---
 
 ### Phase 9: Pantry Inventory List Screen
-- [ ] **Objective:** Build Figma Panel 2 (`PantryFragment`) with a reactive `RecyclerView` showing all pantry items.
-- [ ] **Deliverables:**
+- [x] **Objective:** Build Figma Panel 2 (`PantryFragment`) with a reactive `RecyclerView` showing all pantry items.
+- [x] **Deliverables:**
   - `res/layout/fragment_pantry.xml`: Search input, category filter chips (`All`, `Vegetables`, `Eggs & Dairy`, `Staples`, `Spices`), and sort selector.
   - `res/layout/item_pantry_ingredient.xml`: Card design with item name, quantity, category badge, and dynamic expiration pill (`Use today` green, `Use tomorrow` amber, `Best before` neutral).
   - `ui/pantry/PantryAdapter.java`: `ListAdapter` with `DiffUtil` for smooth list animations.
   - Footer notice: *"Keep quantities up to date. We only suggest meals you can make entirely from this list."*
   - Floating Action Button (FAB) for adding ingredients.
-- [ ] **Verification:** Adding dummy items displays correctly in the list with corresponding freshness pill badges.
-- [ ] **Commit Command:**
+- [x] **Verification:** Adding dummy items displays correctly in the list with corresponding freshness pill badges.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/pantry/
-  git commit -m "feat(pantry): build reactive pantry inventory list with expiry badges"
+  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/pantry/ phases.md
+  git commit -m "created pantry inventory list with recyclerview and expiry pills"
   ```
 
 ---
