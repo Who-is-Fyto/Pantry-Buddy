@@ -271,6 +271,73 @@ public class RepositoryViewModelTest {
         assertEquals("Quick Toast", vm.getFilteredCookableRecipes().getValue().get(0).getRecipe().getTitle());
     }
 
+    @Test
+    public void testRecipeViewModelAlmostThereAndExpiringFilters() {
+        long now = System.currentTimeMillis();
+        long tomorrow = now + (24L * 60 * 60 * 1000);
+
+        Recipe r1 = new Recipe("Bread Toast", "Quick snack", 5, 1, "[]", "", "Easy");
+        r1.setRecipeId(1L);
+        RecipeWithIngredients rwi1 = new RecipeWithIngredients();
+        rwi1.setRecipe(r1);
+        rwi1.setIngredients(Collections.singletonList(
+                new RecipeIngredient(1L, "Bread", "bread", 2.0, "pcs")
+        ));
+
+        Recipe r2 = new Recipe("Warm Milk", "Warm drink", 5, 1, "[]", "", "Easy");
+        r2.setRecipeId(2L);
+        RecipeWithIngredients rwi2 = new RecipeWithIngredients();
+        rwi2.setRecipe(r2);
+        rwi2.setIngredients(Collections.singletonList(
+                new RecipeIngredient(2L, "Milk", "milk", 200.0, "ml")
+        ));
+
+        Recipe r3 = new Recipe("Butter Toast", "Rich toast", 5, 1, "[]", "", "Easy");
+        r3.setRecipeId(3L);
+        RecipeWithIngredients rwi3 = new RecipeWithIngredients();
+        rwi3.setRecipe(r3);
+        rwi3.setIngredients(Arrays.asList(
+                new RecipeIngredient(3L, "Bread", "bread", 2.0, "pcs"),
+                new RecipeIngredient(3L, "Butter", "butter", 20.0, "g")
+        ));
+
+        fakeRecipeDao.setRecipes(Arrays.asList(rwi1, rwi2, rwi3));
+        fakePantryDao.setItems(Arrays.asList(
+                new PantryItem("Bread", "bread", 10.0, "pcs", null, "Staples", now),
+                new PantryItem("Milk", "milk", 500.0, "ml", tomorrow, "Dairy & Eggs", now)
+        ));
+
+        RecipeRepository repo = new RecipeRepository(fakeRecipeDao, fakePantryDao, directExecutor);
+        RecipeViewModel vm = new RecipeViewModel(new Application(), repo);
+
+        vm.getCookableRecipes().observeForever(l -> {});
+        vm.getFilteredCookableRecipes().observeForever(l -> {});
+        vm.getAlmostThereRecipes().observeForever(l -> {});
+        vm.getFilteredAlmostThereRecipes().observeForever(l -> {});
+
+        repo.runMatching();
+
+        // 2 cookable, 1 almost there
+        assertEquals(2, vm.getCookableRecipes().getValue().size());
+        assertEquals(1, vm.getAlmostThereRecipes().getValue().size());
+        assertEquals("Butter Toast", vm.getAlmostThereRecipes().getValue().get(0).getRecipe().getTitle());
+
+        // Filter only expiring items: only Warm Milk uses milk (expiring tomorrow)
+        vm.setOnlyExpiringSoonFilter(true);
+        assertEquals(1, vm.getFilteredCookableRecipes().getValue().size());
+        assertEquals("Warm Milk", vm.getFilteredCookableRecipes().getValue().get(0).getRecipe().getTitle());
+
+        // Reset expiring filter
+        vm.setOnlyExpiringSoonFilter(false);
+        assertEquals(2, vm.getFilteredCookableRecipes().getValue().size());
+
+        // Search query filters both lists
+        vm.setRecipeSearchQuery("Butter");
+        assertEquals(0, vm.getFilteredCookableRecipes().getValue().size());
+        assertEquals(1, vm.getFilteredAlmostThereRecipes().getValue().size());
+        assertEquals("Butter Toast", vm.getFilteredAlmostThereRecipes().getValue().get(0).getRecipe().getTitle());
+    }
+
     // Fake PantryDao for testing without SQLite device dependencies
     private static class FakePantryDao implements PantryDao {
         final List<PantryItem> itemsList = new ArrayList<>();

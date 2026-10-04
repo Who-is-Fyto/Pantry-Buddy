@@ -19,7 +19,7 @@
 | **Phase 8** | **Navigation Shell & Home Dashboard** | Bottom navigation bar, `HomeFragment` | Done | `setup bottom navigation and home dashboard screen` |
 | **Phase 9** | **Pantry Inventory List** | `RecyclerView`, search, filter chips, expiry pills | Done | `created pantry inventory list with recyclerview and expiry pills` |
 | **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | Done | `implemented add, edit, and delete for pantry items` |
-| **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | Pending | `built suggested recipes screen with strict and almost there lists` |
+| **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | Done | `built suggested recipes screen with strict and almost there lists` |
 | **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | Pending | `added empty state feedback screen when zero recipes match` |
 | **Phase 13**| **Recipe Detail & 3-Column Check** | 3-column table, dynamic serving scaler | Pending | `built recipe detail screen with 3 column ingredient check` |
 | **Phase 14**| **Cooking Guide & Stock Deduction** | Step timer, meal review, atomic inventory deduction | Pending | `created cooking guide with timer and meal review pantry deduction` |
@@ -218,17 +218,17 @@
 ---
 
 ### Phase 11: Suggested Recipes Screen & Isolated "Almost There" Tier
-- [ ] **Objective:** Build Figma Panel 5 (`RecipesFragment`) displaying strictly 100% cookable recipes, plus the quarantined 1-missing section.
-- [ ] **Deliverables:**
+- [x] **Objective:** Build Figma Panel 5 (`RecipesFragment`) displaying strictly 100% cookable recipes, plus the quarantined 1-missing section.
+- [x] **Deliverables:**
   - `res/layout/fragment_recipes.xml`: Header banner (*"Dinner is already here • You have everything for these recipes"*), filter tags, and dual-section list.
   - `res/layout/item_recipe_card.xml`: Recipe card with image thumbnail, title, cook time, servings, badge *"6 of 6 ingredients at home"*, and tag *"Uses spinach today"*.
   - `res/layout/item_almost_there_card.xml`: Distinct card with amber banner:  *"Missing 1 Ingredient: 10 ml Olive Oil"*.
   - `ui/recipes/RecipesAdapter.java`: Multi-view type adapter rendering strictly cookable cards and clearly segregated "Almost There" cards.
-- [ ] **Verification:** Strict list contains only 100% matched recipes; missing 1 item falls exclusively into the lower "Almost There" container.
-- [ ] **Commit Command:**
+- [x] **Verification:** Strict list contains only 100% matched recipes; missing 1 item falls exclusively into the lower "Almost There" container.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/recipes/
-  git commit -m "feat(recipes): implement Suggested Recipes screen with strict filtering"
+  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/recipes/ app/src/test/ phases.md
+  git commit -m "built suggested recipes screen with strict and almost there lists"
   ```
 
 ---

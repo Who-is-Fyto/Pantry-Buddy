@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/colorSurface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/colorBorder"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Amber Top Banner: Missing Ingredient Notice -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPillAmber"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="9dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_alert_amber" />
+
+            <TextView
+                android:id="@+id/tvAlmostThereMissingBanner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/colorAccentAmber"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Missing 1 Ingredient: 10 ml Olive Oil" />
+        </LinearLayout>
+
+        <!-- Main Card Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Middle Row: Image Thumbnail + Title & Status -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivAlmostThereThumbnail"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@color/colorPillNeutral"
+                    android:padding="16dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_restaurant"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                    app:tint="@color/colorTextSecondary" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvAlmostThereTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lora"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:text="Classic Vegetable Frittata" />
+
+                    <!-- Meta Row: Cook time & Servings -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_clock"
+                            app:tint="@color/colorTextSecondary" />
+
+                        <TextView
+                            android:id="@+id/tvAlmostThereCookTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:fontFamily="@font/inter"
+                            android:textColor="@color/colorTextSecondary"
+                            android:textSize="12sp"
+                            tools:text="20 min" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="6dp"
+                            android:text="•"
+                            android:textColor="@color/colorTextTertiary"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_person"
+                            app:tint="@color/colorTextSecondary" />
+
+                        <TextView
+                            android:id="@+id/tvAlmostThereServings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:fontFamily="@font/inter"
+                            android:textColor="@color/colorTextSecondary"
+                            android:textSize="12sp"
+                            tools:text="2 servings" />
+                    </LinearLayout>
+
+                    <!-- Stock Status Badge -->
+                    <TextView
+                        android:id="@+id/tvAlmostThereStockBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_pill_neutral"
+                        android:fontFamily="@font/inter"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="11sp"
+                        tools:text="5 of 6 ingredients at home" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Bottom Preview Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/colorBorderLight" />
+
+            <!-- What's at home snapshot -->
+            <TextView
+                android:id="@+id/tvAlmostThereAtHomePreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="12sp"
+                tools:text="Have: Eggs, Potatoes, Onions, Salt, Black Pepper" />
+        </LinearLayout>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

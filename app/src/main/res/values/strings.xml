@@ -26,4 +26,30 @@
     <string name="delete_ingredient_confirm">Are you sure you want to remove %1$s from your pantry?</string>
     <string name="action_delete">Delete</string>
     <string name="action_cancel">Cancel</string>
+
+    <!-- Suggested Recipes & Isolated Almost There Tier -->
+    <string name="recipes_header_eyebrow">SUGGESTED RECIPES • SMART PANTRY</string>
+    <string name="recipes_screen_title">Dinner is already here</string>
+    <string name="recipes_screen_subtitle">You have everything for these recipes.</string>
+    <string name="recipes_guarantee_badge">Strict Guarantee</string>
+    <string name="recipes_guarantee_text">All ingredients in enough quantity. No extras assumed. No shopping needed.</string>
+    <string name="search_recipes_hint">Search recipes by name…</string>
+    <string name="filter_all">All</string>
+    <string name="filter_under_20">Under 20 min</string>
+    <string name="filter_under_30">Under 30 min</string>
+    <string name="filter_expiring_soon">Expiring soon</string>
+    <string name="section_ready_to_cook">Ready to cook</string>
+    <string name="section_ready_to_cook_desc">100% of required ingredients are on hand</string>
+    <string name="section_almost_there_badge">MISSING 1 INGREDIENT — SHOPPING REQUIRED</string>
+    <string name="section_almost_there_title">Almost There</string>
+    <string name="section_almost_there_desc">You have almost everything. Only 1 ingredient is missing or short.</string>
+    <string name="ingredients_at_home_format">%1$d of %2$d ingredients at home</string>
+    <string name="missing_ingredient_format">Missing 1 Ingredient: %1$s</string>
+    <string name="no_recipes_found_title">No recipes found</string>
+    <string name="no_recipes_found_desc">Try adjusting your search terms or filter chips.</string>
+    <string name="no_cookable_notice">No 100% cookable recipes match your current filters. See \"Almost There\" below or check your pantry stock.</string>
+    <plurals name="recipes_count">
+        <item quantity="one">%1$d recipe</item>
+        <item quantity="other">%1$d recipes</item>
+    </plurals>
 </resources>

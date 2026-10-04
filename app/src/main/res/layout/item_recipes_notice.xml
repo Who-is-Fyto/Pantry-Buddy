@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@color/colorSurface"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/colorBorder"
+    app:strokeWidth="1dp">
+
+    <TextView
+        android:id="@+id/tvSectionNoticeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter"
+        android:padding="16dp"
+        android:text="@string/no_cookable_notice"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="13sp"
+        tools:text="No 100% cookable recipes match your current filters. See &quot;Almost There&quot; below or check your pantry stock." />
+
+</com.google.android.material.card.MaterialCardView>
