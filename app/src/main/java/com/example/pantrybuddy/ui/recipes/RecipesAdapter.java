@@ -41,6 +41,16 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.listener = listener;
     }
 
+    public void setAlmostThereOnly(List<MatchResult> almostThereList) {
+        items.clear();
+        if (almostThereList != null) {
+            for (MatchResult mr : almostThereList) {
+                items.add(new AlmostThereItem(mr));
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     public void setData(List<MatchResult> cookableList, List<MatchResult> almostThereList) {
         items.clear();
 

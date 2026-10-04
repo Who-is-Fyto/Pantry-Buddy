@@ -20,7 +20,7 @@
 | **Phase 9** | **Pantry Inventory List** | `RecyclerView`, search, filter chips, expiry pills | Done | `created pantry inventory list with recyclerview and expiry pills` |
 | **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | Done | `implemented add, edit, and delete for pantry items` |
 | **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | Done | `built suggested recipes screen with strict and almost there lists` |
-| **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | Pending | `added empty state feedback screen when zero recipes match` |
+| **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | Done | `added empty state feedback screen when zero recipes match` |
 | **Phase 13**| **Recipe Detail & 3-Column Check** | 3-column table, dynamic serving scaler | Pending | `built recipe detail screen with 3 column ingredient check` |
 | **Phase 14**| **Cooking Guide & Stock Deduction** | Step timer, meal review, atomic inventory deduction | Pending | `created cooking guide with timer and meal review pantry deduction` |
 | **Phase 15**| **Settings, Expiry Alerts & Audit** | Preferences, sample reset button, WorkManager | Pending | `added settings screen, expiry alerts, and sample data reset button` |
@@ -234,8 +234,8 @@
 ---
 
 ### Phase 12: Zero-Match Feedback State & Pantry Diagnostics
-- [ ] **Objective:** Build Figma Panel 10 (`NoMatchesState`) to provide constructive, honest feedback when zero recipes match the current pantry.
-- [ ] **Deliverables:**
+- [x] **Objective:** Build Figma Panel 10 (`NoMatchesState`) to provide constructive, honest feedback when zero recipes match the current pantry.
+- [x] **Deliverables:**
   - `res/layout/view_zero_matches.xml`:
     - Empathetic heading: *"Dinner needs a little more love."*
     - Explanatory copy: *"None of our recipes can be made with your remaining amounts. We won't show meals that need something you don't have."*
@@ -243,11 +243,11 @@
     - Unlocking recommendation chip (e.g. *"Adding 4 eggs or 100 g rice would unlock 3 recipes with your current vegetables"*).
     - Button: *"Add an ingredient"* linking directly to Add dialog.
   - Integrate zero-match view into `RecipesFragment` when `cookableRecipes.isEmpty()`.
-- [ ] **Verification:** Clear pantry or set quantities to 0; verify the warm diagnostic empty state appears instead of a blank screen.
-- [ ] **Commit Command:**
+- [x] **Verification:** Clear pantry or set quantities to 0; verify the warm diagnostic empty state appears instead of a blank screen.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/recipes/
-  git commit -m "feat(recipes): implement zero-match explanatory screen and unlock hints"
+  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ app/src/test/ phases.md
+  git commit -m "added empty state feedback screen when zero recipes match"
   ```
 
 ---

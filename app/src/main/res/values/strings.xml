@@ -52,4 +52,13 @@
         <item quantity="one">%1$d recipe</item>
         <item quantity="other">%1$d recipes</item>
     </plurals>
+
+    <!-- Zero-Match Feedback State & Diagnostics (Panel 10) -->
+    <string name="zero_match_heading">Dinner needs a little more love.</string>
+    <string name="zero_match_explanation">None of our recipes can be made with your remaining amounts. We won\'t show meals that need something you don\'t have.</string>
+    <string name="active_pantry_stock_title">Active Pantry Stock</string>
+    <string name="unlocking_recommendation_title">Unlocking Recommendation</string>
+    <string name="action_add_ingredient">Add an ingredient</string>
+    <string name="action_check_pantry">Check or correct my pantry</string>
+    <string name="pantry_empty_hint">Your pantry is currently empty. Add staple ingredients like eggs, cooking oil, or rice to start seeing recipes.</string>
 </resources>

@@ -12,24 +12,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.pantrybuddy.R;
+import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.databinding.FragmentRecipesBinding;
+import com.example.pantrybuddy.domain.engine.PantryDiagnostics;
 import com.example.pantrybuddy.domain.model.MatchResult;
+import com.example.pantrybuddy.domain.model.RecipeWithIngredients;
+import com.example.pantrybuddy.ui.pantry.AddIngredientBottomSheet;
+import com.example.pantrybuddy.ui.pantry.PantryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// Fragment displaying strictly cookable recipes and quarantined almost there suggestions
+// Fragment displaying strictly cookable recipes, quarantined almost there suggestions,
+// and the diagnostic zero-match feedback state when no complete meals can be made
 public class RecipesFragment extends Fragment {
 
     private FragmentRecipesBinding binding;
     private RecipeViewModel recipeViewModel;
-    private RecipesAdapter adapter;
+    private PantryViewModel pantryViewModel;
 
+    private RecipesAdapter adapter;
+    private RecipesAdapter zeroAlmostAdapter;
+
+    private List<MatchResult> rawCookableList = new ArrayList<>();
     private List<MatchResult> currentCookableList = new ArrayList<>();
     private List<MatchResult> currentAlmostThereList = new ArrayList<>();
+    private List<PantryItem> currentPantryItems = new ArrayList<>();
+    private List<RecipeWithIngredients> allRecipesList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -43,8 +56,10 @@ public class RecipesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
+        pantryViewModel = new ViewModelProvider(requireActivity()).get(PantryViewModel.class);
 
         setupRecyclerView();
+        setupZeroMatchView();
         setupSearchInput();
         setupFilterChips();
         setupObservers();
@@ -60,6 +75,26 @@ public class RecipesFragment extends Fragment {
 
         binding.rvRecipes.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.rvRecipes.setAdapter(adapter);
+    }
+
+    private void setupZeroMatchView() {
+        zeroAlmostAdapter = new RecipesAdapter();
+        zeroAlmostAdapter.setOnRecipeClickListener(matchResult -> {
+            if (matchResult.getRecipe() != null) {
+                Toast.makeText(requireContext(), matchResult.getRecipe().getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.viewZeroMatches.rvZeroAlmostThere.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.viewZeroMatches.rvZeroAlmostThere.setAdapter(zeroAlmostAdapter);
+
+        binding.viewZeroMatches.btnAddIngredientZero.setOnClickListener(v -> {
+            AddIngredientBottomSheet sheet = new AddIngredientBottomSheet();
+            sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+        });
+
+        binding.viewZeroMatches.btnCheckPantryZero.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.navigation_pantry));
     }
 
     private void setupSearchInput() {
@@ -100,23 +135,85 @@ public class RecipesFragment extends Fragment {
     }
 
     private void setupObservers() {
-        recipeViewModel.getFilteredCookableRecipes().observe(getViewLifecycleOwner(), cookable -> {
-            currentCookableList = (cookable != null) ? cookable : new ArrayList<>();
+        // Raw cookable list (unfiltered) to determine zero-match state
+        recipeViewModel.getCookableRecipes().observe(getViewLifecycleOwner(), cookable -> {
+            rawCookableList = (cookable != null) ? cookable : new ArrayList<>();
             updateAdapterFeed();
         });
 
+        // Filtered cookable recipes (for search and chips)
+        recipeViewModel.getFilteredCookableRecipes().observe(getViewLifecycleOwner(), filteredCookable -> {
+            currentCookableList = (filteredCookable != null) ? filteredCookable : new ArrayList<>();
+            updateAdapterFeed();
+        });
+
+        // Filtered almost there recipes
         recipeViewModel.getFilteredAlmostThereRecipes().observe(getViewLifecycleOwner(), almostThere -> {
             currentAlmostThereList = (almostThere != null) ? almostThere : new ArrayList<>();
+            updateAdapterFeed();
+        });
+
+        // Pantry items for stock audit and diagnostics
+        pantryViewModel.getAllPantryItems().observe(getViewLifecycleOwner(), items -> {
+            currentPantryItems = (items != null) ? items : new ArrayList<>();
+            updateAdapterFeed();
+        });
+
+        // All recipes for unlocking hint calculation
+        recipeViewModel.getAllRecipes().observe(getViewLifecycleOwner(), recipes -> {
+            allRecipesList = (recipes != null) ? recipes : new ArrayList<>();
             updateAdapterFeed();
         });
     }
 
     private void updateAdapterFeed() {
-        adapter.setData(currentCookableList, currentAlmostThereList);
+        boolean hasCookable = !rawCookableList.isEmpty();
 
-        boolean isTotallyEmpty = currentCookableList.isEmpty() && currentAlmostThereList.isEmpty();
-        binding.layoutEmptyState.setVisibility(isTotallyEmpty ? View.VISIBLE : View.GONE);
-        binding.rvRecipes.setVisibility(isTotallyEmpty ? View.GONE : View.VISIBLE);
+        if (hasCookable) {
+            // Cookable recipes exist in the pantry
+            binding.layoutRecipesHeader.setVisibility(View.VISIBLE);
+            binding.layoutSearchAndFilters.setVisibility(View.VISIBLE);
+            binding.viewZeroMatches.getRoot().setVisibility(View.GONE);
+
+            boolean isFilterEmpty = currentCookableList.isEmpty() && currentAlmostThereList.isEmpty();
+            if (isFilterEmpty) {
+                binding.layoutEmptyState.setVisibility(View.VISIBLE);
+                binding.rvRecipes.setVisibility(View.GONE);
+            } else {
+                binding.layoutEmptyState.setVisibility(View.GONE);
+                binding.rvRecipes.setVisibility(View.VISIBLE);
+                adapter.setData(currentCookableList, currentAlmostThereList);
+            }
+        } else {
+            // Zero-Match Feedback State (Figma Panel 10)
+            binding.layoutRecipesHeader.setVisibility(View.GONE);
+            binding.layoutSearchAndFilters.setVisibility(View.GONE);
+            binding.rvRecipes.setVisibility(View.GONE);
+            binding.layoutEmptyState.setVisibility(View.GONE);
+            binding.viewZeroMatches.getRoot().setVisibility(View.VISIBLE);
+
+            // Populate active stock summary
+            String stockSummary = PantryDiagnostics.formatActiveStockSummary(currentPantryItems);
+            binding.viewZeroMatches.tvPantryStockList.setText(stockSummary);
+            int count = currentPantryItems.size();
+            binding.viewZeroMatches.tvPantryStockCount.setText(
+                    getResources().getQuantityString(R.plurals.pantry_ingredients_count, count, count)
+            );
+
+            // Populate unlocking hint
+            String hint = PantryDiagnostics.generateUnlockingRecommendation(
+                    allRecipesList, currentPantryItems, currentAlmostThereList
+            );
+            binding.viewZeroMatches.tvUnlockingHint.setText(hint);
+
+            // Show almost-there recipes if available
+            if (!currentAlmostThereList.isEmpty()) {
+                binding.viewZeroMatches.layoutZeroAlmostThere.setVisibility(View.VISIBLE);
+                zeroAlmostAdapter.setAlmostThereOnly(currentAlmostThereList);
+            } else {
+                binding.viewZeroMatches.layoutZeroAlmostThere.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
