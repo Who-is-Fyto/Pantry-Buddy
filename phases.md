@@ -21,7 +21,7 @@
 | **Phase 10**| **Pantry Item CRUD** | Add bottom sheet, item detail, edit & delete | Done | `implemented add, edit, and delete for pantry items` |
 | **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | Done | `built suggested recipes screen with strict and almost there lists` |
 | **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | Done | `added empty state feedback screen when zero recipes match` |
-| **Phase 13**| **Recipe Detail & 3-Column Check** | 3-column table, dynamic serving scaler | Pending | `built recipe detail screen with 3 column ingredient check` |
+| **Phase 13**| **Recipe Detail & 3-Column Check** | 3-column table, dynamic serving scaler | Done | `built recipe detail screen with 3 column ingredient check` |
 | **Phase 14**| **Cooking Guide & Stock Deduction** | Step timer, meal review, atomic inventory deduction | Pending | `created cooking guide with timer and meal review pantry deduction` |
 | **Phase 15**| **Settings, Expiry Alerts & Audit** | Preferences, sample reset button, WorkManager | Pending | `added settings screen, expiry alerts, and sample data reset button` |
 
@@ -253,8 +253,8 @@
 ---
 
 ### Phase 13: Recipe Detail & 3-Column Verification Table
-- [ ] **Objective:** Build Figma Panel 6 (`RecipeDetailActivity`) with dynamic serving scaler and 3-column ingredient audit.
-- [ ] **Deliverables:**
+- [x] **Objective:** Build Figma Panel 6 (`RecipeDetailActivity`) with dynamic serving scaler and 3-column ingredient audit.
+- [x] **Deliverables:**
   - `res/layout/activity_recipe_detail.xml`:
     - Recipe image hero banner, title, cook time, tags.
     - Dynamic serving counter (+ / - buttons) with indicator: *"2 servings (Maximum with your 4 eggs)"*.
@@ -265,11 +265,11 @@
     - Post-cooking projection: *"Quantities leave 100 g tomatoes and 20 g spinach for later."*
     - Primary CTA: *"Start cooking · 2 servings"*.
   - `ui/recipes/RecipeDetailActivity.java`: Logic for scaling ingredient quantities and updating the 3-column table dynamically.
-- [ ] **Verification:** Changing servings dynamically multiplies `NEEDED` quantities; if needed exceeds at-home, warning indicator displays.
-- [ ] **Commit Command:**
+- [x] **Verification:** Changing servings dynamically multiplies `NEEDED` quantities; if needed exceeds at-home, warning indicator displays.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/recipes/
-  git commit -m "feat(recipes): create Recipe Detail with 3-column ingredient verification"
+  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ app/src/test/ phases.md
+  git commit -m "built recipe detail screen with 3 column ingredient check"
   ```
 
 ---

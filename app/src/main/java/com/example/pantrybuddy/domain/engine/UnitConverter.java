@@ -240,4 +240,18 @@ public class UnitConverter {
 
         return (int) Math.floor(pantryAmount / reqAmountSingleServing);
     }
+
+    // Calculates how much of an ingredient is missing in required units
+    public static double calculateShortfall(double pantryAmount, String pantryUnit, double requiredAmount, String requiredUnit, String ingredientNormalizedName) {
+        if (pantryAmount <= 0.0) return requiredAmount;
+        double pantryConverted = convertAmount(pantryAmount, pantryUnit, requiredUnit, ingredientNormalizedName);
+        return Math.max(0.0, requiredAmount - pantryConverted);
+    }
+
+    // Calculates how much of an ingredient will remain in required units
+    public static double calculateLeftover(double pantryAmount, String pantryUnit, double requiredAmount, String requiredUnit, String ingredientNormalizedName) {
+        if (pantryAmount <= 0.0) return 0.0;
+        double pantryConverted = convertAmount(pantryAmount, pantryUnit, requiredUnit, ingredientNormalizedName);
+        return Math.max(0.0, pantryConverted - requiredAmount);
+    }
 }

@@ -77,4 +77,18 @@ public class UnitConverterTest {
         // 30 ml to tbsp -> 2 tbsp
         assertEquals(2.0, UnitConverter.convertAmount(30.0, "ml", "tbsp", "oil"), 0.001);
     }
+
+    @Test
+    public void testCalculateShortfallAndLeftover() {
+        // Need 200g, have 150g -> shortfall is 50g, leftover is 0g
+        assertEquals(50.0, UnitConverter.calculateShortfall(150.0, "g", 200.0, "g", "spinach"), 0.001);
+        assertEquals(0.0, UnitConverter.calculateLeftover(150.0, "g", 200.0, "g", "spinach"), 0.001);
+
+        // Need 200g, have 300g -> shortfall is 0g, leftover is 100g
+        assertEquals(0.0, UnitConverter.calculateShortfall(300.0, "g", 200.0, "g", "tomato"), 0.001);
+        assertEquals(100.0, UnitConverter.calculateLeftover(300.0, "g", 200.0, "g", "tomato"), 0.001);
+
+        // Cross unit: Need 100g, have 0.5kg (500g) -> leftover is 400g
+        assertEquals(400.0, UnitConverter.calculateLeftover(0.5, "kg", 100.0, "g", "potato"), 0.001);
+    }
 }

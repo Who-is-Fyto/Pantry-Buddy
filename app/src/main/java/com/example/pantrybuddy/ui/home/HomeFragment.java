@@ -126,6 +126,7 @@ public class HomeFragment extends Fragment {
             binding.cardZeroMatchState.setVisibility(View.GONE);
 
             MatchResult featured = cookableList.get(0);
+            long featuredRecipeId = featured.getRecipe().getRecipeId();
             binding.tvFeaturedTitle.setText(featured.getRecipe().getTitle());
             binding.tvFeaturedTime.setText(getString(R.string.cook_time_mins, featured.getRecipe().getCookTimeMinutes()));
             binding.tvFeaturedServings.setText(getString(R.string.servings_format, featured.getMaxServings()));
@@ -137,6 +138,14 @@ public class HomeFragment extends Fragment {
             } else {
                 binding.tvFeaturedUrgentNotice.setVisibility(View.GONE);
             }
+
+            View.OnClickListener openDetail = v -> {
+                android.content.Intent intent = new android.content.Intent(requireContext(), com.example.pantrybuddy.ui.recipes.RecipeDetailActivity.class);
+                intent.putExtra(com.example.pantrybuddy.ui.recipes.RecipeDetailActivity.EXTRA_RECIPE_ID, featuredRecipeId);
+                startActivity(intent);
+            };
+            binding.cardFeaturedRecipe.setOnClickListener(openDetail);
+            binding.btnViewFeaturedRecipe.setOnClickListener(openDetail);
         });
     }
 
@@ -145,9 +154,6 @@ public class HomeFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.navigation_pantry));
 
         binding.cardUrgentExpiry.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.navigation_recipes));
-
-        binding.btnViewFeaturedRecipe.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_recipes));
 
         binding.btnOpenPantryZero.setOnClickListener(v ->

@@ -69,7 +69,9 @@ public class RecipesFragment extends Fragment {
         adapter = new RecipesAdapter();
         adapter.setOnRecipeClickListener(matchResult -> {
             if (matchResult.getRecipe() != null) {
-                Toast.makeText(requireContext(), matchResult.getRecipe().getTitle(), Toast.LENGTH_SHORT).show();
+                android.content.Intent intent = new android.content.Intent(requireContext(), RecipeDetailActivity.class);
+                intent.putExtra(RecipeDetailActivity.EXTRA_RECIPE_ID, matchResult.getRecipe().getRecipeId());
+                startActivity(intent);
             }
         });
 
@@ -81,7 +83,9 @@ public class RecipesFragment extends Fragment {
         zeroAlmostAdapter = new RecipesAdapter();
         zeroAlmostAdapter.setOnRecipeClickListener(matchResult -> {
             if (matchResult.getRecipe() != null) {
-                Toast.makeText(requireContext(), matchResult.getRecipe().getTitle(), Toast.LENGTH_SHORT).show();
+                android.content.Intent intent = new android.content.Intent(requireContext(), RecipeDetailActivity.class);
+                intent.putExtra(RecipeDetailActivity.EXTRA_RECIPE_ID, matchResult.getRecipe().getRecipeId());
+                startActivity(intent);
             }
         });
 
@@ -94,7 +98,7 @@ public class RecipesFragment extends Fragment {
         });
 
         binding.viewZeroMatches.btnCheckPantryZero.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.navigation_pantry));
+                androidx.navigation.fragment.NavHostFragment.findNavController(this).navigate(R.id.navigation_pantry));
     }
 
     private void setupSearchInput() {
