@@ -10,6 +10,7 @@ import com.example.pantrybuddy.data.local.dao.PantryDao;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.domain.engine.IngredientNormalizer;
 import com.example.pantrybuddy.domain.engine.UnitConverter;
+import com.example.pantrybuddy.domain.model.StockDeduction;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -128,6 +129,16 @@ public class PantryRepository {
             } else {
                 existing.setQuantity(remaining);
                 pantryDao.update(existing);
+            }
+        });
+    }
+
+    // Deducts inventory stock using batch deductions
+    public void deductStock(List<StockDeduction> deductions, Runnable onComplete) {
+        executor.execute(() -> {
+            pantryDao.deductStock(deductions);
+            if (onComplete != null) {
+                onComplete.run();
             }
         });
     }

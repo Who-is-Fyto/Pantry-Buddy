@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.data.repository.PantryRepository;
 import com.example.pantrybuddy.domain.model.ExpiryStatus;
+import com.example.pantrybuddy.domain.model.StockDeduction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -202,5 +203,9 @@ public class PantryViewModel extends AndroidViewModel {
 
     public void resetSampleData() {
         repository.resetSampleData();
+    }
+
+    public void deductStock(List<StockDeduction> deductions, Runnable onComplete) {
+        repository.deductStock(deductions, onComplete);
     }
 }

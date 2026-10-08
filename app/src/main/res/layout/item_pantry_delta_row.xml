@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp">
+
+    <!-- Left: Ingredient Name & Quantity Shift -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDeltaItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Eggs" />
+
+        <TextView
+            android:id="@+id/tvDeltaDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp"
+            tools:text="4 → 0 pcs (4 pcs used)" />
+    </LinearLayout>
+
+    <!-- Right: Status Pill -->
+    <TextView
+        android:id="@+id/tvDeltaStatusPill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_pill_neutral"
+        android:fontFamily="@font/inter"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="4dp"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        tools:text="Used up" />
+
+</LinearLayout>

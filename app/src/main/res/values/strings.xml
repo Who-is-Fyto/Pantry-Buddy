@@ -61,4 +61,40 @@
     <string name="action_add_ingredient">Add an ingredient</string>
     <string name="action_check_pantry">Check or correct my pantry</string>
     <string name="pantry_empty_hint">Your pantry is currently empty. Add staple ingredients like eggs, cooking oil, or rice to start seeing recipes.</string>
+
+    <!-- Cooking Guide (Panel 7) -->
+    <string name="cooking_header_eyebrow">GUIDED COOKING • SMART PANTRY</string>
+    <string name="cooking_step_format">Step %1$d of %2$d</string>
+    <string name="cooking_time_left_format">About %1$d min left</string>
+    <string name="cooking_step_badge">STEP %1$d</string>
+    <string name="cooking_timer_label">Step timer</string>
+    <string name="cooking_timer_finished">Timer finished!</string>
+    <string name="cooking_safety_reassurance">Your pantry stays unchanged until you review and confirm what you used.</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_next_step">Next step</string>
+    <string name="action_finish_cooking">Done cooking · Review meal</string>
+    <string name="cooking_exit_title">Exit cooking mode?</string>
+    <string name="cooking_exit_message">Are you sure you want to exit? Your cooking step progress will not be saved.</string>
+    <string name="action_keep_cooking">Keep cooking</string>
+    <string name="action_exit">Exit</string>
+
+    <!-- Meal Review (Panel 8) -->
+    <string name="meal_review_header_eyebrow">A MEAL WELL MADE • SMART PANTRY</string>
+    <string name="meal_review_title">A meal well made</string>
+    <string name="meal_review_subtitle_format">%1$s · %2$d %3$s cooked</string>
+    <string name="meal_review_explanation">Review what you used. You can adjust the exact amounts if you cooked with a little more or less.</string>
+    <string name="col_ingredient">INGREDIENT</string>
+    <string name="col_before">BEFORE</string>
+    <string name="col_actually_used">ACTUALLY USED</string>
+    <string name="col_will_remain">WILL REMAIN</string>
+    <string name="meal_review_checkbox_label">I checked these amounts. They reflect what I actually used, including oil, salt and pepper.</string>
+    <string name="action_confirm_pantry_update">Confirm quantities &amp; update pantry</string>
+    <string name="label_used_up">Used up</string>
+
+    <!-- Pantry Update Success (Panel 9) -->
+    <string name="pantry_update_success_eyebrow">PANTRY UPDATED • SMART PANTRY</string>
+    <string name="pantry_update_success_title">Pantry updated</string>
+    <string name="pantry_update_success_subtitle">Confirmed inventory changes</string>
+    <string name="pantry_update_notification_format">%1$d ingredients remain. %2$sAll expiry dates are unchanged.</string>
+    <string name="action_view_updated_pantry">View my updated pantry</string>
 </resources>

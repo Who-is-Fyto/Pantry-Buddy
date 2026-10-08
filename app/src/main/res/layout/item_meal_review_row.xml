@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp">
+
+    <!-- Column 1: Ingredient Name -->
+    <TextView
+        android:id="@+id/tvReviewIngredientName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_weight="1.3"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter"
+        android:maxLines="2"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        tools:text="Tomatoes" />
+
+    <!-- Column 2: Before Quantity -->
+    <TextView
+        android:id="@+id/tvReviewBeforeQuantity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_weight="0.9"
+        android:fontFamily="@font/inter"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="13sp"
+        tools:text="300 g" />
+
+    <!-- Column 3: Actually Used (Editable) -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_weight="1.2"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etActuallyUsed"
+            android:layout_width="54dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_search_input"
+            android:fontFamily="@font/inter"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:paddingHorizontal="4dp"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            tools:text="200" />
+
+        <TextView
+            android:id="@+id/tvReviewUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp"
+            tools:text="g" />
+    </LinearLayout>
+
+    <!-- Column 4: Will Remain -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvWillRemain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            tools:text="100 g" />
+
+        <TextView
+            android:id="@+id/tvUsedUpBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/bg_pill_neutral"
+            android:fontFamily="@font/inter"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:text="@string/label_used_up"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+</LinearLayout>

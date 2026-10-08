@@ -6,8 +6,10 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
+import com.example.pantrybuddy.domain.model.StockDeduction;
 import java.util.List;
 
 @Dao
@@ -56,4 +58,21 @@ public interface PantryDao {
 
     @Query("SELECT * FROM pantry_items WHERE expiryDate IS NOT NULL AND expiryDate <= :thresholdTime ORDER BY expiryDate ASC")
     LiveData<List<PantryItem>> getItemsExpiringBefore(long thresholdTime);
+
+    @Transaction
+    default void deductStock(List<StockDeduction> deductions) {
+        if (deductions == null) return;
+        for (StockDeduction deduction : deductions) {
+            PantryItem item = getItemById(deduction.getItemId());
+            if (item != null) {
+                double newQuantity = item.getQuantity() - deduction.getAmountUsed();
+                if (newQuantity <= 0.001) {
+                    deleteById(item.getItemId());
+                } else {
+                    item.setQuantity(newQuantity);
+                    update(item);
+                }
+            }
+        }
+    }
 }

@@ -16,6 +16,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 // Main host activity for bottom navigation and fragments
 public class MainActivity extends AppCompatActivity {
 
+    public static final String EXTRA_NAV_TAB = "extra_nav_tab";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,27 @@ public class MainActivity extends AppCompatActivity {
             NavController navController = navHostFragment.getNavController();
             BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
             NavigationUI.setupWithNavController(bottomNav, navController);
+
+            handleNavTabIntent(getIntent(), bottomNav);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(android.content.Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        if (bottomNav != null) {
+            handleNavTabIntent(intent, bottomNav);
+        }
+    }
+
+    private void handleNavTabIntent(android.content.Intent intent, BottomNavigationView bottomNav) {
+        if (intent != null && intent.hasExtra(EXTRA_NAV_TAB)) {
+            int tabId = intent.getIntExtra(EXTRA_NAV_TAB, -1);
+            if (tabId != -1) {
+                bottomNav.setSelectedItemId(tabId);
+            }
         }
     }
 }

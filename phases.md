@@ -22,7 +22,7 @@
 | **Phase 11**| **Suggested Recipes Screen** | Strict 100% feed & quarantined "Almost There" | Done | `built suggested recipes screen with strict and almost there lists` |
 | **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | Done | `added empty state feedback screen when zero recipes match` |
 | **Phase 13**| **Recipe Detail & 3-Column Check** | 3-column table, dynamic serving scaler | Done | `built recipe detail screen with 3 column ingredient check` |
-| **Phase 14**| **Cooking Guide & Stock Deduction** | Step timer, meal review, atomic inventory deduction | Pending | `created cooking guide with timer and meal review pantry deduction` |
+| **Phase 14**| **Cooking Guide & Stock Deduction** | Step timer, meal review, atomic inventory deduction | Done | `created cooking guide with timer and meal review pantry deduction` |
 | **Phase 15**| **Settings, Expiry Alerts & Audit** | Preferences, sample reset button, WorkManager | Pending | `added settings screen, expiry alerts, and sample data reset button` |
 
 ---
@@ -275,8 +275,8 @@
 ---
 
 ### Phase 14: Step-by-Step Cooking Guide & Post-Cooking Inventory Deduction
-- [ ] **Objective:** Build Figma Panels 7, 8, and 9 for guided cooking, meal completion review, and atomic pantry inventory deduction.
-- [ ] **Deliverables:**
+- [x] **Objective:** Build Figma Panels 7, 8, and 9 for guided cooking, meal completion review, and atomic pantry inventory deduction.
+- [x] **Deliverables:**
   - `ui/cooking/CookingActivity.java` and `res/layout/activity_cooking.xml`:
     - Step-by-step progress indicator (*"Step 2 of 3 • About 8 min left"*).
     - Technique description with highlighted ingredient measurements.
@@ -288,11 +288,11 @@
   - `ui/cooking/PantryUpdateSuccessActivity.java`:
     - Shows inventory delta (e.g. `Eggs: 4 → 0 pcs; Tomatoes: 300 → 100 g`).
     - Executes `@Transaction` atomic stock reduction in `PantryDao`.
-- [ ] **Verification:** Complete a cooking session; verify pantry stock is deducted accurately and recipes are re-evaluated.
-- [ ] **Commit Command:**
+- [x] **Verification:** Complete a cooking session; verify pantry stock is deducted accurately and recipes are re-evaluated.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/cooking/
-  git commit -m "feat(cooking): build guided cooking mode and atomic pantry deduction"
+  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ app/src/main/AndroidManifest.xml app/src/test/ phases.md
+  git commit -m "created cooking guide with timer and meal review pantry deduction"
   ```
 
 ---

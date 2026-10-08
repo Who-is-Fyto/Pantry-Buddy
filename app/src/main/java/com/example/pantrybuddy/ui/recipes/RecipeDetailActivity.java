@@ -1,5 +1,6 @@
 package com.example.pantrybuddy.ui.recipes;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.pantrybuddy.databinding.ItemIngredientVerificationRowBinding;
 import com.example.pantrybuddy.domain.engine.StrictRecipeMatcher;
 import com.example.pantrybuddy.domain.engine.UnitConverter;
 import com.example.pantrybuddy.domain.model.RecipeWithIngredients;
+import com.example.pantrybuddy.ui.cooking.CookingActivity;
 import com.example.pantrybuddy.ui.pantry.PantryViewModel;
 
 import java.util.ArrayList;
@@ -84,11 +86,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private void setupCtaButton() {
         binding.btnStartCooking.setOnClickListener(v -> {
             if (currentRecipeWithIngredients != null) {
-                Toast.makeText(
-                        this,
-                        "Start cooking: " + currentRecipeWithIngredients.getRecipe().getTitle() + " (" + currentServings + " servings)",
-                        Toast.LENGTH_SHORT
-                ).show();
+                Intent intent = new Intent(this, CookingActivity.class);
+                intent.putExtra(CookingActivity.EXTRA_RECIPE_ID, recipeId);
+                intent.putExtra(CookingActivity.EXTRA_SERVINGS, currentServings);
+                startActivity(intent);
             }
         });
     }
