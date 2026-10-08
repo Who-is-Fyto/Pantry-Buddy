@@ -1,11 +1,14 @@
 package com.example.pantrybuddy.ui.pantry;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +20,8 @@ import com.example.pantrybuddy.R;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.databinding.BottomSheetAddIngredientBinding;
 import com.example.pantrybuddy.domain.engine.IngredientNormalizer;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +34,7 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
     private BottomSheetAddIngredientBinding binding;
     private PantryViewModel pantryViewModel;
     private Long selectedExpiryDateMs = null;
+    private boolean isSubmitting = false;
 
     private static final String[] COMMON_INGREDIENTS = {
             "Eggs", "Tomatoes", "Spinach", "Olive Oil", "Cooking Oil", "Table Salt",
@@ -38,6 +44,25 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
             "Mayonnaise", "Lemon Juice", "Soy Sauce", "Curry Powder", "Cinnamon",
             "Sugar", "Cumin", "Chili Flakes", "Rosemary"
     };
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
+        dialog.setOnShowListener(dialogInterface -> {
+            BottomSheetDialog bsd = (BottomSheetDialog) dialogInterface;
+            FrameLayout bottomSheet = bsd.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            if (bottomSheet != null) {
+                BottomSheetBehavior<FrameLayout> behavior = BottomSheetBehavior.from(bottomSheet);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                behavior.setSkipCollapsed(true);
+            }
+        });
+        return dialog;
+    }
 
     @Nullable
     @Override
@@ -136,6 +161,8 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
 
     private void setupSubmitButton() {
         binding.btnAddIngredientSubmit.setOnClickListener(v -> {
+            if (isSubmitting) return;
+
             String name = binding.actvIngredientName.getText().toString().trim();
             if (name.isEmpty()) {
                 binding.actvIngredientName.setError("Please enter ingredient name");
@@ -155,6 +182,9 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
                 binding.etIngredientQuantity.requestFocus();
                 return;
             }
+
+            isSubmitting = true;
+            binding.btnAddIngredientSubmit.setEnabled(false);
 
             String unit = getSelectedUnit();
             String category = getSelectedCategory();

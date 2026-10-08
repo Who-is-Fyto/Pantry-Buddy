@@ -147,12 +147,14 @@
 
             <ImageView
                 android:id="@+id/btnClearRecipeSearch"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="-8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:contentDescription="Clear search"
                 android:focusable="true"
+                android:padding="8dp"
                 android:src="@drawable/ic_close"
                 android:visibility="gone"
                 app:tint="@color/colorTextSecondary"

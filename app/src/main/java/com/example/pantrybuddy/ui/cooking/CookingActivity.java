@@ -57,6 +57,7 @@ public class CookingActivity extends AppCompatActivity {
     private long totalStepDurationMs = 180_000L;
     private long timeLeftMs = 180_000L;
     private boolean isTimerRunning = false;
+    private boolean isNavigatingToReview = false;
 
     private static final Pattern DURATION_PATTERN = Pattern.compile("(\\d+)\\s*(?:min|minute)", Pattern.CASE_INSENSITIVE);
 
@@ -126,6 +127,8 @@ public class CookingActivity extends AppCompatActivity {
     }
 
     private void finishCookingAndProceedToReview() {
+        if (isNavigatingToReview || isFinishing()) return;
+        isNavigatingToReview = true;
         stopTimer();
         Intent intent = new Intent(this, MealReviewActivity.class);
         intent.putExtra(MealReviewActivity.EXTRA_RECIPE_ID, recipeId);

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_bottom_sheet"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:overScrollMode="never">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
         android:paddingTop="12dp"
-        android:paddingBottom="32dp">
+        android:paddingBottom="48dp">
 
         <!-- Drag handle -->
         <View
@@ -344,11 +345,14 @@
 
             <ImageView
                 android:id="@+id/btnClearSelectedExpiry"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="-8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:contentDescription="Clear expiration date"
                 android:focusable="true"
+                android:padding="8dp"
                 android:src="@drawable/ic_close"
                 android:visibility="gone"
                 app:tint="@color/colorTextSecondary"

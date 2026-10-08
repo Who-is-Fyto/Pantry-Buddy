@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -35,7 +36,7 @@
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
             android:paddingTop="20dp"
-            android:paddingBottom="40dp">
+            android:paddingBottom="80dp">
 
             <!-- Hero Card -->
             <com.google.android.material.card.MaterialCardView
@@ -383,11 +384,14 @@
 
                 <ImageView
                     android:id="@+id/btnClearDetailExpiry"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="-8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
+                    android:contentDescription="Clear expiration date"
                     android:focusable="true"
+                    android:padding="8dp"
                     android:src="@drawable/ic_close"
                     android:visibility="gone"
                     app:tint="@color/colorTextSecondary"

@@ -38,6 +38,7 @@ public class IngredientDetailActivity extends AppCompatActivity {
     private PantryItem currentItem;
     private Long selectedExpiryDateMs = null;
     private boolean initializedUi = false;
+    private boolean isProcessing = false;
 
     private final SimpleDateFormat shortDateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
 
@@ -259,7 +260,7 @@ public class IngredientDetailActivity extends AppCompatActivity {
     }
 
     private void saveChanges() {
-        if (currentItem == null) return;
+        if (isProcessing || isFinishing() || currentItem == null) return;
 
         String qtyStr = binding.etDetailQuantity.getText().toString().trim();
         double newQuantity;
@@ -271,6 +272,9 @@ public class IngredientDetailActivity extends AppCompatActivity {
             binding.etDetailQuantity.requestFocus();
             return;
         }
+
+        isProcessing = true;
+        binding.btnSaveIngredient.setEnabled(false);
 
         String newUnit = getSelectedUnit();
         String newCategory = getSelectedCategory();
@@ -286,12 +290,15 @@ public class IngredientDetailActivity extends AppCompatActivity {
     }
 
     private void confirmDelete() {
-        if (currentItem == null) return;
+        if (isProcessing || isFinishing() || currentItem == null) return;
 
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Delete ingredient?")
                 .setMessage("Are you sure you want to remove " + currentItem.getName() + " from your pantry?")
                 .setPositiveButton("Delete", (dialog, which) -> {
+                    if (isProcessing) return;
+                    isProcessing = true;
+                    binding.btnDeleteIngredient.setEnabled(false);
                     pantryViewModel.delete(currentItem);
                     Toast.makeText(this, "Removed from pantry", Toast.LENGTH_SHORT).show();
                     finish();

@@ -93,8 +93,10 @@ public class RecipesFragment extends Fragment {
         binding.viewZeroMatches.rvZeroAlmostThere.setAdapter(zeroAlmostAdapter);
 
         binding.viewZeroMatches.btnAddIngredientZero.setOnClickListener(v -> {
-            AddIngredientBottomSheet sheet = new AddIngredientBottomSheet();
-            sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            if (getParentFragmentManager().findFragmentByTag("AddIngredientBottomSheet") == null) {
+                AddIngredientBottomSheet sheet = new AddIngredientBottomSheet();
+                sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            }
         });
 
         binding.viewZeroMatches.btnCheckPantryZero.setOnClickListener(v ->

@@ -42,6 +42,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private int defaultServings = 2;
     private RecipeWithIngredients currentRecipeWithIngredients;
     private List<PantryItem> pantryItems = new ArrayList<>();
+    private boolean isNavigating = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,13 +86,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private void setupCtaButton() {
         binding.btnStartCooking.setOnClickListener(v -> {
+            if (isNavigating || isFinishing()) return;
             if (currentRecipeWithIngredients != null) {
+                isNavigating = true;
                 Intent intent = new Intent(this, CookingActivity.class);
                 intent.putExtra(CookingActivity.EXTRA_RECIPE_ID, recipeId);
                 intent.putExtra(CookingActivity.EXTRA_SERVINGS, currentServings);
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isNavigating = false;
     }
 
     private void observeData() {

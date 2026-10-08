@@ -11,7 +11,8 @@
 | Phase | Phase Name | Focus Area | Status | Target Git Commit Message |
 | :---: | :--- | :--- | :---: | :--- |
 | **Phase FP-1** | **User Personalization & Dynamic Profile** | Custom user profile name, reactive greetings, settings edit | Done | `added user personalization and dynamic dashboard greeting` |
-| **Phase FP-2** | **UI/UX Solidification & Layout Audit** | Button listeners, screen fit, keyboard resize, dialogs | Pending | `solidified ui layouts, button interactions, and responsive scroll views` |
+| **Phase FP-2** | **UI/UX Solidification & Layout Audit** | Button listeners, screen fit, keyboard resize, dialogs | Done | `solidified ui layouts, button interactions, and responsive scroll views` |
+| **Phase FP-2.5** | **Figma Design & Missing Features Audit** | Full screen-by-screen Figma audit and gap documentation | Done | `documented figma frontend design gaps and missing features backlog` |
 | **Phase FP-3** | **QR & Barcode Scanning (Open Food Facts API)** | Camera barcode scanner, Open Food Facts REST client, auto-add | Pending | `implemented barcode qr scanning with open food facts api integration` |
 | **Phase FP-4** | **Spoonacular Recipe API Integration** | Spoonacular REST client, remote recipes, image loading, offline cache | Pending | `integrated spoonacular api for dynamic recipes and offline cache` |
 | **Phase FP-5** | **Backend Robustness, Error Handling & Tests** | Network error resilience, lint cleanup, unit test suite | Pending | `completed backend robustness, offline fallbacks, and test verification` |
@@ -53,8 +54,8 @@
 
 ### Phase FP-2: UI/UX Solidification & Responsive Layout Audit
 
-- [ ] **Objective:** Audit and solidify all interactive controls, ensure content fits cleanly across various screen densities, and fix keyboard overflow.
-- [ ] **Deliverables:**
+- [x] **Objective:** Audit and solidify all interactive controls, ensure content fits cleanly across various screen densities, and fix keyboard overflow.
+- [x] **Deliverables:**
   - **Screen Fitting & Soft Keyboard Insets:**
     - Audit all activities and bottom sheets for `android:windowSoftInputMode="adjustResize"`.
     - Verify that all scrollable screens (`fragment_home.xml`, `fragment_pantry.xml`, `fragment_recipes.xml`, `activity_recipe_detail.xml`, `activity_cooking.xml`, `activity_meal_review.xml`, `activity_pantry_update_success.xml`, `fragment_settings.xml`) use `NestedScrollView` with `fillViewport="true"` and adequate bottom padding (80dp - 120dp) so floating buttons and bottom navigation bars never obscure content.
@@ -67,7 +68,7 @@
     - Eliminate any text truncation or awkward line wrapping on smaller screen sizes.
   - **Dialog & Navigation Polish:**
     - Clean dismissal and clear state transitions for all bottom sheets and confirmation dialogs.
-- [ ] **Verification:** Manual inspection across all 4 navigation tabs and 4 sub-activities. Form inputs stay visible above keyboard; all buttons respond reliably.
+- [x] **Verification:** Manual inspection across all 4 navigation tabs and 4 sub-activities. Form inputs stay visible above keyboard; all buttons respond reliably.
 - [ ] **Commit Command:**
   ```bash
   git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ phases_fixing_problems.md

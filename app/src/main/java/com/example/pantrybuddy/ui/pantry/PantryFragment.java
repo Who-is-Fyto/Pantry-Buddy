@@ -136,8 +136,10 @@ public class PantryFragment extends Fragment {
 
     private void setupFab() {
         binding.fabAddIngredient.setOnClickListener(v -> {
-            AddIngredientBottomSheet bottomSheet = new AddIngredientBottomSheet();
-            bottomSheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            if (getParentFragmentManager().findFragmentByTag("AddIngredientBottomSheet") == null) {
+                AddIngredientBottomSheet bottomSheet = new AddIngredientBottomSheet();
+                bottomSheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            }
         });
     }
 
