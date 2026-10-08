@@ -205,6 +205,10 @@ public class PantryViewModel extends AndroidViewModel {
         repository.resetSampleData();
     }
 
+    public void resetSampleData(Runnable onComplete) {
+        repository.resetSampleData(onComplete);
+    }
+
     public void deductStock(List<StockDeduction> deductions, Runnable onComplete) {
         repository.deductStock(deductions, onComplete);
     }

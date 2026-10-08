@@ -97,4 +97,40 @@
     <string name="pantry_update_success_subtitle">Confirmed inventory changes</string>
     <string name="pantry_update_notification_format">%1$d ingredients remain. %2$sAll expiry dates are unchanged.</string>
     <string name="action_view_updated_pantry">View my updated pantry</string>
+
+    <!-- Settings & Preferences (Panel 13) -->
+    <string name="settings_eyebrow">SETTINGS • SMART PANTRY</string>
+    <string name="settings_title">Settings &amp; Preferences</string>
+    <string name="settings_subtitle">Manage notifications, measurement units, and pantry sample data.</string>
+    <string name="settings_notifications_title">Daily Expiry Reminders</string>
+    <string name="settings_notifications_desc">Receive helpful alerts at 9:00 AM and 5:00 PM when ingredients are nearing their best-before dates.</string>
+    <string name="settings_units_title">Measurement Units</string>
+    <string name="settings_units_desc">Choose your preferred unit system for pantry items and recipe amounts.</string>
+    <string name="unit_metric">Metric (g, ml)</string>
+    <string name="unit_imperial">Imperial (oz, fl oz)</string>
+    <string name="settings_threshold_title">Anti-Waste Urgency Threshold</string>
+    <string name="settings_threshold_desc">Flag ingredients as \"Expiring Soon\" when they have this many days remaining:</string>
+    <string name="threshold_1_day">1 Day</string>
+    <string name="threshold_2_days">2 Days</string>
+    <string name="threshold_3_days">3 Days</string>
+    <string name="settings_marker_title">Reset Sample Pantry</string>
+    <string name="settings_marker_tag">MARKER TESTING TOOL</string>
+    <string name="settings_marker_desc">Populate pantry with the standard 6 ingredients (4 eggs, 300g tomatoes, 100g spinach, 40ml olive oil, 10g salt, 6g black pepper). Quickly verifies 100% strict matching.</string>
+    <string name="action_reset_sample_data">Reset to sample pantry</string>
+    <string name="dialog_reset_title">Reset sample pantry?</string>
+    <string name="dialog_reset_message">This will replace current inventory items with the 6 standard demo ingredients.</string>
+    <string name="action_reset">Reset</string>
+    <string name="toast_reset_success">Sample pantry restored.</string>
+    <string name="toast_units_updated">Measurement units set to %1$s.</string>
+    <string name="toast_threshold_updated">Urgency threshold set to %1$d days.</string>
+    <string name="settings_privacy_title">Privacy &amp; Permissions Guarantee</string>
+    <string name="settings_privacy_desc">No Location or GPS used. No network tracking or external telemetry. All inventory and recipes are stored locally in your private SQLite database.</string>
+    <string name="settings_app_info">PantryBuddy v1.0.0 • Zero-Waste Smart Pantry</string>
+
+    <!-- WorkManager Expiry Notifications -->
+    <string name="notification_channel_name">Pantry Expiry Alerts</string>
+    <string name="notification_channel_desc">Notifications reminding you about ingredients nearing their expiration date</string>
+    <string name="notification_title_singular">%1$d item needs love soon</string>
+    <string name="notification_title_plural">%1$d items need love soon</string>
+    <string name="notification_text_format">%1$s is nearing expiration. Open PantryBuddy to find 100%% cookable meals.</string>
 </resources>

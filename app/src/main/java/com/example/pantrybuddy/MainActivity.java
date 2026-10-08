@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
             handleNavTabIntent(getIntent(), bottomNav);
         }
+
+        com.example.pantrybuddy.utils.NotificationHelper.createNotificationChannel(this);
+        if (com.example.pantrybuddy.utils.PreferenceHelper.isExpiryAlertsEnabled(this)) {
+            com.example.pantrybuddy.utils.ExpiryReminderWorker.scheduleDailyReminders(this);
+        }
     }
 
     @Override

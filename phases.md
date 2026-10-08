@@ -23,7 +23,7 @@
 | **Phase 12**| **Zero-Match Feedback State** | Diagnostic empty state, stock audit, hints | Done | `added empty state feedback screen when zero recipes match` |
 | **Phase 13**| **Recipe Detail & 3-Column Check** | 3-column table, dynamic serving scaler | Done | `built recipe detail screen with 3 column ingredient check` |
 | **Phase 14**| **Cooking Guide & Stock Deduction** | Step timer, meal review, atomic inventory deduction | Done | `created cooking guide with timer and meal review pantry deduction` |
-| **Phase 15**| **Settings, Expiry Alerts & Audit** | Preferences, sample reset button, WorkManager | Pending | `added settings screen, expiry alerts, and sample data reset button` |
+| **Phase 15**| **Settings, Expiry Alerts & Audit** | Preferences, sample reset button, WorkManager | Done | `added settings screen, expiry alerts, and sample data reset button` |
 
 ---
 
@@ -298,8 +298,8 @@
 ---
 
 ### Phase 15: Settings Screen, Expiry Alerts & Marker Verification Suite
-- [ ] **Objective:** Build Figma Panel 13 (`SettingsFragment`), WorkManager background expiry reminders, and marker testing reset button.
-- [ ] **Deliverables:**
+- [x] **Objective:** Build Figma Panel 13 (`SettingsFragment`), WorkManager background expiry reminders, and marker testing reset button.
+- [x] **Deliverables:**
   - `ui/settings/SettingsFragment.java` and `res/layout/fragment_settings.xml`:
     - Expiry push alert toggle switch (9:00 AM & 5:00 PM).
     - Unit preference radio group (`Metric: g, ml` vs `Imperial: oz, fl oz`).
@@ -308,11 +308,11 @@
     - Privacy guarantee card: *"No Location or GPS used. No network tracking. Local SQLite database."*
   - `utils/NotificationHelper.java` & `utils/ExpiryReminderWorker.java`: Periodic WorkManager task to trigger expiry notification.
   - `AndroidManifest.xml` verification: Audit to confirm zero location permissions.
-- [ ] **Verification:** Tap "Reset Sample Data"; verify pantry resets instantly to sample items and Tomato & spinach scramble is suggested.
-- [ ] **Commit Command:**
+- [x] **Verification:** Tap "Reset Sample Data"; verify pantry resets instantly to sample items and Tomato & spinach scramble is suggested.
+- [x] **Commit Command:**
   ```bash
-  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ui/settings/ app/src/main/java/com/example/pantrybuddy/utils/
-  git commit -m "feat(settings): add Settings screen, sample data reset, and expiry alerts"
+  git add app/src/main/res/ app/src/main/java/com/example/pantrybuddy/ app/src/main/AndroidManifest.xml app/src/test/ phases.md
+  git commit -m "added settings screen, expiry alerts, and sample data reset button"
   ```
 
 ---

@@ -145,9 +145,17 @@ public class PantryRepository {
 
     // Resets pantry back to the default sample ingredients
     public void resetSampleData() {
+        resetSampleData(null);
+    }
+
+    public void resetSampleData(Runnable onComplete) {
         executor.execute(() -> {
             if (application != null) {
-                DatabaseInitializer.populateSamplePantry(AppDatabase.getDatabase(application));
+                AppDatabase db = AppDatabase.getDatabase(application);
+                DatabaseInitializer.resetAllToSampleData(db, application);
+            }
+            if (onComplete != null) {
+                onComplete.run();
             }
         });
     }
