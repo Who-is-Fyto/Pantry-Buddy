@@ -98,10 +98,19 @@
     <string name="pantry_update_notification_format">%1$d ingredients remain. %2$sAll expiry dates are unchanged.</string>
     <string name="action_view_updated_pantry">View my updated pantry</string>
 
+    <!-- User Personalization -->
+    <string name="settings_profile_title">Your Name</string>
+    <string name="settings_profile_desc">This name appears on your Home dashboard greeting. Change it anytime.</string>
+    <string name="settings_profile_hint">Enter your name</string>
+    <string name="toast_name_updated">Name updated to %1$s.</string>
+    <string name="greeting_morning">Good morning, %1$s</string>
+    <string name="greeting_afternoon">Good afternoon, %1$s</string>
+    <string name="greeting_evening">Good evening, %1$s</string>
+
     <!-- Settings & Preferences (Panel 13) -->
     <string name="settings_eyebrow">SETTINGS • SMART PANTRY</string>
     <string name="settings_title">Settings &amp; Preferences</string>
-    <string name="settings_subtitle">Manage notifications, measurement units, and pantry sample data.</string>
+    <string name="settings_subtitle">Manage your profile, notifications, measurement units, and pantry sample data.</string>
     <string name="settings_notifications_title">Daily Expiry Reminders</string>
     <string name="settings_notifications_desc">Receive helpful alerts at 9:00 AM and 5:00 PM when ingredients are nearing their best-before dates.</string>
     <string name="settings_units_title">Measurement Units</string>

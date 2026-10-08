@@ -10,7 +10,7 @@
 
 | Phase | Phase Name | Focus Area | Status | Target Git Commit Message |
 | :---: | :--- | :--- | :---: | :--- |
-| **Phase FP-1** | **User Personalization & Dynamic Profile** | Custom user profile name, reactive greetings, settings edit | Pending | `added user personalization and dynamic dashboard greeting` |
+| **Phase FP-1** | **User Personalization & Dynamic Profile** | Custom user profile name, reactive greetings, settings edit | Done | `added user personalization and dynamic dashboard greeting` |
 | **Phase FP-2** | **UI/UX Solidification & Layout Audit** | Button listeners, screen fit, keyboard resize, dialogs | Pending | `solidified ui layouts, button interactions, and responsive scroll views` |
 | **Phase FP-3** | **QR & Barcode Scanning (Open Food Facts API)** | Camera barcode scanner, Open Food Facts REST client, auto-add | Pending | `implemented barcode qr scanning with open food facts api integration` |
 | **Phase FP-4** | **Spoonacular Recipe API Integration** | Spoonacular REST client, remote recipes, image loading, offline cache | Pending | `integrated spoonacular api for dynamic recipes and offline cache` |

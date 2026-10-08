@@ -18,6 +18,7 @@ import com.example.pantrybuddy.domain.model.ExpiryStatus;
 import com.example.pantrybuddy.domain.model.MatchResult;
 import com.example.pantrybuddy.ui.pantry.PantryViewModel;
 import com.example.pantrybuddy.ui.recipes.RecipeViewModel;
+import com.example.pantrybuddy.utils.PreferenceHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,15 +58,16 @@ public class HomeFragment extends Fragment {
         String formattedDate = sdf.format(new Date()).toUpperCase(Locale.US);
         binding.tvHeaderCategory.setText(getString(R.string.home_header_format, formattedDate));
 
-        // Time-based greeting
+        // Time-based greeting using personalized name
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        String userName = PreferenceHelper.getUserName(requireContext());
         String greeting;
         if (hour < 12) {
-            greeting = "Good morning, Maya";
+            greeting = getString(R.string.greeting_morning, userName);
         } else if (hour < 17) {
-            greeting = "Good afternoon, Maya";
+            greeting = getString(R.string.greeting_afternoon, userName);
         } else {
-            greeting = "Good evening, Maya";
+            greeting = getString(R.string.greeting_evening, userName);
         }
         binding.tvGreeting.setText(greeting);
     }
@@ -158,6 +160,15 @@ public class HomeFragment extends Fragment {
 
         binding.btnOpenPantryZero.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_pantry));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Refresh greeting in case the user changed their name in Settings
+        if (binding != null) {
+            setupHeaderDateAndGreeting();
+        }
     }
 
     @Override

@@ -68,6 +68,10 @@ public class SettingsFragment extends Fragment {
     private void setupInitialState() {
         Context context = requireContext();
 
+        // 0. User Profile Name
+        String savedName = PreferenceHelper.getUserName(context);
+        binding.etUserName.setText(savedName);
+
         // 1. Notification switch
         boolean alertsEnabled = PreferenceHelper.isExpiryAlertsEnabled(context);
         binding.switchExpiryAlerts.setChecked(alertsEnabled);
@@ -93,6 +97,25 @@ public class SettingsFragment extends Fragment {
 
     private void setupListeners() {
         Context context = requireContext();
+
+        // Save Name Button
+        binding.btnSaveUserName.setOnClickListener(v -> {
+            String input = "";
+            if (binding.etUserName.getText() != null) {
+                input = binding.etUserName.getText().toString();
+            }
+            PreferenceHelper.setUserName(context, input);
+            String saved = PreferenceHelper.getUserName(context);
+            binding.etUserName.setText(saved);
+            Toast.makeText(context, getString(R.string.toast_name_updated, saved), Toast.LENGTH_SHORT).show();
+
+            // Dismiss keyboard after saving
+            android.view.inputmethod.InputMethodManager imm =
+                    (android.view.inputmethod.InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(binding.etUserName.getWindowToken(), 0);
+            }
+        });
 
         // Notification Switch
         binding.switchExpiryAlerts.setOnCheckedChangeListener((buttonView, isChecked) -> {
