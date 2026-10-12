@@ -13,7 +13,7 @@
 | **Phase FP-1** | **User Personalization & Dynamic Profile** | Custom user profile name, reactive greetings, settings edit | Done | `added user personalization and dynamic dashboard greeting` |
 | **Phase FP-2** | **UI/UX Solidification & Layout Audit** | Button listeners, screen fit, keyboard resize, dialogs | Done | `solidified ui layouts, button interactions, and responsive scroll views` |
 | **Phase FP-2.5** | **Figma Design & Missing Features Audit** | Full screen-by-screen Figma audit and gap documentation | Done | `documented figma frontend design gaps and missing features backlog` |
-| **Phase FP-3** | **QR & Barcode Scanning (Open Food Facts API)** | Camera barcode scanner, Open Food Facts REST client, auto-add | Pending | `implemented barcode qr scanning with open food facts api integration` |
+| **Phase FP-3** | **QR & Barcode Scanning (Open Food Facts API)** | Camera barcode scanner, Open Food Facts REST client, auto-add | Done | `implemented barcode qr scanning with open food facts api integration` |
 | **Phase FP-4** | **Spoonacular Recipe API Integration** | Spoonacular REST client, remote recipes, image loading, offline cache | Pending | `integrated spoonacular api for dynamic recipes and offline cache` |
 | **Phase FP-5** | **Backend Robustness, Error Handling & Tests** | Network error resilience, lint cleanup, unit test suite | Pending | `completed backend robustness, offline fallbacks, and test verification` |
 
@@ -79,8 +79,8 @@
 
 ### Phase FP-3: QR & Barcode Scanning with Open Food Facts API
 
-- [ ] **Objective:** Enable instant pantry item entry by scanning package barcodes (EAN-13, UPC-A, QR codes) and querying the Open Food Facts API to retrieve product name, category, and quantity.
-- [ ] **Deliverables:**
+- [x] **Objective:** Enable instant pantry item entry by scanning package barcodes (EAN-13, UPC-A, QR codes) and querying the Open Food Facts API to retrieve product name, category, and quantity.
+- [x] **Deliverables:**
   - **Dependencies & Permissions:**
     - Add Google ML Kit Barcode Scanning (`com.google.mlkit:barcode-scanning`) and CameraX (`androidx.camera:camera-camera2`, `androidx.camera:camera-lifecycle`, `androidx.camera:camera-view`).
     - Add Camera permission `<uses-permission android:name="android.permission.CAMERA" />` in `AndroidManifest.xml`.
@@ -103,10 +103,10 @@
     - Allow user review and manual adjustment before confirming the item into SQLite.
   - `app/src/test/java/com/example/pantrybuddy/OpenFoodFactsParserTest.java`:
     - Unit tests verifying JSON parsing for standard Open Food Facts product responses.
-- [ ] **Verification:** Mock or live scan of sample food barcode parses product name and opens pre-filled Add Ingredient sheet; app functions cleanly offline if network is unavailable.
+- [x] **Verification:** Mock or live scan of sample food barcode parses product name and opens pre-filled Add Ingredient sheet; app functions cleanly offline if network is unavailable.
 - [ ] **Commit Command:**
   ```bash
-  git add app/src/main/ app/build.gradle.kts app/src/test/ phases_fixing_problems.md
+  git add app/src/main/ app/build.gradle.kts gradle/libs.versions.toml app/src/test/ phases_fixing_problems.md
   git commit -m "implemented barcode qr scanning with open food facts api integration"
   ```
 

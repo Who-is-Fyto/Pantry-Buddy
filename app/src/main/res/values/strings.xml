@@ -184,4 +184,18 @@
     <string name="meal_review_reassurance_banner">Your pantry hasn\'t changed yet — These amounts come from the recipe. Edit each one to match what you actually used.</string>
     <string name="meal_review_confirm_note">Confirming subtracts only these quantities. Fully used ingredients will be marked used up; the others stay in your pantry.</string>
     <string name="pantry_update_recheck_card">Recipe matches checked again — We\'ll recheck what recipes are possible with what remains.</string>
+
+    <!-- Barcode Scanner & Open Food Facts (Phase FP-3) -->
+    <string name="scanner_title">Scan Barcode or QR</string>
+    <string name="scanner_hint_title">Align barcode within frame</string>
+    <string name="scanner_hint_subtitle">We\'ll fetch product details from Open Food Facts automatically.</string>
+    <string name="scanner_loading">Looking up product details…</string>
+    <string name="scanner_permission_title">Camera permission required</string>
+    <string name="scanner_permission_message">To scan barcodes, please allow camera access. PantryBuddy never accesses your location or personal data.</string>
+    <string name="scanner_grant_permission">Grant Camera Access</string>
+    <string name="scanner_flashlight_desc">Toggle flashlight</string>
+    <string name="scanner_product_not_found">Product not found on Open Food Facts. You can still add it manually.</string>
+    <string name="action_scan_barcode">Scan Barcode</string>
+    <string name="scan_barcode_or_qr">Scan Barcode / QR</string>
+    <string name="scan_barcode_hint">Scan a package barcode to pre-fill name, category and quantity</string>
 </resources>

@@ -95,6 +95,19 @@
                 tools:visibility="visible" />
 
             <ImageView
+                android:id="@+id/btnScanBarcode"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="@string/action_scan_barcode"
+                android:focusable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_qr_code_scanner"
+                app:tint="@color/colorAccentClay" />
+
+            <ImageView
                 android:id="@+id/btnPantryFilterDrawer"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
@@ -286,6 +299,23 @@
                     android:text="Try clearing your search or category filter to view your pantry items."
                     android:textColor="@color/colorTextSecondary"
                     android:textSize="13sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEmptyScanBarcode"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/inter"
+                    android:text="@string/scan_barcode_or_qr"
+                    android:textColor="@color/colorAccentClay"
+                    android:textSize="13sp"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_qr_code_scanner"
+                    app:iconGravity="textStart"
+                    app:iconSize="18dp"
+                    app:iconTint="@color/colorAccentClay"
+                    app:strokeColor="@color/colorAccentClay" />
             </LinearLayout>
         </FrameLayout>
 

@@ -1,7 +1,9 @@
 package com.example.pantrybuddy.ui.pantry;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -18,8 +22,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pantrybuddy.R;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
+import com.example.pantrybuddy.data.remote.openfoodfacts.ScannedProduct;
 import com.example.pantrybuddy.databinding.BottomSheetAddIngredientBinding;
 import com.example.pantrybuddy.domain.engine.IngredientNormalizer;
+import com.example.pantrybuddy.ui.scanner.BarcodeScannerActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -30,6 +36,11 @@ import java.util.Locale;
 
 // Bottom sheet dialog for adding a new ingredient with quantity, unit, category and expiry
 public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
+
+    private static final String ARG_PREFILL_NAME = "arg_prefill_name";
+    private static final String ARG_PREFILL_QTY = "arg_prefill_qty";
+    private static final String ARG_PREFILL_UNIT = "arg_prefill_unit";
+    private static final String ARG_PREFILL_CATEGORY = "arg_prefill_category";
 
     private BottomSheetAddIngredientBinding binding;
     private PantryViewModel pantryViewModel;
@@ -44,6 +55,43 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
             "Mayonnaise", "Lemon Juice", "Soy Sauce", "Curry Powder", "Cinnamon",
             "Sugar", "Cumin", "Chili Flakes", "Rosemary"
     };
+
+    private final ActivityResultLauncher<Intent> scanBarcodeLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    ScannedProduct product = (ScannedProduct) result.getData()
+                            .getSerializableExtra(BarcodeScannerActivity.EXTRA_SCANNED_PRODUCT);
+                    if (product != null) {
+                        populateProduct(product);
+                        Toast.makeText(requireContext(), "Scanned: " + product.getName(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        String barcode = result.getData().getStringExtra(BarcodeScannerActivity.EXTRA_SCANNED_BARCODE);
+                        if (barcode != null && !barcode.trim().isEmpty()) {
+                            binding.actvIngredientName.setText(barcode);
+                            binding.actvIngredientName.requestFocus();
+                        }
+                    }
+                }
+            });
+
+    @NonNull
+    public static AddIngredientBottomSheet newInstance() {
+        return new AddIngredientBottomSheet();
+    }
+
+    @NonNull
+    public static AddIngredientBottomSheet newInstance(@Nullable ScannedProduct product) {
+        AddIngredientBottomSheet sheet = new AddIngredientBottomSheet();
+        if (product != null) {
+            Bundle args = new Bundle();
+            args.putString(ARG_PREFILL_NAME, product.getDisplayTitle());
+            args.putDouble(ARG_PREFILL_QTY, product.getQuantity());
+            args.putString(ARG_PREFILL_UNIT, product.getUnit());
+            args.putString(ARG_PREFILL_CATEGORY, product.getCategory());
+            sheet.setArguments(args);
+        }
+        return sheet;
+    }
 
     @NonNull
     @Override
@@ -79,7 +127,66 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
 
         setupAutocomplete();
         setupDatePicker();
+        setupScanButton();
         setupSubmitButton();
+        checkAndApplyArguments();
+    }
+
+    private void setupScanButton() {
+        binding.btnScanBarcodeInSheet.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), BarcodeScannerActivity.class);
+            scanBarcodeLauncher.launch(intent);
+        });
+    }
+
+    private void checkAndApplyArguments() {
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(ARG_PREFILL_NAME)) {
+            String name = args.getString(ARG_PREFILL_NAME, "");
+            double qty = args.getDouble(ARG_PREFILL_QTY, 1.0);
+            String unit = args.getString(ARG_PREFILL_UNIT, "pcs");
+            String category = args.getString(ARG_PREFILL_CATEGORY, "Staples");
+
+            populateFields(name, qty, unit, category);
+        }
+    }
+
+    public void populateProduct(@NonNull ScannedProduct product) {
+        populateFields(product.getDisplayTitle(), product.getQuantity(), product.getUnit(), product.getCategory());
+    }
+
+    public void populateFields(@NonNull String name, double quantity, @NonNull String unit, @NonNull String category) {
+        if (binding == null) return;
+
+        binding.actvIngredientName.setText(name);
+
+        if (quantity == Math.floor(quantity)) {
+            binding.etIngredientQuantity.setText(String.format(Locale.US, "%.0f", quantity));
+        } else {
+            binding.etIngredientQuantity.setText(String.format(Locale.US, "%.1f", quantity));
+        }
+
+        selectUnitChip(unit);
+        selectCategoryChip(category);
+    }
+
+    private void selectUnitChip(@NonNull String unit) {
+        String u = unit.toLowerCase(Locale.US);
+        if (u.equals("g")) binding.chipUnitG.setChecked(true);
+        else if (u.equals("kg")) binding.chipUnitKg.setChecked(true);
+        else if (u.equals("ml")) binding.chipUnitMl.setChecked(true);
+        else if (u.equals("l")) binding.chipUnitL.setChecked(true);
+        else if (u.equals("tbsp")) binding.chipUnitTbsp.setChecked(true);
+        else if (u.equals("tsp")) binding.chipUnitTsp.setChecked(true);
+        else binding.chipUnitPcs.setChecked(true);
+    }
+
+    private void selectCategoryChip(@NonNull String category) {
+        if (category.equalsIgnoreCase("Dairy & Eggs")) binding.chipCatDairy.setChecked(true);
+        else if (category.equalsIgnoreCase("Staples")) binding.chipCatStaples.setChecked(true);
+        else if (category.equalsIgnoreCase("Spices & Seasonings")) binding.chipCatSpices.setChecked(true);
+        else if (category.equalsIgnoreCase("Meat & Fish")) binding.chipCatMeat.setChecked(true);
+        else binding.chipCatVegetables.setChecked(true);
     }
 
     private void setupAutocomplete() {

@@ -1,5 +1,7 @@
 package com.example.pantrybuddy.ui.pantry;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.pantrybuddy.R;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
+import com.example.pantrybuddy.data.remote.openfoodfacts.ScannedProduct;
 import com.example.pantrybuddy.databinding.FragmentPantryBinding;
+import com.example.pantrybuddy.ui.scanner.BarcodeScannerActivity;
 
 // Fragment displaying the reactive pantry inventory list, search, filter chips, and sorting
 public class PantryFragment extends Fragment {
@@ -25,6 +31,26 @@ public class PantryFragment extends Fragment {
     private PantryViewModel pantryViewModel;
     private PantryAdapter adapter;
     private PantryViewModel.SortOrder currentSort = PantryViewModel.SortOrder.EXPIRY_ASC;
+
+    private final ActivityResultLauncher<Intent> scanBarcodeLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    ScannedProduct product = (ScannedProduct) result.getData()
+                            .getSerializableExtra(BarcodeScannerActivity.EXTRA_SCANNED_PRODUCT);
+                    if (product != null) {
+                        AddIngredientBottomSheet sheet = AddIngredientBottomSheet.newInstance(product);
+                        sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+                    } else {
+                        String barcode = result.getData().getStringExtra(BarcodeScannerActivity.EXTRA_SCANNED_BARCODE);
+                        if (barcode != null && !barcode.trim().isEmpty()) {
+                            AddIngredientBottomSheet sheet = AddIngredientBottomSheet.newInstance(
+                                    new ScannedProduct(barcode, barcode, "", 1.0, "pcs", "Staples", "")
+                            );
+                            sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+                        }
+                    }
+                }
+            });
 
     @Nullable
     @Override
@@ -43,8 +69,18 @@ public class PantryFragment extends Fragment {
         setupSearchInput();
         setupCategoryChips();
         setupSortSelector();
+        setupScannerButtons();
         setupFab();
         setupObservers();
+    }
+
+    private void setupScannerButtons() {
+        View.OnClickListener scanListener = v -> {
+            Intent intent = new Intent(requireContext(), BarcodeScannerActivity.class);
+            scanBarcodeLauncher.launch(intent);
+        };
+        binding.btnScanBarcode.setOnClickListener(scanListener);
+        binding.btnEmptyScanBarcode.setOnClickListener(scanListener);
     }
 
     private void setupRecyclerView() {
