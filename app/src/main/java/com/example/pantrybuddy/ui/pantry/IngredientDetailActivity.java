@@ -67,6 +67,14 @@ public class IngredientDetailActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         binding.toolbarDetail.setNavigationOnClickListener(v -> finish());
+        binding.toolbarDetail.inflateMenu(R.menu.menu_ingredient_detail);
+        binding.toolbarDetail.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_delete) {
+                confirmDelete();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void observeItemData() {
@@ -179,6 +187,18 @@ public class IngredientDetailActivity extends AppCompatActivity {
                     matchCount,
                     recipeWord
             ));
+            binding.btnSeeRecipesForIngredient.setText(getString(
+                    R.string.detail_see_recipes_format,
+                    currentItem.getName().toLowerCase(Locale.US)
+            ));
+            View.OnClickListener openRecipes = v -> {
+                android.content.Intent intent = new android.content.Intent(this, com.example.pantrybuddy.MainActivity.class);
+                intent.putExtra(com.example.pantrybuddy.MainActivity.EXTRA_NAV_TAB, R.id.navigation_recipes);
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            };
+            binding.btnSeeRecipesForIngredient.setOnClickListener(openRecipes);
             binding.cardCrossReference.setVisibility(View.VISIBLE);
         } else {
             binding.cardCrossReference.setVisibility(View.GONE);

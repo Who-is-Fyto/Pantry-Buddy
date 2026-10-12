@@ -153,8 +153,8 @@ public class MealReviewActivity extends AppCompatActivity {
             // Set Ingredient Name
             rowBinding.tvReviewIngredientName.setText(req.getIngredientName());
 
-            // Set Before Quantity
-            rowBinding.tvReviewBeforeQuantity.setText(String.format("%s %s", formatQty(beforeQty), beforeUnit));
+            // Set Before Quantity subtitle (Figma 2:9621)
+            rowBinding.tvReviewBeforeQuantity.setText(String.format("Before: %s %s", formatQty(beforeQty), beforeUnit));
 
             // Set Actually Used initial value & unit
             rowBinding.etActuallyUsed.setText(formatQty(scaledDefaultUsed));

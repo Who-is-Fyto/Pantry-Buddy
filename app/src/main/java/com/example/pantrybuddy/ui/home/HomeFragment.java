@@ -141,6 +141,21 @@ public class HomeFragment extends Fragment {
                 binding.tvFeaturedUrgentNotice.setVisibility(View.GONE);
             }
 
+            // Recipe Photography / Placeholder
+            if (featured.getRecipe().getImageUrl() != null && !featured.getRecipe().getImageUrl().trim().isEmpty()) {
+                com.bumptech.glide.Glide.with(this)
+                        .load(featured.getRecipe().getImageUrl())
+                        .placeholder(R.drawable.ic_restaurant)
+                        .error(R.drawable.ic_restaurant)
+                        .into(binding.ivFeaturedRecipeImage);
+            } else {
+                binding.ivFeaturedRecipeImage.setImageResource(R.drawable.ic_restaurant);
+            }
+
+            binding.btnHomeSeeRecipes.setText(getString(R.string.home_see_recipes_link, cookableList.size()));
+            binding.layoutHomeRecipesHeader.setVisibility(View.VISIBLE);
+            binding.tvHomeGuaranteeBadge.setVisibility(View.VISIBLE);
+
             View.OnClickListener openDetail = v -> {
                 android.content.Intent intent = new android.content.Intent(requireContext(), com.example.pantrybuddy.ui.recipes.RecipeDetailActivity.class);
                 intent.putExtra(com.example.pantrybuddy.ui.recipes.RecipeDetailActivity.EXTRA_RECIPE_ID, featuredRecipeId);
@@ -155,11 +170,29 @@ public class HomeFragment extends Fragment {
         binding.cardPantrySummary.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_pantry));
 
-        binding.cardUrgentExpiry.setOnClickListener(v ->
+        binding.btnHomeQuickAdd.setOnClickListener(v -> {
+            if (getParentFragmentManager().findFragmentByTag("AddIngredientBottomSheet") == null) {
+                com.example.pantrybuddy.ui.pantry.AddIngredientBottomSheet sheet = new com.example.pantrybuddy.ui.pantry.AddIngredientBottomSheet();
+                sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            }
+        });
+
+        binding.btnHomeNotificationBell.setOnClickListener(v -> showExpiryReminderBottomSheet());
+
+        binding.cardUrgentExpiry.setOnClickListener(v -> showExpiryReminderBottomSheet());
+
+        binding.btnHomeSeeRecipes.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_recipes));
 
         binding.btnOpenPantryZero.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_pantry));
+    }
+
+    private void showExpiryReminderBottomSheet() {
+        if (getParentFragmentManager().findFragmentByTag("ExpiryReminderBottomSheet") == null) {
+            ExpiryReminderBottomSheet sheet = new ExpiryReminderBottomSheet();
+            sheet.show(getParentFragmentManager(), "ExpiryReminderBottomSheet");
+        }
     }
 
     @Override

@@ -187,7 +187,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/inter"
-                        android:text="Suggested recipes have been automatically recalculated based on your remaining amounts."
+                        android:text="@string/pantry_update_recheck_card"
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="12sp" />
                 </LinearLayout>

@@ -16,25 +16,53 @@
         android:paddingTop="24dp"
         android:paddingBottom="96dp">
 
-        <!-- Top category tag and date -->
-        <TextView
-            android:id="@+id/tvHeaderCategory"
-            android:layout_width="wrap_content"
+        <!-- Top App Bar with Pot icon and Notification Bell -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/inter"
-            android:letterSpacing="0.08"
-            android:text="SMART PANTRY"
-            android:textAllCaps="true"
-            android:textColor="@color/colorAccentClay"
-            android:textSize="11sp"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_cooking_pot"
+                app:tint="@color/colorAccentClay"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvHeaderCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter"
+                android:letterSpacing="0.08"
+                android:text="SMART PANTRY"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccentClay"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btnHomeNotificationBell"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="Expiry alerts"
+                android:focusable="true"
+                android:padding="12dp"
+                android:src="@drawable/ic_notifications"
+                app:tint="@color/colorAccentClay" />
+        </LinearLayout>
 
         <!-- Main greeting -->
         <TextView
             android:id="@+id/tvGreeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             android:fontFamily="@font/lora"
             android:text="Good day, Maya"
             android:textColor="@color/colorTextPrimary"
@@ -109,6 +137,20 @@
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="13sp" />
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/btnHomeQuickAdd"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_pill_neutral"
+                    android:clickable="true"
+                    android:contentDescription="Quick add ingredient"
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_add"
+                    app:tint="@color/colorAccentClay" />
 
                 <ImageView
                     android:layout_width="24dp"
@@ -200,12 +242,62 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Section Header: From Your Pantry with "See recipes →" link -->
+        <LinearLayout
+            android:id="@+id/layoutHomeRecipesHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/lora"
+                android:text="From your pantry"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnHomeSeeRecipes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:gravity="center_vertical"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/inter"
+                android:paddingHorizontal="8dp"
+                android:text="See recipes →"
+                android:textColor="@color/colorAccentClay"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Reassuring guarantee badge pill -->
+        <TextView
+            android:id="@+id/tvHomeGuaranteeBadge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_pill_neutral"
+            android:fontFamily="@font/inter"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:text="@string/home_guarantee_badge"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp" />
+
         <!-- Featured Cookable Recipe Card -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardFeaturedRecipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:clickable="true"
             android:focusable="true"
             app:cardBackgroundColor="@color/colorSurface"
@@ -252,12 +344,24 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
+                <!-- Recipe Photography / Placeholder -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivFeaturedRecipeImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/colorPillNeutral"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_restaurant"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                    app:tint="@color/colorTextSecondary" />
+
                 <!-- Recipe title -->
                 <TextView
                     android:id="@+id/tvFeaturedTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/lora"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="20sp"

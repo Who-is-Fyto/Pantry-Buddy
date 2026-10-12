@@ -142,4 +142,46 @@
     <string name="notification_title_singular">%1$d item needs love soon</string>
     <string name="notification_title_plural">%1$d items need love soon</string>
     <string name="notification_text_format">%1$s is nearing expiration. Open PantryBuddy to find 100%% cookable meals.</string>
+
+    <!-- Expiry Reminder Bottom Sheet (Figma 2:9864) -->
+    <string name="expiry_nudge_title">A little nudge for today</string>
+    <string name="expiry_nudge_subtitle">Two ingredients could use a little love. Your pantry is still unchanged.</string>
+    <string name="expiry_nudge_subtitle_format">%1$d ingredients could use a little love. Your pantry is still unchanged.</string>
+    <string name="expiry_recipes_teaser_format">%1$d recipes, all ingredients already at home</string>
+    <string name="expiry_recipes_teaser_desc">Recipes use your expiring ingredients. Choose one, and we\'ll recheck the pantry after cooking.</string>
+    <string name="action_see_cookable_recipes">See recipes I can cook</string>
+    <string name="action_remind_today_5pm">Remind me today at 5 pm</string>
+    <string name="expiry_safety_disclaimer">Dates are reminders, not a safety guarantee. Check freshness before cooking.</string>
+    <string name="toast_snooze_5pm">Reminder snoozed until 5:00 PM today.</string>
+
+    <!-- Pantry Filter Bottom Sheet (Figma 2:9785) -->
+    <string name="filter_drawer_title">Find what you need</string>
+    <string name="filter_drawer_subtitle">Narrow down your pantry without changing what\'s in it.</string>
+    <string name="filter_drawer_reset">Reset</string>
+    <string name="filter_categories_label">CATEGORIES</string>
+    <string name="filter_urgency_label">EXPIRY URGENCY</string>
+    <string name="filter_use_soon_title">Use soon only</string>
+    <string name="filter_use_soon_desc">Due today or in the next 2 days</string>
+    <string name="filter_sort_label">SORT BY</string>
+    <string name="filter_sort_soonest">Soonest expiry</string>
+    <string name="filter_sort_name">Ingredient name</string>
+    <string name="filter_show_button_format">Show %1$d ingredients</string>
+
+    <!-- Additional Micro-Copy and Figma Banners -->
+    <string name="home_guarantee_badge">Every ingredient checked, in the right amounts. Even the oil, salt and pepper.</string>
+    <string name="home_see_recipes_link">See %1$d recipes →</string>
+    <string name="pantry_header_eyebrow">SMART PANTRY • BEFORE COOKING</string>
+    <string name="pantry_header_title">Your pantry</string>
+    <string name="pantry_reassurance_footer">Keep quantities up to date. We only suggest meals you can make entirely from this list.</string>
+    <string name="add_ingredient_draft_badge">Unsaved entry · not in your pantry yet</string>
+    <string name="add_ingredient_qty_helper">Count or weigh what you actually have. Use grams or millilitres for loose ingredients.</string>
+    <string name="detail_see_recipes_format">See recipes using %1$s</string>
+    <string name="detail_edit_helper">Eaten some already? Correct the amount here and we\'ll check your recipe matches again.</string>
+    <string name="recipes_recheck_footer">Matches are checked separately. After you cook one, we\'ll recheck what\'s possible with what remains.</string>
+    <string name="zero_match_leftover_reminder">Still use your expiring items today — Leftovers keep their original expiry date. Cooking didn\'t reset any dates.</string>
+    <string name="zero_match_secondary_note">Forgot to record something already at home? Add it to your pantry, then check again.</string>
+    <string name="recipe_check_header">A check before you cook</string>
+    <string name="meal_review_reassurance_banner">Your pantry hasn\'t changed yet — These amounts come from the recipe. Edit each one to match what you actually used.</string>
+    <string name="meal_review_confirm_note">Confirming subtracts only these quantities. Fully used ingredients will be marked used up; the others stay in your pantry.</string>
+    <string name="pantry_update_recheck_card">Recipe matches checked again — We\'ll recheck what recipes are possible with what remains.</string>
 </resources>

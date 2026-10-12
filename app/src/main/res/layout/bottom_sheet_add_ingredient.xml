@@ -36,11 +36,40 @@
             android:textSize="11sp"
             android:textStyle="bold" />
 
+        <!-- Draft State Indicator Badge (Figma 2:9285) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_pill_neutral"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/colorAccentAmber"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:fontFamily="@font/inter"
+                android:text="@string/add_ingredient_draft_badge"
+                android:textColor="@color/colorAccentAmber"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/lora"
             android:text="What's in your kitchen?"
             android:textColor="@color/colorTextPrimary"
@@ -300,6 +329,16 @@
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
         </LinearLayout>
+
+        <!-- Quantity helper note (Figma 2:9285) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/inter"
+            android:text="@string/add_ingredient_qty_helper"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp" />
 
         <!-- Expiry Date Picker Field -->
         <TextView

@@ -75,6 +75,13 @@ public class PantryFragment extends Fragment {
         });
 
         binding.btnClearSearch.setOnClickListener(v -> binding.etPantrySearch.setText(""));
+
+        binding.btnPantryFilterDrawer.setOnClickListener(v -> {
+            if (getParentFragmentManager().findFragmentByTag("PantryFilterBottomSheet") == null) {
+                PantryFilterBottomSheet bottomSheet = new PantryFilterBottomSheet();
+                bottomSheet.show(getParentFragmentManager(), "PantryFilterBottomSheet");
+            }
+        });
     }
 
     private void setupCategoryChips() {

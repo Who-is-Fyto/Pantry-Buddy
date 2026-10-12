@@ -68,6 +68,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         binding.toolbarDetail.setNavigationOnClickListener(v -> finish());
+        binding.toolbarDetail.inflateMenu(R.menu.menu_recipe_detail);
+        binding.toolbarDetail.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_bookmark) {
+                Toast.makeText(this, "Recipe saved to favorites", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void setupStepper() {

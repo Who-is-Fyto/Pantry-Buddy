@@ -16,14 +16,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Header Eyebrow -->
+        <!-- Header Eyebrow (Figma 2:9406) -->
         <TextView
             android:id="@+id/tvRecipesEyebrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter"
             android:letterSpacing="0.08"
-            android:text="@string/recipes_header_eyebrow"
+            android:text="SMART PANTRY • YOUR PANTRY · BEFORE COOKING"
             android:textColor="@color/colorTextSecondary"
             android:textSize="11sp"
             android:textStyle="bold" />
@@ -277,5 +277,20 @@
                 android:textSize="13sp" />
         </LinearLayout>
     </FrameLayout>
+
+    <!-- Bottom Explanation Footer (Figma 2:9406) -->
+    <TextView
+        android:id="@+id/tvRecipesRecheckFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="88dp"
+        android:background="@drawable/bg_pill_neutral"
+        android:fontFamily="@font/inter"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="8dp"
+        android:text="@string/recipes_recheck_footer"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="12sp" />
 
 </LinearLayout>
