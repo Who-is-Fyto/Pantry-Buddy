@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pantrybuddy.R;
+import com.example.pantrybuddy.utils.IngredientImageHelper;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.databinding.ItemPantryIngredientBinding;
 import com.example.pantrybuddy.domain.model.ExpiryStatus;
@@ -75,6 +76,9 @@ public class PantryAdapter extends ListAdapter<PantryItem, PantryAdapter.ViewHol
 
         void bind(PantryItem item) {
             Context context = binding.getRoot().getContext();
+
+            // Thumbnail
+            IngredientImageHelper.loadIngredientImage(binding.ivIngredientThumbnail, item.getName(), item.getNormalizedName());
 
             // Name
             binding.tvIngredientName.setText(item.getName());

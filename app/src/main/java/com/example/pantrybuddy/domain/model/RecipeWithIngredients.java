@@ -1,6 +1,7 @@
 package com.example.pantrybuddy.domain.model;
 
 import androidx.room.Embedded;
+import androidx.room.Ignore;
 import androidx.room.Relation;
 import com.example.pantrybuddy.data.local.entity.Recipe;
 import com.example.pantrybuddy.data.local.entity.RecipeIngredient;
@@ -16,6 +17,14 @@ public class RecipeWithIngredients {
         entityColumn = "recipeId"
     )
     public List<RecipeIngredient> ingredients;
+
+    public RecipeWithIngredients() {}
+
+    @Ignore
+    public RecipeWithIngredients(Recipe recipe, List<RecipeIngredient> ingredients) {
+        this.recipe = recipe;
+        this.ingredients = ingredients;
+    }
 
     public Recipe getRecipe() {
         return recipe;

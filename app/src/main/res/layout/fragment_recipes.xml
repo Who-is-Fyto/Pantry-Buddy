@@ -16,29 +16,61 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Header Eyebrow -->
+        <!-- Header Eyebrow (Figma 2:9406) -->
         <TextView
             android:id="@+id/tvRecipesEyebrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter"
             android:letterSpacing="0.08"
-            android:text="@string/recipes_header_eyebrow"
+            android:text="SMART PANTRY • YOUR PANTRY · BEFORE COOKING"
             android:textColor="@color/colorTextSecondary"
             android:textSize="11sp"
             android:textStyle="bold" />
 
-        <!-- Title and Subtitle -->
-        <TextView
-            android:id="@+id/tvRecipesTitle"
-            android:layout_width="wrap_content"
+        <!-- Title Row with Spoonacular Sync Button -->
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/lora"
-            android:text="@string/recipes_screen_title"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:id="@+id/tvRecipesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/lora"
+                android:text="@string/recipes_screen_title"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressSyncRecipes"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="6dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/colorAccentClay"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/btnSyncSpoonacular"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_pill_neutral"
+                android:clickable="true"
+                android:contentDescription="Sync recipes with Spoonacular"
+                android:focusable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_replay"
+                app:tint="@color/colorAccentClay" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvRecipesSubtitle"
@@ -147,12 +179,14 @@
 
             <ImageView
                 android:id="@+id/btnClearRecipeSearch"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="-8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:contentDescription="Clear search"
                 android:focusable="true"
+                android:padding="8dp"
                 android:src="@drawable/ic_close"
                 android:visibility="gone"
                 app:tint="@color/colorTextSecondary"
@@ -184,6 +218,15 @@
                     android:checked="true"
                     android:fontFamily="@font/inter"
                     android:text="@string/filter_all"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipFilterMissing1or2"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter"
+                    android:text="@string/filter_missing_1_or_2"
                     android:textSize="12sp" />
 
                 <com.google.android.material.chip.Chip

@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 
 @Database(
     entities = {PantryItem.class, Recipe.class, RecipeIngredient.class},
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -46,6 +46,15 @@ public abstract class AppDatabase extends RoomDatabase {
                             databaseWriteExecutor.execute(() -> {
                                 DatabaseInitializer.populateInitialRecipes(getDatabase(appContext), appContext);
                                 DatabaseInitializer.populateSamplePantry(getDatabase(appContext));
+                            });
+                        }
+
+                        @Override
+                        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+                            super.onOpen(db);
+                            databaseWriteExecutor.execute(() -> {
+                                DatabaseInitializer.populateInitialRecipes(getDatabase(appContext), appContext);
+                                DatabaseInitializer.backfillMissingRecipeImages(getDatabase(appContext), appContext);
                             });
                         }
                     })

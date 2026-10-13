@@ -25,6 +25,7 @@ import com.example.pantrybuddy.ui.pantry.AddIngredientBottomSheet;
 import com.example.pantrybuddy.ui.pantry.PantryViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // Fragment displaying strictly cookable recipes, quarantined almost there suggestions,
@@ -93,12 +94,23 @@ public class RecipesFragment extends Fragment {
         binding.viewZeroMatches.rvZeroAlmostThere.setAdapter(zeroAlmostAdapter);
 
         binding.viewZeroMatches.btnAddIngredientZero.setOnClickListener(v -> {
-            AddIngredientBottomSheet sheet = new AddIngredientBottomSheet();
-            sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            if (getParentFragmentManager().findFragmentByTag("AddIngredientBottomSheet") == null) {
+                AddIngredientBottomSheet sheet = new AddIngredientBottomSheet();
+                sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            }
         });
 
         binding.viewZeroMatches.btnCheckPantryZero.setOnClickListener(v ->
                 androidx.navigation.fragment.NavHostFragment.findNavController(this).navigate(R.id.navigation_pantry));
+
+        binding.viewZeroMatches.btnDiscoverOnlineZero.setOnClickListener(v ->
+                recipeViewModel.syncSpoonacularRecipes());
+
+        binding.viewZeroMatches.btnZeroShowMissing1or2.setOnClickListener(v ->
+                binding.chipFilterMissing1or2.setChecked(true));
+
+        binding.btnSyncSpoonacular.setOnClickListener(v ->
+                recipeViewModel.syncSpoonacularRecipes());
     }
 
     private void setupSearchInput() {
@@ -125,15 +137,23 @@ public class RecipesFragment extends Fragment {
             if (checkedIds.isEmpty() || checkedIds.contains(R.id.chipFilterAll)) {
                 recipeViewModel.setMaxCookTimeFilter(0);
                 recipeViewModel.setOnlyExpiringSoonFilter(false);
+                recipeViewModel.setOnlyMissing1or2Filter(false);
+            } else if (checkedIds.contains(R.id.chipFilterMissing1or2)) {
+                recipeViewModel.setMaxCookTimeFilter(0);
+                recipeViewModel.setOnlyExpiringSoonFilter(false);
+                recipeViewModel.setOnlyMissing1or2Filter(true);
             } else if (checkedIds.contains(R.id.chipFilterUnder20)) {
                 recipeViewModel.setMaxCookTimeFilter(20);
                 recipeViewModel.setOnlyExpiringSoonFilter(false);
+                recipeViewModel.setOnlyMissing1or2Filter(false);
             } else if (checkedIds.contains(R.id.chipFilterUnder30)) {
                 recipeViewModel.setMaxCookTimeFilter(30);
                 recipeViewModel.setOnlyExpiringSoonFilter(false);
+                recipeViewModel.setOnlyMissing1or2Filter(false);
             } else if (checkedIds.contains(R.id.chipFilterExpiringSoon)) {
                 recipeViewModel.setMaxCookTimeFilter(0);
                 recipeViewModel.setOnlyExpiringSoonFilter(true);
+                recipeViewModel.setOnlyMissing1or2Filter(false);
             }
         });
     }
@@ -168,25 +188,49 @@ public class RecipesFragment extends Fragment {
             allRecipesList = (recipes != null) ? recipes : new ArrayList<>();
             updateAdapterFeed();
         });
+
+        // Spoonacular sync progress observer
+        recipeViewModel.getIsSyncingRecipes().observe(getViewLifecycleOwner(), syncing -> {
+            boolean isSyncing = Boolean.TRUE.equals(syncing);
+            binding.progressSyncRecipes.setVisibility(isSyncing ? View.VISIBLE : View.GONE);
+            binding.btnSyncSpoonacular.setVisibility(isSyncing ? View.GONE : View.VISIBLE);
+            binding.viewZeroMatches.btnDiscoverOnlineZero.setEnabled(!isSyncing);
+        });
+
+        // Spoonacular sync status feedback message
+        recipeViewModel.getSyncStatusMessage().observe(getViewLifecycleOwner(), msg -> {
+            if (msg != null && !msg.isEmpty()) {
+                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Observer for missing 1-2 items filter
+        recipeViewModel.getOnlyMissing1or2Filter().observe(getViewLifecycleOwner(), filterActive -> {
+            updateAdapterFeed();
+        });
     }
 
     private void updateAdapterFeed() {
+        boolean showMissingOnly = Boolean.TRUE.equals(recipeViewModel.getOnlyMissing1or2Filter().getValue());
         boolean hasCookable = !rawCookableList.isEmpty();
 
-        if (hasCookable) {
-            // Cookable recipes exist in the pantry
+        if (hasCookable || showMissingOnly) {
+            // Cookable recipes exist in the pantry OR user explicitly chose to see missing 1-2 items
             binding.layoutRecipesHeader.setVisibility(View.VISIBLE);
             binding.layoutSearchAndFilters.setVisibility(View.VISIBLE);
             binding.viewZeroMatches.getRoot().setVisibility(View.GONE);
 
-            boolean isFilterEmpty = currentCookableList.isEmpty() && currentAlmostThereList.isEmpty();
+            List<MatchResult> displayCookable = showMissingOnly ? Collections.emptyList() : currentCookableList;
+            List<MatchResult> displayAlmost = currentAlmostThereList;
+
+            boolean isFilterEmpty = displayCookable.isEmpty() && displayAlmost.isEmpty();
             if (isFilterEmpty) {
                 binding.layoutEmptyState.setVisibility(View.VISIBLE);
                 binding.rvRecipes.setVisibility(View.GONE);
             } else {
                 binding.layoutEmptyState.setVisibility(View.GONE);
                 binding.rvRecipes.setVisibility(View.VISIBLE);
-                adapter.setData(currentCookableList, currentAlmostThereList);
+                adapter.setData(displayCookable, displayAlmost, showMissingOnly);
             }
         } else {
             // Zero-Match Feedback State (Figma Panel 10)
@@ -212,9 +256,11 @@ public class RecipesFragment extends Fragment {
 
             // Show almost-there recipes if available
             if (!currentAlmostThereList.isEmpty()) {
+                binding.viewZeroMatches.btnZeroShowMissing1or2.setVisibility(View.VISIBLE);
                 binding.viewZeroMatches.layoutZeroAlmostThere.setVisibility(View.VISIBLE);
                 zeroAlmostAdapter.setAlmostThereOnly(currentAlmostThereList);
             } else {
+                binding.viewZeroMatches.btnZeroShowMissing1or2.setVisibility(View.GONE);
                 binding.viewZeroMatches.layoutZeroAlmostThere.setVisibility(View.GONE);
             }
         }

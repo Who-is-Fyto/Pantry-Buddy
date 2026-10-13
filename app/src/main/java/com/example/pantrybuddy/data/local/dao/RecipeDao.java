@@ -41,9 +41,24 @@ public interface RecipeDao {
     @Query("SELECT COUNT(*) FROM recipes")
     int getRecipeCount();
 
+    @Query("SELECT * FROM recipes WHERE title = :title LIMIT 1")
+    Recipe getRecipeByTitle(String title);
+
     @Query("DELETE FROM recipes")
     void deleteAllRecipes();
 
     @Query("DELETE FROM recipe_ingredients")
     void deleteAllIngredients();
+
+    @Query("DELETE FROM recipes WHERE source = 'spoonacular' AND cachedTimestamp < :expiryThresholdMs")
+    int purgeExpiredSpoonacularCache(long expiryThresholdMs);
+
+    @Query("DELETE FROM recipes WHERE source = 'spoonacular'")
+    int deleteAllSpoonacularRecipes();
+
+    @Query("UPDATE recipes SET imageUrl = :imageUrl WHERE title = :title AND (imageUrl IS NULL OR imageUrl = '')")
+    void updateRecipeImageIfMissing(String title, String imageUrl);
+
+    @Query("UPDATE recipes SET imageUrl = :imageUrl WHERE title = :title")
+    void updateRecipeImage(String title, String imageUrl);
 }

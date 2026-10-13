@@ -48,6 +48,7 @@ public class MealReviewActivity extends AppCompatActivity {
     private List<PantryItem> pantryItems = new ArrayList<>();
     private final List<ReviewRowHolder> rowHolders = new ArrayList<>();
     private boolean isTableBuilt = false;
+    private boolean isSubmittingDeduction = false;
 
     private static class ReviewRowHolder {
         final ItemMealReviewRowBinding rowBinding;
@@ -152,8 +153,8 @@ public class MealReviewActivity extends AppCompatActivity {
             // Set Ingredient Name
             rowBinding.tvReviewIngredientName.setText(req.getIngredientName());
 
-            // Set Before Quantity
-            rowBinding.tvReviewBeforeQuantity.setText(String.format("%s %s", formatQty(beforeQty), beforeUnit));
+            // Set Before Quantity subtitle (Figma 2:9621)
+            rowBinding.tvReviewBeforeQuantity.setText(String.format("Before: %s %s", formatQty(beforeQty), beforeUnit));
 
             // Set Actually Used initial value & unit
             rowBinding.etActuallyUsed.setText(formatQty(scaledDefaultUsed));
@@ -215,10 +216,14 @@ public class MealReviewActivity extends AppCompatActivity {
     }
 
     private void confirmAndDeductStock() {
+        if (isSubmittingDeduction || isFinishing()) return;
         if (rowHolders.isEmpty()) {
             Toast.makeText(this, "No ingredients to deduct.", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        isSubmittingDeduction = true;
+        updateCtaButtonState(false);
 
         List<StockDeduction> deductions = new ArrayList<>();
         ArrayList<DeductionDelta> deltas = new ArrayList<>();

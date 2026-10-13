@@ -57,6 +57,7 @@ public class CookingActivity extends AppCompatActivity {
     private long totalStepDurationMs = 180_000L;
     private long timeLeftMs = 180_000L;
     private boolean isTimerRunning = false;
+    private boolean isNavigatingToReview = false;
 
     private static final Pattern DURATION_PATTERN = Pattern.compile("(\\d+)\\s*(?:min|minute)", Pattern.CASE_INSENSITIVE);
 
@@ -126,6 +127,8 @@ public class CookingActivity extends AppCompatActivity {
     }
 
     private void finishCookingAndProceedToReview() {
+        if (isNavigatingToReview || isFinishing()) return;
+        isNavigatingToReview = true;
         stopTimer();
         Intent intent = new Intent(this, MealReviewActivity.class);
         intent.putExtra(MealReviewActivity.EXTRA_RECIPE_ID, recipeId);
@@ -197,6 +200,27 @@ public class CookingActivity extends AppCompatActivity {
         int estimatedMinutesLeft = Math.max(2, remainingSteps * 3);
         binding.tvEstimatedTimeLeft.setText(getString(R.string.cooking_time_left_format, estimatedMinutesLeft));
 
+        // Step timeline previews (Figma 2:9566)
+        if (currentStepIndex > 0) {
+            binding.cardPrevStepPreview.setVisibility(View.VISIBLE);
+            String prevInstruction = steps.get(currentStepIndex - 1);
+            String prevShort = prevInstruction.length() > 38 ? prevInstruction.substring(0, 35) + "…" : prevInstruction;
+            binding.tvPrevStepPreviewText.setText(String.format(Locale.US, "Step %d: %s · Done", currentStepIndex, prevShort));
+        } else {
+            binding.cardPrevStepPreview.setVisibility(View.GONE);
+        }
+
+        if (currentStepIndex < totalSteps - 1) {
+            binding.cardNextStepPreview.setVisibility(View.VISIBLE);
+            String nextInstruction = steps.get(currentStepIndex + 1);
+            String nextShort = nextInstruction.length() > 32 ? nextInstruction.substring(0, 29) + "…" : nextInstruction;
+            binding.tvNextStepPreviewText.setText(String.format(Locale.US, "Up next: %s", nextShort));
+            binding.btnNextStep.setText(String.format(Locale.US, "Next · %s", nextShort));
+        } else {
+            binding.cardNextStepPreview.setVisibility(View.GONE);
+            binding.btnNextStep.setText(R.string.action_finish_cooking);
+        }
+
         // Navigation button labels & state
         if (currentStepIndex == 0) {
             binding.btnPrevStep.setEnabled(false);
@@ -204,12 +228,6 @@ public class CookingActivity extends AppCompatActivity {
         } else {
             binding.btnPrevStep.setEnabled(true);
             binding.btnPrevStep.setAlpha(1.0f);
-        }
-
-        if (currentStepIndex == totalSteps - 1) {
-            binding.btnNextStep.setText(R.string.action_finish_cooking);
-        } else {
-            binding.btnNextStep.setText(R.string.action_next_step);
         }
 
         // Setup timer for this step

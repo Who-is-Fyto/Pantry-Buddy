@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pantrybuddy.R;
+import com.example.pantrybuddy.utils.IngredientImageHelper;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.data.local.entity.RecipeIngredient;
 import com.example.pantrybuddy.databinding.ActivityIngredientDetailBinding;
@@ -38,6 +39,7 @@ public class IngredientDetailActivity extends AppCompatActivity {
     private PantryItem currentItem;
     private Long selectedExpiryDateMs = null;
     private boolean initializedUi = false;
+    private boolean isProcessing = false;
 
     private final SimpleDateFormat shortDateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
 
@@ -66,6 +68,14 @@ public class IngredientDetailActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         binding.toolbarDetail.setNavigationOnClickListener(v -> finish());
+        binding.toolbarDetail.inflateMenu(R.menu.menu_ingredient_detail);
+        binding.toolbarDetail.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_delete) {
+                confirmDelete();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void observeItemData() {
@@ -108,6 +118,7 @@ public class IngredientDetailActivity extends AppCompatActivity {
     }
 
     private void updateHeroCard(PantryItem item) {
+        IngredientImageHelper.loadIngredientImage(binding.ivDetailIngredientHero, item.getName(), item.getNormalizedName());
         binding.tvDetailIngredientName.setText(item.getName());
 
         String qtyStr = (item.getQuantity() == (long) item.getQuantity())
@@ -178,6 +189,18 @@ public class IngredientDetailActivity extends AppCompatActivity {
                     matchCount,
                     recipeWord
             ));
+            binding.btnSeeRecipesForIngredient.setText(getString(
+                    R.string.detail_see_recipes_format,
+                    currentItem.getName().toLowerCase(Locale.US)
+            ));
+            View.OnClickListener openRecipes = v -> {
+                android.content.Intent intent = new android.content.Intent(this, com.example.pantrybuddy.MainActivity.class);
+                intent.putExtra(com.example.pantrybuddy.MainActivity.EXTRA_NAV_TAB, R.id.navigation_recipes);
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            };
+            binding.btnSeeRecipesForIngredient.setOnClickListener(openRecipes);
             binding.cardCrossReference.setVisibility(View.VISIBLE);
         } else {
             binding.cardCrossReference.setVisibility(View.GONE);
@@ -202,6 +225,10 @@ public class IngredientDetailActivity extends AppCompatActivity {
             step = 50.0;
         } else if ("kg".equalsIgnoreCase(unit) || "l".equalsIgnoreCase(unit)) {
             step = 0.5;
+        } else if ("oz".equalsIgnoreCase(unit)) {
+            step = 1.0;
+        } else if ("cup".equalsIgnoreCase(unit)) {
+            step = 0.25;
         }
 
         val = Math.max(0.0, val + (direction * step));
@@ -259,7 +286,7 @@ public class IngredientDetailActivity extends AppCompatActivity {
     }
 
     private void saveChanges() {
-        if (currentItem == null) return;
+        if (isProcessing || isFinishing() || currentItem == null) return;
 
         String qtyStr = binding.etDetailQuantity.getText().toString().trim();
         double newQuantity;
@@ -271,6 +298,9 @@ public class IngredientDetailActivity extends AppCompatActivity {
             binding.etDetailQuantity.requestFocus();
             return;
         }
+
+        isProcessing = true;
+        binding.btnSaveIngredient.setEnabled(false);
 
         String newUnit = getSelectedUnit();
         String newCategory = getSelectedCategory();
@@ -286,12 +316,15 @@ public class IngredientDetailActivity extends AppCompatActivity {
     }
 
     private void confirmDelete() {
-        if (currentItem == null) return;
+        if (isProcessing || isFinishing() || currentItem == null) return;
 
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Delete ingredient?")
                 .setMessage("Are you sure you want to remove " + currentItem.getName() + " from your pantry?")
                 .setPositiveButton("Delete", (dialog, which) -> {
+                    if (isProcessing) return;
+                    isProcessing = true;
+                    binding.btnDeleteIngredient.setEnabled(false);
                     pantryViewModel.delete(currentItem);
                     Toast.makeText(this, "Removed from pantry", Toast.LENGTH_SHORT).show();
                     finish();
@@ -302,13 +335,20 @@ public class IngredientDetailActivity extends AppCompatActivity {
 
     private void selectUnitChip(String unit) {
         if (unit == null) return;
-        String u = unit.toLowerCase(Locale.US);
+        String u = unit.toLowerCase(Locale.US).trim();
         if ("g".equals(u)) binding.chipDetailUnitG.setChecked(true);
         else if ("kg".equals(u)) binding.chipDetailUnitKg.setChecked(true);
         else if ("ml".equals(u)) binding.chipDetailUnitMl.setChecked(true);
         else if ("l".equals(u)) binding.chipDetailUnitL.setChecked(true);
+        else if ("cup".equals(u)) binding.chipDetailUnitCup.setChecked(true);
         else if ("tbsp".equals(u)) binding.chipDetailUnitTbsp.setChecked(true);
         else if ("tsp".equals(u)) binding.chipDetailUnitTsp.setChecked(true);
+        else if ("oz".equals(u)) binding.chipDetailUnitOz.setChecked(true);
+        else if ("can".equals(u)) binding.chipDetailUnitCan.setChecked(true);
+        else if ("slice".equals(u)) binding.chipDetailUnitSlice.setChecked(true);
+        else if ("clove".equals(u)) binding.chipDetailUnitClove.setChecked(true);
+        else if ("bunch".equals(u)) binding.chipDetailUnitBunch.setChecked(true);
+        else if ("pinch".equals(u)) binding.chipDetailUnitPinch.setChecked(true);
         else binding.chipDetailUnitPcs.setChecked(true);
     }
 
@@ -318,26 +358,46 @@ public class IngredientDetailActivity extends AppCompatActivity {
         if (checkedId == R.id.chipDetailUnitKg) return "kg";
         if (checkedId == R.id.chipDetailUnitMl) return "ml";
         if (checkedId == R.id.chipDetailUnitL) return "l";
+        if (checkedId == R.id.chipDetailUnitCup) return "cup";
         if (checkedId == R.id.chipDetailUnitTbsp) return "tbsp";
         if (checkedId == R.id.chipDetailUnitTsp) return "tsp";
+        if (checkedId == R.id.chipDetailUnitOz) return "oz";
+        if (checkedId == R.id.chipDetailUnitCan) return "can";
+        if (checkedId == R.id.chipDetailUnitSlice) return "slice";
+        if (checkedId == R.id.chipDetailUnitClove) return "clove";
+        if (checkedId == R.id.chipDetailUnitBunch) return "bunch";
+        if (checkedId == R.id.chipDetailUnitPinch) return "pinch";
         return "pcs";
     }
 
     private void selectCategoryChip(String category) {
         if (category == null) return;
-        if ("Dairy & Eggs".equalsIgnoreCase(category)) binding.chipDetailCatDairy.setChecked(true);
-        else if ("Staples".equalsIgnoreCase(category)) binding.chipDetailCatStaples.setChecked(true);
-        else if ("Spices & Seasonings".equalsIgnoreCase(category)) binding.chipDetailCatSpices.setChecked(true);
-        else if ("Meat & Fish".equalsIgnoreCase(category)) binding.chipDetailCatMeat.setChecked(true);
+        String c = category.toLowerCase(Locale.US).trim();
+        if (c.contains("fruit")) binding.chipDetailCatFruits.setChecked(true);
+        else if (c.contains("dairy") || c.contains("egg")) binding.chipDetailCatDairy.setChecked(true);
+        else if (c.contains("meat") || c.contains("fish") || c.contains("seafood")) binding.chipDetailCatMeat.setChecked(true);
+        else if (c.contains("bakery") || c.contains("bread")) binding.chipDetailCatBakery.setChecked(true);
+        else if (c.contains("canned") || c.contains("tin")) binding.chipDetailCatCanned.setChecked(true);
+        else if (c.contains("condiment") || c.contains("sauce") || c.contains("oil")) binding.chipDetailCatCondiments.setChecked(true);
+        else if (c.contains("spice") || c.contains("seasoning") || c.contains("herb")) binding.chipDetailCatSpices.setChecked(true);
+        else if (c.contains("beverage") || c.contains("drink") || c.contains("coffee") || c.contains("tea")) binding.chipDetailCatBeverages.setChecked(true);
+        else if (c.contains("snack") || c.contains("sweet") || c.contains("nut")) binding.chipDetailCatSnacks.setChecked(true);
+        else if (c.contains("staple") || c.contains("grain") || c.contains("rice") || c.contains("pasta")) binding.chipDetailCatStaples.setChecked(true);
         else binding.chipDetailCatVegetables.setChecked(true);
     }
 
     private String getSelectedCategory() {
         int checkedId = binding.chipGroupDetailCategory.getCheckedChipId();
+        if (checkedId == R.id.chipDetailCatFruits) return "Fruits";
         if (checkedId == R.id.chipDetailCatDairy) return "Dairy & Eggs";
-        if (checkedId == R.id.chipDetailCatStaples) return "Staples";
-        if (checkedId == R.id.chipDetailCatSpices) return "Spices & Seasonings";
         if (checkedId == R.id.chipDetailCatMeat) return "Meat & Fish";
+        if (checkedId == R.id.chipDetailCatBakery) return "Bakery & Bread";
+        if (checkedId == R.id.chipDetailCatStaples) return "Staples & Grains";
+        if (checkedId == R.id.chipDetailCatCanned) return "Canned Goods";
+        if (checkedId == R.id.chipDetailCatCondiments) return "Condiments & Sauces";
+        if (checkedId == R.id.chipDetailCatSpices) return "Spices & Seasonings";
+        if (checkedId == R.id.chipDetailCatBeverages) return "Beverages";
+        if (checkedId == R.id.chipDetailCatSnacks) return "Snacks & Sweets";
         return "Vegetables";
     }
 }

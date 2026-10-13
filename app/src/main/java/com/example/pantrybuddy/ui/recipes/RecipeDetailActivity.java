@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.pantrybuddy.R;
+import com.example.pantrybuddy.utils.IngredientImageHelper;
+import com.example.pantrybuddy.utils.RecipeImageHelper;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.data.local.entity.Recipe;
 import com.example.pantrybuddy.data.local.entity.RecipeIngredient;
@@ -42,6 +44,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private int defaultServings = 2;
     private RecipeWithIngredients currentRecipeWithIngredients;
     private List<PantryItem> pantryItems = new ArrayList<>();
+    private boolean isNavigating = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         binding.toolbarDetail.setNavigationOnClickListener(v -> finish());
+        binding.toolbarDetail.inflateMenu(R.menu.menu_recipe_detail);
+        binding.toolbarDetail.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_bookmark) {
+                Toast.makeText(this, "Recipe saved to favorites", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void setupStepper() {
@@ -85,13 +96,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private void setupCtaButton() {
         binding.btnStartCooking.setOnClickListener(v -> {
+            if (isNavigating || isFinishing()) return;
             if (currentRecipeWithIngredients != null) {
+                isNavigating = true;
                 Intent intent = new Intent(this, CookingActivity.class);
                 intent.putExtra(CookingActivity.EXTRA_RECIPE_ID, recipeId);
                 intent.putExtra(CookingActivity.EXTRA_SERVINGS, currentServings);
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isNavigating = false;
     }
 
     private void observeData() {
@@ -119,14 +138,34 @@ public class RecipeDetailActivity extends AppCompatActivity {
         binding.tvRecipeDifficulty.setText(recipe.getDifficulty() != null ? recipe.getDifficulty() : "Easy");
         binding.tvRecipeBaseServings.setText(String.format(Locale.US, "Default: %d servings", defaultServings));
 
-        if (recipe.getImageUrl() != null && !recipe.getImageUrl().trim().isEmpty()) {
-            Glide.with(this)
-                    .load(recipe.getImageUrl())
-                    .placeholder(R.drawable.ic_restaurant)
-                    .error(R.drawable.ic_restaurant)
-                    .into(binding.ivRecipeHero);
+        RecipeImageHelper.loadRecipeImage(binding.ivRecipeHero, recipe.getImageUrl(), RecipeImageHelper.HERO_BANNER_PADDING_DP);
+
+        // Publisher Attribution & Source Link (Spoonacular terms compliance)
+        String sourceName = recipe.getSourceName();
+        String sourceUrl = recipe.getSourceUrl();
+        boolean hasSource = (sourceName != null && !sourceName.trim().isEmpty())
+                || "spoonacular".equalsIgnoreCase(recipe.getSource());
+
+        if (hasSource) {
+            String displayName = (sourceName != null && !sourceName.trim().isEmpty()) ? sourceName.trim() : "Spoonacular";
+            binding.tvRecipeAttribution.setText(getString(R.string.recipe_source_attribution, displayName));
+            binding.cardRecipeAttribution.setVisibility(View.VISIBLE);
+
+            if (sourceUrl != null && (sourceUrl.startsWith("http://") || sourceUrl.startsWith("https://"))) {
+                binding.btnViewOriginalRecipe.setVisibility(View.VISIBLE);
+                binding.btnViewOriginalRecipe.setOnClickListener(v -> {
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(sourceUrl));
+                        startActivity(browserIntent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Could not open recipe link", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                binding.btnViewOriginalRecipe.setVisibility(View.GONE);
+            }
         } else {
-            binding.ivRecipeHero.setImageResource(R.drawable.ic_restaurant);
+            binding.cardRecipeAttribution.setVisibility(View.GONE);
         }
     }
 
@@ -229,7 +268,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 allSufficient = false;
             }
 
-            // Column 1: Name and status icon
+            // Column 1: Photo, Name, and status icon
+            IngredientImageHelper.loadIngredientImage(rowBinding.ivIngredientImage, req.getIngredientName(), req.getNormalizedName());
             rowBinding.tvIngredientName.setText(req.getIngredientName());
             if (sufficient) {
                 rowBinding.ivIngredientStatus.setImageResource(R.drawable.ic_check);

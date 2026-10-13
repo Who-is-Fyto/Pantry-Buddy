@@ -13,13 +13,26 @@
         android:paddingHorizontal="20dp"
         android:paddingTop="20dp">
 
+        <!-- Eyebrow -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:letterSpacing="0.08"
+            android:text="@string/pantry_header_eyebrow"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccentClay"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
         <!-- Title and Subtitle -->
         <TextView
             android:id="@+id/tvPantryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:fontFamily="@font/lora"
-            android:text="Pantry Inventory"
+            android:text="@string/pantry_header_title"
             android:textColor="@color/colorTextPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -34,7 +47,7 @@
             android:textColor="@color/colorTextSecondary"
             android:textSize="13sp" />
 
-        <!-- Search Bar -->
+        <!-- Search Bar with Filter Drawer Button -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -68,15 +81,44 @@
 
             <ImageView
                 android:id="@+id/btnClearSearch"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:contentDescription="Clear search"
                 android:focusable="true"
+                android:padding="8dp"
                 android:src="@drawable/ic_close"
                 android:visibility="gone"
                 app:tint="@color/colorTextSecondary"
                 tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/btnScanBarcode"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="@string/action_scan_barcode"
+                android:focusable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_qr_code_scanner"
+                app:tint="@color/colorAccentClay" />
+
+            <ImageView
+                android:id="@+id/btnPantryFilterDrawer"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="-4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="Filter options"
+                android:focusable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_tune"
+                app:tint="@color/colorAccentClay" />
         </LinearLayout>
 
         <!-- Category Filter Chips -->
@@ -118,6 +160,17 @@
                     app:chipStrokeWidth="1dp" />
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chipFruits"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fruits"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/chipDairy"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
@@ -129,11 +182,55 @@
                     app:chipStrokeWidth="1dp" />
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMeat"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Meat &amp; Fish"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipBakery"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bakery &amp; Bread"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/chipStaples"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Staples"
+                    android:text="Staples &amp; Grains"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCanned"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Canned Goods"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCondiments"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Condiments &amp; Sauces"
                     android:textColor="@color/chip_text_selector"
                     app:chipBackgroundColor="@color/chip_background_selector"
                     app:chipStrokeColor="@color/colorBorder"
@@ -151,11 +248,22 @@
                     app:chipStrokeWidth="1dp" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipMeat"
+                    android:id="@+id/chipBeverages"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Meat &amp; Fish"
+                    android:text="Beverages"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipSnacks"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Snacks &amp; Sweets"
                     android:textColor="@color/chip_text_selector"
                     app:chipBackgroundColor="@color/chip_background_selector"
                     app:chipStrokeColor="@color/colorBorder"
@@ -197,11 +305,14 @@
                 android:id="@+id/btnSortOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:gravity="center_vertical"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/inter"
-                android:padding="4dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="8dp"
                 android:text="Soonest expiry ↓"
                 android:textColor="@color/colorAccentClay"
                 android:textSize="12sp"
@@ -254,8 +365,39 @@
                     android:text="Try clearing your search or category filter to view your pantry items."
                     android:textColor="@color/colorTextSecondary"
                     android:textSize="13sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEmptyScanBarcode"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/inter"
+                    android:text="@string/scan_barcode_or_qr"
+                    android:textColor="@color/colorAccentClay"
+                    android:textSize="13sp"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_qr_code_scanner"
+                    app:iconGravity="textStart"
+                    app:iconSize="18dp"
+                    app:iconTint="@color/colorAccentClay"
+                    app:strokeColor="@color/colorAccentClay" />
             </LinearLayout>
         </FrameLayout>
+
+        <!-- Reassurance Footer Banner -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="88dp"
+            android:background="@drawable/bg_pill_neutral"
+            android:fontFamily="@font/inter"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:text="@string/pantry_reassurance_footer"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <!-- Floating Action Button for adding ingredients -->

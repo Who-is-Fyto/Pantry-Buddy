@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvFooterNotice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_pill_neutral"
+    android:fontFamily="@font/inter"
+    android:paddingHorizontal="14dp"
+    android:paddingVertical="10dp"
+    android:text="@string/recipes_recheck_footer"
+    android:textColor="@color/colorTextSecondary"
+    android:textSize="12sp" />

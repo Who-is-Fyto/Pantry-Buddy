@@ -18,6 +18,8 @@ import com.example.pantrybuddy.domain.model.ExpiryStatus;
 import com.example.pantrybuddy.domain.model.MatchResult;
 import com.example.pantrybuddy.ui.pantry.PantryViewModel;
 import com.example.pantrybuddy.ui.recipes.RecipeViewModel;
+import com.example.pantrybuddy.utils.PreferenceHelper;
+import com.example.pantrybuddy.utils.RecipeImageHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,15 +59,16 @@ public class HomeFragment extends Fragment {
         String formattedDate = sdf.format(new Date()).toUpperCase(Locale.US);
         binding.tvHeaderCategory.setText(getString(R.string.home_header_format, formattedDate));
 
-        // Time-based greeting
+        // Time-based greeting using personalized name
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        String userName = PreferenceHelper.getUserName(requireContext());
         String greeting;
         if (hour < 12) {
-            greeting = "Good morning, Maya";
+            greeting = getString(R.string.greeting_morning, userName);
         } else if (hour < 17) {
-            greeting = "Good afternoon, Maya";
+            greeting = getString(R.string.greeting_afternoon, userName);
         } else {
-            greeting = "Good evening, Maya";
+            greeting = getString(R.string.greeting_evening, userName);
         }
         binding.tvGreeting.setText(greeting);
     }
@@ -139,6 +142,13 @@ public class HomeFragment extends Fragment {
                 binding.tvFeaturedUrgentNotice.setVisibility(View.GONE);
             }
 
+            // Recipe Photography / Placeholder
+            RecipeImageHelper.loadRecipeImage(binding.ivFeaturedRecipeImage, featured.getRecipe().getImageUrl(), RecipeImageHelper.DEFAULT_CARD_PADDING_DP);
+
+            binding.btnHomeSeeRecipes.setText(getString(R.string.home_see_recipes_link, cookableList.size()));
+            binding.layoutHomeRecipesHeader.setVisibility(View.VISIBLE);
+            binding.tvHomeGuaranteeBadge.setVisibility(View.VISIBLE);
+
             View.OnClickListener openDetail = v -> {
                 android.content.Intent intent = new android.content.Intent(requireContext(), com.example.pantrybuddy.ui.recipes.RecipeDetailActivity.class);
                 intent.putExtra(com.example.pantrybuddy.ui.recipes.RecipeDetailActivity.EXTRA_RECIPE_ID, featuredRecipeId);
@@ -153,11 +163,38 @@ public class HomeFragment extends Fragment {
         binding.cardPantrySummary.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_pantry));
 
-        binding.cardUrgentExpiry.setOnClickListener(v ->
+        binding.btnHomeQuickAdd.setOnClickListener(v -> {
+            if (getParentFragmentManager().findFragmentByTag("AddIngredientBottomSheet") == null) {
+                com.example.pantrybuddy.ui.pantry.AddIngredientBottomSheet sheet = new com.example.pantrybuddy.ui.pantry.AddIngredientBottomSheet();
+                sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            }
+        });
+
+        binding.btnHomeNotificationBell.setOnClickListener(v -> showExpiryReminderBottomSheet());
+
+        binding.cardUrgentExpiry.setOnClickListener(v -> showExpiryReminderBottomSheet());
+
+        binding.btnHomeSeeRecipes.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_recipes));
 
         binding.btnOpenPantryZero.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_pantry));
+    }
+
+    private void showExpiryReminderBottomSheet() {
+        if (getParentFragmentManager().findFragmentByTag("ExpiryReminderBottomSheet") == null) {
+            ExpiryReminderBottomSheet sheet = new ExpiryReminderBottomSheet();
+            sheet.show(getParentFragmentManager(), "ExpiryReminderBottomSheet");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Refresh greeting in case the user changed their name in Settings
+        if (binding != null) {
+            setupHeaderDateAndGreeting();
+        }
     }
 
     @Override

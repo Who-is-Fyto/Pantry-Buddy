@@ -184,6 +184,81 @@
             android:layout_marginTop="10dp"
             android:text="@string/action_check_pantry" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDiscoverOnlineZero"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter"
+            android:text="@string/action_discover_online_recipes"
+            android:textColor="@color/colorAccentClay"
+            android:textSize="13sp"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_search"
+            app:iconGravity="textStart"
+            app:iconSize="18dp"
+            app:iconTint="@color/colorAccentClay"
+            app:strokeColor="@color/colorAccentClay" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnZeroShowMissing1or2"
+            style="@style/Widget.PantryBuddy.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/action_view_missing_recipes"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <!-- Secondary Action Helper Note (Figma 2:9716) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/inter"
+            android:gravity="center"
+            android:text="@string/zero_match_secondary_note"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp" />
+
+        <!-- Shelf-Life Reminder for Leftovers Card (Figma 2:9716) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/colorPillNeutral"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_clock"
+                    app:tint="@color/colorAccentAmber"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/zero_match_leftover_reminder"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Optional Almost There Section in Zero-Match State -->
         <LinearLayout
             android:id="@+id/layoutZeroAlmostThere"

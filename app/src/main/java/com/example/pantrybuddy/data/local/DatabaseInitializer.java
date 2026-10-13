@@ -104,7 +104,33 @@ public class DatabaseInitializer {
         db.runInTransaction(() -> {
             db.pantryDao().deleteAll();
             populateInitialRecipes(db, context);
+            backfillMissingRecipeImages(db, context);
             populateSamplePantry(db);
         });
+    }
+
+    // Backfills missing image URLs for existing seeded recipes
+    public static void backfillMissingRecipeImages(AppDatabase db, Context context) {
+        try {
+            InputStream inputStream = context.getAssets().open("recipes_seed.json");
+            Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<RecipeSeedDto>>() {}.getType();
+            List<RecipeSeedDto> seedList = gson.fromJson(reader, listType);
+            reader.close();
+
+            if (seedList != null && !seedList.isEmpty()) {
+                db.runInTransaction(() -> {
+                    for (RecipeSeedDto dto : seedList) {
+                        if (dto.imageUrl != null && !dto.imageUrl.trim().isEmpty()) {
+                            db.recipeDao().updateRecipeImage(dto.title, dto.imageUrl.trim());
+                        }
+                    }
+                });
+                Log.d(TAG, "Backfilled missing recipe images from assets.");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error backfilling recipe images", e);
+        }
     }
 }

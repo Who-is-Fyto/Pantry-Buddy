@@ -2,6 +2,7 @@ package com.example.pantrybuddy.data.repository;
 
 import android.app.Application;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
@@ -66,18 +67,13 @@ public class RecipeRepository {
         almostThereRecipes.addSource(allPantryItems, pantry -> runMatching());
     }
 
+    public static final long SPOONACULAR_CACHE_MAX_AGE_MS = 60 * 60 * 1000L; // Strict 1-hour caching limit
+
     // Runs matching algorithm whenever recipes or pantry items change
     public void runMatching() {
         executor.execute(() -> {
-            List<RecipeWithIngredients> recipes = allRecipes.getValue();
-            if (recipes == null) {
-                recipes = recipeDao.getAllRecipesWithIngredientsSync();
-            }
-
-            List<PantryItem> pantry = allPantryItems.getValue();
-            if (pantry == null) {
-                pantry = pantryDao.getAllPantryItemsSync();
-            }
+            List<RecipeWithIngredients> recipes = recipeDao.getAllRecipesWithIngredientsSync();
+            List<PantryItem> pantry = pantryDao.getAllPantryItemsSync();
 
             if (recipes == null) {
                 recipes = Collections.emptyList();
@@ -113,6 +109,106 @@ public class RecipeRepository {
 
     public LiveData<Boolean> getZeroMatchState() {
         return zeroMatchState;
+    }
+
+    public interface OnSyncCompletedListener {
+        void onSyncCompleted(int newRecipesCount, @Nullable String errorMessage);
+    }
+
+    // Purges Spoonacular cached recipes older than 1 hour in compliance with API terms
+    public void purgeExpiredCache() {
+        executor.execute(() -> {
+            long threshold = System.currentTimeMillis() - SPOONACULAR_CACHE_MAX_AGE_MS;
+            recipeDao.purgeExpiredSpoonacularCache(threshold);
+            runMatching();
+        });
+    }
+
+    // Immediately purges all Spoonacular data on user request
+    public void clearAllSpoonacularCache(@Nullable Runnable onCleared) {
+        executor.execute(() -> {
+            recipeDao.deleteAllSpoonacularRecipes();
+            runMatching();
+            if (onCleared != null) {
+                onCleared.run();
+            }
+        });
+    }
+
+    // Fetches matching recipes from Spoonacular based on current pantry items and caches into Room
+    public void syncSpoonacularRecipes(@Nullable OnSyncCompletedListener listener) {
+        executor.execute(() -> {
+            // 1. Enforce 1-hour cache expiration policy first
+            long threshold = System.currentTimeMillis() - SPOONACULAR_CACHE_MAX_AGE_MS;
+            recipeDao.purgeExpiredSpoonacularCache(threshold);
+
+            List<PantryItem> pantry = pantryDao.getAllPantryItemsSync();
+            if (pantry == null || pantry.isEmpty()) {
+                if (listener != null) {
+                    listener.onSyncCompleted(0, "Pantry is empty");
+                }
+                return;
+            }
+
+            java.util.List<String> ingredients = new java.util.ArrayList<>();
+            for (PantryItem item : pantry) {
+                if (item.getQuantity() > 0) {
+                    ingredients.add(item.getNormalizedName());
+                }
+            }
+
+            if (ingredients.isEmpty()) {
+                if (listener != null) {
+                    listener.onSyncCompleted(0, "No available ingredients in pantry");
+                }
+                return;
+            }
+
+            try {
+                List<RecipeWithIngredients> remoteRecipes =
+                        com.example.pantrybuddy.data.remote.spoonacular.SpoonacularService.getInstance()
+                                .searchRecipesByIngredientsSync(ingredients);
+
+                if (remoteRecipes != null && !remoteRecipes.isEmpty()) {
+                    int added = 0;
+                    for (RecipeWithIngredients rwi : remoteRecipes) {
+                        com.example.pantrybuddy.data.local.entity.Recipe recipe = rwi.getRecipe();
+                        if (recipe == null || rwi.getIngredients() == null || rwi.getIngredients().isEmpty()) {
+                            continue;
+                        }
+
+                        com.example.pantrybuddy.data.local.entity.Recipe existing = recipeDao.getRecipeByTitle(recipe.getTitle());
+                        long recipeId;
+                        if (existing != null) {
+                            recipeId = existing.getRecipeId();
+                            recipe.setRecipeId(recipeId);
+                            recipeDao.insertRecipe(recipe); // Update cachedTimestamp
+                        } else {
+                            recipeId = recipeDao.insertRecipe(recipe);
+                            for (com.example.pantrybuddy.data.local.entity.RecipeIngredient ing : rwi.getIngredients()) {
+                                ing.setRecipeId(recipeId);
+                            }
+                            recipeDao.insertIngredients(rwi.getIngredients());
+                            added++;
+                        }
+                    }
+
+                    // Directly re-evaluate matching against SQLite
+                    runMatching();
+                    if (listener != null) {
+                        listener.onSyncCompleted(added, null);
+                    }
+                } else {
+                    if (listener != null) {
+                        listener.onSyncCompleted(0, "No new recipes found for current ingredients");
+                    }
+                }
+            } catch (Exception e) {
+                if (listener != null) {
+                    listener.onSyncCompleted(0, e.getMessage());
+                }
+            }
+        });
     }
 
     // Evaluates a single recipe asynchronously with current pantry items

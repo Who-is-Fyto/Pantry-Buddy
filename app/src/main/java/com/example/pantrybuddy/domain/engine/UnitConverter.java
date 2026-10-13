@@ -36,6 +36,9 @@ public class UnitConverter {
         MASS_TO_GRAMS.put("lbs", 453.592);
         MASS_TO_GRAMS.put("pound", 453.592);
         MASS_TO_GRAMS.put("pounds", 453.592);
+        MASS_TO_GRAMS.put("mg", 0.001);
+        MASS_TO_GRAMS.put("milligram", 0.001);
+        MASS_TO_GRAMS.put("milligrams", 0.001);
 
         // Volume -> ml
         VOLUME_TO_ML.put("ml", 1.0);
@@ -53,6 +56,17 @@ public class UnitConverter {
         VOLUME_TO_ML.put("cup", 240.0);
         VOLUME_TO_ML.put("cups", 240.0);
         VOLUME_TO_ML.put("fl oz", 29.5735);
+        VOLUME_TO_ML.put("pinch", 0.36);
+        VOLUME_TO_ML.put("pinches", 0.36);
+        VOLUME_TO_ML.put("dash", 0.6);
+        VOLUME_TO_ML.put("dashes", 0.6);
+        VOLUME_TO_ML.put("pint", 473.176);
+        VOLUME_TO_ML.put("pints", 473.176);
+        VOLUME_TO_ML.put("quart", 946.353);
+        VOLUME_TO_ML.put("quarts", 946.353);
+        VOLUME_TO_ML.put("gal", 3785.41);
+        VOLUME_TO_ML.put("gallon", 3785.41);
+        VOLUME_TO_ML.put("gallons", 3785.41);
 
         // Count -> pcs
         COUNT_TO_PCS.put("pcs", 1.0);
@@ -65,6 +79,28 @@ public class UnitConverter {
         COUNT_TO_PCS.put("cloves", 1.0);
         COUNT_TO_PCS.put("slice", 1.0);
         COUNT_TO_PCS.put("slices", 1.0);
+        COUNT_TO_PCS.put("can", 1.0);
+        COUNT_TO_PCS.put("cans", 1.0);
+        COUNT_TO_PCS.put("bunch", 1.0);
+        COUNT_TO_PCS.put("bunches", 1.0);
+        COUNT_TO_PCS.put("pack", 1.0);
+        COUNT_TO_PCS.put("packs", 1.0);
+        COUNT_TO_PCS.put("package", 1.0);
+        COUNT_TO_PCS.put("packages", 1.0);
+        COUNT_TO_PCS.put("packet", 1.0);
+        COUNT_TO_PCS.put("packets", 1.0);
+        COUNT_TO_PCS.put("head", 1.0);
+        COUNT_TO_PCS.put("heads", 1.0);
+        COUNT_TO_PCS.put("stalk", 1.0);
+        COUNT_TO_PCS.put("stalks", 1.0);
+        COUNT_TO_PCS.put("bottle", 1.0);
+        COUNT_TO_PCS.put("bottles", 1.0);
+        COUNT_TO_PCS.put("jar", 1.0);
+        COUNT_TO_PCS.put("jars", 1.0);
+        COUNT_TO_PCS.put("bag", 1.0);
+        COUNT_TO_PCS.put("bags", 1.0);
+        COUNT_TO_PCS.put("box", 1.0);
+        COUNT_TO_PCS.put("boxes", 1.0);
 
         // Average weights in grams
         PIECE_WEIGHT_ESTIMATES.put("egg", 50.0);
@@ -74,6 +110,13 @@ public class UnitConverter {
         PIECE_WEIGHT_ESTIMATES.put("garlic", 5.0);
         PIECE_WEIGHT_ESTIMATES.put("carrot", 80.0);
         PIECE_WEIGHT_ESTIMATES.put("cucumber", 150.0);
+        PIECE_WEIGHT_ESTIMATES.put("apple", 180.0);
+        PIECE_WEIGHT_ESTIMATES.put("banana", 120.0);
+        PIECE_WEIGHT_ESTIMATES.put("lemon", 60.0);
+        PIECE_WEIGHT_ESTIMATES.put("lime", 45.0);
+        PIECE_WEIGHT_ESTIMATES.put("avocado", 150.0);
+        PIECE_WEIGHT_ESTIMATES.put("bell pepper", 120.0);
+        PIECE_WEIGHT_ESTIMATES.put("mushroom", 20.0);
     }
 
     // Standardizes unit abbreviations
@@ -82,15 +125,27 @@ public class UnitConverter {
         String u = unit.toLowerCase(Locale.US).trim();
         if (MASS_TO_GRAMS.containsKey(u)) {
             if (u.equals("kg") || u.startsWith("kilo")) return "kg";
+            if (u.equals("oz") || u.startsWith("ounce")) return "oz";
+            if (u.equals("lb") || u.startsWith("pound")) return "lb";
+            if (u.equals("mg")) return "mg";
             return "g";
         }
         if (VOLUME_TO_ML.containsKey(u)) {
             if (u.equals("l") || u.startsWith("liter")) return "l";
             if (u.startsWith("tbsp") || u.startsWith("tablespoon")) return "tbsp";
             if (u.startsWith("tsp") || u.startsWith("teaspoon")) return "tsp";
+            if (u.startsWith("cup")) return "cup";
+            if (u.startsWith("pinch")) return "pinch";
+            if (u.startsWith("dash")) return "dash";
+            if (u.equals("fl oz")) return "fl oz";
             return "ml";
         }
         if (COUNT_TO_PCS.containsKey(u)) {
+            if (u.startsWith("clove")) return "clove";
+            if (u.startsWith("slice")) return "slice";
+            if (u.startsWith("can")) return "can";
+            if (u.startsWith("bunch")) return "bunch";
+            if (u.startsWith("pack")) return "pack";
             return "pcs";
         }
         return u;

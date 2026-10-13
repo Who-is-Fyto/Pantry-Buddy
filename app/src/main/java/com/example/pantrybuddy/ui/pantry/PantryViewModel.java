@@ -16,6 +16,7 @@ import com.example.pantrybuddy.domain.model.StockDeduction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 // ViewModel managing pantry inventory, search, and category filters
 public class PantryViewModel extends AndroidViewModel {
@@ -93,7 +94,16 @@ public class PantryViewModel extends AndroidViewModel {
         List<PantryItem> result = new ArrayList<>();
         for (PantryItem item : rawList) {
             if (category != null && !category.equalsIgnoreCase("All")) {
-                if (!category.equalsIgnoreCase(item.getCategory())) {
+                boolean matchesCategory = false;
+                if (item.getCategory() != null) {
+                    if (category.equalsIgnoreCase(item.getCategory())) {
+                        matchesCategory = true;
+                    } else if (category.toLowerCase(Locale.US).startsWith("staples")
+                            && item.getCategory().toLowerCase(Locale.US).startsWith("staples")) {
+                        matchesCategory = true;
+                    }
+                }
+                if (!matchesCategory) {
                     continue;
                 }
             }
@@ -203,6 +213,10 @@ public class PantryViewModel extends AndroidViewModel {
 
     public void resetSampleData() {
         repository.resetSampleData();
+    }
+
+    public void resetSampleData(Runnable onComplete) {
+        repository.resetSampleData(onComplete);
     }
 
     public void deductStock(List<StockDeduction> deductions, Runnable onComplete) {

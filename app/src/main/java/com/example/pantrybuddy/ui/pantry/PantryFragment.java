@@ -1,5 +1,7 @@
 package com.example.pantrybuddy.ui.pantry;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.pantrybuddy.R;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
+import com.example.pantrybuddy.data.remote.openfoodfacts.ScannedProduct;
 import com.example.pantrybuddy.databinding.FragmentPantryBinding;
+import com.example.pantrybuddy.ui.scanner.BarcodeScannerActivity;
 
 // Fragment displaying the reactive pantry inventory list, search, filter chips, and sorting
 public class PantryFragment extends Fragment {
@@ -25,6 +31,26 @@ public class PantryFragment extends Fragment {
     private PantryViewModel pantryViewModel;
     private PantryAdapter adapter;
     private PantryViewModel.SortOrder currentSort = PantryViewModel.SortOrder.EXPIRY_ASC;
+
+    private final ActivityResultLauncher<Intent> scanBarcodeLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    ScannedProduct product = (ScannedProduct) result.getData()
+                            .getSerializableExtra(BarcodeScannerActivity.EXTRA_SCANNED_PRODUCT);
+                    if (product != null) {
+                        AddIngredientBottomSheet sheet = AddIngredientBottomSheet.newInstance(product);
+                        sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+                    } else {
+                        String barcode = result.getData().getStringExtra(BarcodeScannerActivity.EXTRA_SCANNED_BARCODE);
+                        if (barcode != null && !barcode.trim().isEmpty()) {
+                            AddIngredientBottomSheet sheet = AddIngredientBottomSheet.newInstance(
+                                    new ScannedProduct(barcode, barcode, "", 1.0, "pcs", "Staples", "")
+                            );
+                            sheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+                        }
+                    }
+                }
+            });
 
     @Nullable
     @Override
@@ -43,8 +69,18 @@ public class PantryFragment extends Fragment {
         setupSearchInput();
         setupCategoryChips();
         setupSortSelector();
+        setupScannerButtons();
         setupFab();
         setupObservers();
+    }
+
+    private void setupScannerButtons() {
+        View.OnClickListener scanListener = v -> {
+            Intent intent = new Intent(requireContext(), BarcodeScannerActivity.class);
+            scanBarcodeLauncher.launch(intent);
+        };
+        binding.btnScanBarcode.setOnClickListener(scanListener);
+        binding.btnEmptyScanBarcode.setOnClickListener(scanListener);
     }
 
     private void setupRecyclerView() {
@@ -75,6 +111,13 @@ public class PantryFragment extends Fragment {
         });
 
         binding.btnClearSearch.setOnClickListener(v -> binding.etPantrySearch.setText(""));
+
+        binding.btnPantryFilterDrawer.setOnClickListener(v -> {
+            if (getParentFragmentManager().findFragmentByTag("PantryFilterBottomSheet") == null) {
+                PantryFilterBottomSheet bottomSheet = new PantryFilterBottomSheet();
+                bottomSheet.show(getParentFragmentManager(), "PantryFilterBottomSheet");
+            }
+        });
     }
 
     private void setupCategoryChips() {
@@ -85,17 +128,35 @@ public class PantryFragment extends Fragment {
             } else if (checkedIds.contains(R.id.chipVegetables)) {
                 pantryViewModel.setCategoryFilter("Vegetables");
                 pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipFruits)) {
+                pantryViewModel.setCategoryFilter("Fruits");
+                pantryViewModel.setUseSoonOnly(false);
             } else if (checkedIds.contains(R.id.chipDairy)) {
                 pantryViewModel.setCategoryFilter("Dairy & Eggs");
                 pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipMeat)) {
+                pantryViewModel.setCategoryFilter("Meat & Fish");
+                pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipBakery)) {
+                pantryViewModel.setCategoryFilter("Bakery & Bread");
+                pantryViewModel.setUseSoonOnly(false);
             } else if (checkedIds.contains(R.id.chipStaples)) {
-                pantryViewModel.setCategoryFilter("Staples");
+                pantryViewModel.setCategoryFilter("Staples & Grains");
+                pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipCanned)) {
+                pantryViewModel.setCategoryFilter("Canned Goods");
+                pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipCondiments)) {
+                pantryViewModel.setCategoryFilter("Condiments & Sauces");
                 pantryViewModel.setUseSoonOnly(false);
             } else if (checkedIds.contains(R.id.chipSpices)) {
                 pantryViewModel.setCategoryFilter("Spices & Seasonings");
                 pantryViewModel.setUseSoonOnly(false);
-            } else if (checkedIds.contains(R.id.chipMeat)) {
-                pantryViewModel.setCategoryFilter("Meat & Fish");
+            } else if (checkedIds.contains(R.id.chipBeverages)) {
+                pantryViewModel.setCategoryFilter("Beverages");
+                pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipSnacks)) {
+                pantryViewModel.setCategoryFilter("Snacks & Sweets");
                 pantryViewModel.setUseSoonOnly(false);
             } else if (checkedIds.contains(R.id.chipUseSoon)) {
                 pantryViewModel.setCategoryFilter("All");
@@ -122,7 +183,7 @@ public class PantryFragment extends Fragment {
     private void updateSortButtonText() {
         switch (currentSort) {
             case NAME_ASC:
-                binding.btnSortOrder.setText("Name A–Z ↑");
+                binding.btnSortOrder.setText("Name A-Z ↑");
                 break;
             case DATE_ADDED_DESC:
                 binding.btnSortOrder.setText("Recently added ↓");
@@ -136,8 +197,10 @@ public class PantryFragment extends Fragment {
 
     private void setupFab() {
         binding.fabAddIngredient.setOnClickListener(v -> {
-            AddIngredientBottomSheet bottomSheet = new AddIngredientBottomSheet();
-            bottomSheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            if (getParentFragmentManager().findFragmentByTag("AddIngredientBottomSheet") == null) {
+                AddIngredientBottomSheet bottomSheet = new AddIngredientBottomSheet();
+                bottomSheet.show(getParentFragmentManager(), "AddIngredientBottomSheet");
+            }
         });
     }
 

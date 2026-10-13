@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -35,7 +36,7 @@
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
             android:paddingTop="20dp"
-            android:paddingBottom="40dp">
+            android:paddingBottom="80dp">
 
             <!-- Hero Card -->
             <com.google.android.material.card.MaterialCardView
@@ -51,73 +52,91 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="20dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvDetailIngredientName"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/lora"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            tools:text="Tomatoes" />
-
-                        <TextView
-                            android:id="@+id/tvDetailExpiryPill"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_pill_green"
-                            android:fontFamily="@font/inter"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:textColor="@color/colorAccentGreen"
-                            android:textSize="11sp"
-                            android:textStyle="bold"
-                            tools:text="Use today" />
-                    </LinearLayout>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivDetailIngredientHero"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/colorPillNeutral"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_restaurant"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tvDetailCurrentQty"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter"
-                            android:textColor="@color/colorAccentClay"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            tools:text="300 g in pantry" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="6dp"
-                            android:text="•"
-                            android:textColor="@color/colorTextTertiary" />
+                            <TextView
+                                android:id="@+id/tvDetailIngredientName"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lora"
+                                android:textColor="@color/colorTextPrimary"
+                                android:textSize="22sp"
+                                android:textStyle="bold"
+                                tools:text="Tomatoes" />
 
-                        <TextView
-                            android:id="@+id/tvDetailCategoryBadge"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/tvDetailExpiryPill"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_pill_green"
+                                android:fontFamily="@font/inter"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="3dp"
+                                android:textColor="@color/colorAccentGreen"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                tools:text="Use today" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter"
-                            android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp"
-                            tools:text="Vegetables" />
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvDetailCurrentQty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter"
+                                android:textColor="@color/colorAccentClay"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                tools:text="300 g in pantry" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_marginHorizontal="6dp"
+                                android:layout_height="wrap_content"
+                                android:text="•"
+                                android:textColor="@color/colorTextTertiary" />
+
+                            <TextView
+                                android:id="@+id/tvDetailCategoryBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter"
+                                android:textColor="@color/colorTextSecondary"
+                                android:textSize="14sp"
+                                tools:text="Vegetables" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -137,26 +156,46 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="14dp">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_nav_recipes"
-                        app:tint="@color/colorAccentGreen" />
-
-                    <TextView
-                        android:id="@+id/tvCrossReferenceText"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_nav_recipes"
+                            app:tint="@color/colorAccentGreen" />
+
+                        <TextView
+                            android:id="@+id/tvCrossReferenceText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/inter"
+                            android:lineSpacingExtra="2dp"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="13sp"
+                            tools:text="Your tomatoes are included in 2 recipes you can make right now." />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSeeRecipesForIngredient"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/inter"
-                        android:lineSpacingExtra="2dp"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="13sp"
-                        tools:text="Your tomatoes are included in 2 recipes you can make right now." />
+                        android:text="See recipes using this item"
+                        android:textColor="@color/colorAccentClay"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="@color/colorAccentClay"
+                        app:strokeWidth="1dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -316,6 +355,17 @@
                         app:chipStrokeWidth="1dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailUnitCup"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="cup"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/chipDetailUnitTbsp"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
@@ -332,6 +382,72 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="tsp"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailUnitOz"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="oz"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailUnitCan"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="can"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailUnitSlice"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="slice"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailUnitClove"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="clove"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailUnitBunch"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="bunch"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailUnitPinch"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="pinch"
                         android:textColor="@color/chip_text_selector"
                         app:chipBackgroundColor="@color/chip_background_selector"
                         app:chipStrokeColor="@color/colorBorder"
@@ -383,11 +499,14 @@
 
                 <ImageView
                     android:id="@+id/btnClearDetailExpiry"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="-8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
+                    android:contentDescription="Clear expiration date"
                     android:focusable="true"
+                    android:padding="8dp"
                     android:src="@drawable/ic_close"
                     android:visibility="gone"
                     app:tint="@color/colorTextSecondary"
@@ -432,6 +551,17 @@
                         app:chipStrokeWidth="1dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailCatFruits"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fruits"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/chipDetailCatDairy"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
@@ -443,11 +573,55 @@
                         app:chipStrokeWidth="1dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailCatMeat"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Meat &amp; Fish"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailCatBakery"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bakery &amp; Bread"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/chipDetailCatStaples"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Staples"
+                        android:text="Staples &amp; Grains"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailCatCanned"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Canned Goods"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailCatCondiments"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Condiments &amp; Sauces"
                         android:textColor="@color/chip_text_selector"
                         app:chipBackgroundColor="@color/chip_background_selector"
                         app:chipStrokeColor="@color/colorBorder"
@@ -465,17 +639,38 @@
                         app:chipStrokeWidth="1dp" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chipDetailCatMeat"
+                        android:id="@+id/chipDetailCatBeverages"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Meat &amp; Fish"
+                        android:text="Beverages"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDetailCatSnacks"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Snacks &amp; Sweets"
                         android:textColor="@color/chip_text_selector"
                         app:chipBackgroundColor="@color/chip_background_selector"
                         app:chipStrokeColor="@color/colorBorder"
                         app:chipStrokeWidth="1dp" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
+
+            <!-- Helper Micro-Copy (Figma 2:9346) -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/inter"
+                android:text="@string/detail_edit_helper"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="12sp" />
 
             <!-- Save Button -->
             <com.google.android.material.button.MaterialButton

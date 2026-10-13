@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_bottom_sheet"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:overScrollMode="never">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
         android:paddingTop="12dp"
-        android:paddingBottom="32dp">
+        android:paddingBottom="48dp">
 
         <!-- Drag handle -->
         <View
@@ -35,11 +36,40 @@
             android:textSize="11sp"
             android:textStyle="bold" />
 
+        <!-- Draft State Indicator Badge (Figma 2:9285) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_pill_neutral"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/colorAccentAmber"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:fontFamily="@font/inter"
+                android:text="@string/add_ingredient_draft_badge"
+                android:textColor="@color/colorAccentAmber"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/lora"
             android:text="What's in your kitchen?"
             android:textColor="@color/colorTextPrimary"
@@ -56,11 +86,29 @@
             android:textColor="@color/colorTextSecondary"
             android:textSize="13sp" />
 
+        <!-- Barcode Scan Shortcut -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnScanBarcodeInSheet"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/inter"
+            android:text="@string/scan_barcode_or_qr"
+            android:textColor="@color/colorAccentClay"
+            android:textSize="13sp"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_qr_code_scanner"
+            app:iconGravity="textStart"
+            app:iconSize="18dp"
+            app:iconTint="@color/colorAccentClay"
+            app:strokeColor="@color/colorAccentClay" />
+
         <!-- Ingredient Name -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/inter"
             android:letterSpacing="0.05"
             android:text="INGREDIENT NAME"
@@ -85,6 +133,76 @@
             android:textColor="@color/colorTextPrimary"
             android:textColorHint="@color/colorTextSecondary"
             android:textSize="14sp" />
+
+        <!-- Smart Semi-AI Assistant Suggestion Banner -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardSmartAssistant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/colorPillNeutral"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/colorAccentGreen"
+            app:strokeWidth="1dp"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_restaurant"
+                    app:tint="@color/colorAccentGreen" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:text="SMART HELPER AUTO-ADAPTED"
+                        android:textColor="@color/colorAccentGreen"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvSmartSuggestionSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/inter"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="Dairy &amp; Eggs • 1000 ml • ~7 days shelf life" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvSmartSuggestionExpiryTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pill_green"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:textColor="@color/colorAccentGreen"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    tools:text="+7 days" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Category -->
         <TextView
@@ -125,6 +243,17 @@
                     app:chipStrokeWidth="1dp" />
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCatFruits"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fruits"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/chipCatDairy"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
@@ -136,11 +265,55 @@
                     app:chipStrokeWidth="1dp" />
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCatMeat"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Meat &amp; Fish"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCatBakery"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bakery &amp; Bread"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/chipCatStaples"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Staples"
+                    android:text="Staples &amp; Grains"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCatCanned"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Canned Goods"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCatCondiments"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Condiments &amp; Sauces"
                     android:textColor="@color/chip_text_selector"
                     app:chipBackgroundColor="@color/chip_background_selector"
                     app:chipStrokeColor="@color/colorBorder"
@@ -158,11 +331,22 @@
                     app:chipStrokeWidth="1dp" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipCatMeat"
+                    android:id="@+id/chipCatBeverages"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Meat &amp; Fish"
+                    android:text="Beverages"
+                    android:textColor="@color/chip_text_selector"
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    app:chipStrokeColor="@color/colorBorder"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCatSnacks"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Snacks &amp; Sweets"
                     android:textColor="@color/chip_text_selector"
                     app:chipBackgroundColor="@color/chip_background_selector"
                     app:chipStrokeColor="@color/colorBorder"
@@ -276,6 +460,17 @@
                         app:chipStrokeWidth="1dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/chipUnitCup"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="cup"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/chipUnitTbsp"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
@@ -296,9 +491,85 @@
                         app:chipBackgroundColor="@color/chip_background_selector"
                         app:chipStrokeColor="@color/colorBorder"
                         app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipUnitOz"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="oz"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipUnitCan"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="can"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipUnitSlice"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="slice"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipUnitClove"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="clove"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipUnitBunch"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="bunch"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipUnitPinch"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="pinch"
+                        android:textColor="@color/chip_text_selector"
+                        app:chipBackgroundColor="@color/chip_background_selector"
+                        app:chipStrokeColor="@color/colorBorder"
+                        app:chipStrokeWidth="1dp" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
         </LinearLayout>
+
+        <!-- Quantity helper note (Figma 2:9285) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/inter"
+            android:text="@string/add_ingredient_qty_helper"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="12sp" />
 
         <!-- Expiry Date Picker Field -->
         <TextView
@@ -344,11 +615,14 @@
 
             <ImageView
                 android:id="@+id/btnClearSelectedExpiry"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="-8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:contentDescription="Clear expiration date"
                 android:focusable="true"
+                android:padding="8dp"
                 android:src="@drawable/ic_close"
                 android:visibility="gone"
                 app:tint="@color/colorTextSecondary"
