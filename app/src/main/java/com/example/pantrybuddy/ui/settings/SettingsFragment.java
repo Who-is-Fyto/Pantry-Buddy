@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.pantrybuddy.R;
 import com.example.pantrybuddy.databinding.FragmentSettingsBinding;
 import com.example.pantrybuddy.ui.pantry.PantryViewModel;
+import com.example.pantrybuddy.ui.recipes.RecipeViewModel;
 import com.example.pantrybuddy.utils.ExpiryReminderWorker;
 import com.example.pantrybuddy.utils.NotificationHelper;
 import com.example.pantrybuddy.utils.PreferenceHelper;
@@ -31,6 +32,7 @@ public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
     private PantryViewModel pantryViewModel;
+    private RecipeViewModel recipeViewModel;
 
     private final ActivityResultLauncher<String> requestNotificationPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -60,6 +62,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         pantryViewModel = new ViewModelProvider(requireActivity()).get(PantryViewModel.class);
+        recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 
         setupInitialState();
         setupListeners();
@@ -165,6 +168,26 @@ public class SettingsFragment extends Fragment {
 
         // Marker Testing Tool: Reset Sample Pantry Button
         binding.btnResetSampleData.setOnClickListener(v -> showResetConfirmationDialog());
+
+        // Clear Spoonacular Cache Button
+        binding.btnClearSpoonacularCache.setOnClickListener(v -> showClearCacheConfirmationDialog());
+    }
+
+    private void showClearCacheConfirmationDialog() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_clear_cache_title)
+                .setMessage(R.string.dialog_clear_cache_message)
+                .setNegativeButton(R.string.action_cancel, (dialog, which) -> dialog.dismiss())
+                .setPositiveButton(R.string.action_clear, (dialog, which) -> {
+                    recipeViewModel.clearSpoonacularCache(() -> {
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(() -> {
+                                Toast.makeText(getContext(), R.string.toast_spoonacular_cache_cleared, Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                    });
+                })
+                .show();
     }
 
     private void showResetConfirmationDialog() {

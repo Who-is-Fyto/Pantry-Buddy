@@ -351,10 +351,9 @@
                     android:layout_height="140dp"
                     android:layout_marginTop="12dp"
                     android:background="@color/colorPillNeutral"
-                    android:scaleType="centerInside"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_restaurant"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-                    app:tint="@color/colorTextSecondary" />
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
                 <!-- Recipe title -->
                 <TextView

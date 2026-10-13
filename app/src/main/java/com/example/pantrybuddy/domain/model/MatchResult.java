@@ -68,6 +68,10 @@ public class MatchResult {
         return !isStrictlyCookable && missingCount == 1;
     }
 
+    public boolean isMissing1or2() {
+        return !isStrictlyCookable && (missingCount == 1 || missingCount == 2);
+    }
+
     public static class MissingIngredientInfo {
         private final String ingredientName;
         private final double amountNeeded;

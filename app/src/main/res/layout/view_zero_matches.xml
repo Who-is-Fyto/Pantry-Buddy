@@ -184,6 +184,33 @@
             android:layout_marginTop="10dp"
             android:text="@string/action_check_pantry" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDiscoverOnlineZero"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter"
+            android:text="@string/action_discover_online_recipes"
+            android:textColor="@color/colorAccentClay"
+            android:textSize="13sp"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_search"
+            app:iconGravity="textStart"
+            app:iconSize="18dp"
+            app:iconTint="@color/colorAccentClay"
+            app:strokeColor="@color/colorAccentClay" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnZeroShowMissing1or2"
+            style="@style/Widget.PantryBuddy.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/action_view_missing_recipes"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
         <!-- Secondary Action Helper Note (Figma 2:9716) -->
         <TextView
             android:layout_width="match_parent"

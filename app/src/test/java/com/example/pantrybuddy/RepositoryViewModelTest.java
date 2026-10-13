@@ -336,6 +336,18 @@ public class RepositoryViewModelTest {
         assertEquals(0, vm.getFilteredCookableRecipes().getValue().size());
         assertEquals(1, vm.getFilteredAlmostThereRecipes().getValue().size());
         assertEquals("Butter Toast", vm.getFilteredAlmostThereRecipes().getValue().get(0).getRecipe().getTitle());
+
+        // Filter only missing 1 or 2 items: cookable list becomes empty, almost there list contains Butter Toast
+        vm.setRecipeSearchQuery("");
+        vm.setOnlyMissing1or2Filter(true);
+        assertEquals(0, vm.getFilteredCookableRecipes().getValue().size());
+        assertEquals(1, vm.getFilteredAlmostThereRecipes().getValue().size());
+        assertEquals("Butter Toast", vm.getFilteredAlmostThereRecipes().getValue().get(0).getRecipe().getTitle());
+
+        // Reset missing 1 or 2 items filter
+        vm.setOnlyMissing1or2Filter(false);
+        assertEquals(2, vm.getFilteredCookableRecipes().getValue().size());
+        assertEquals(1, vm.getFilteredAlmostThereRecipes().getValue().size());
     }
 
     // Fake PantryDao for testing without SQLite device dependencies
@@ -495,9 +507,49 @@ public class RepositoryViewModelTest {
         }
 
         @Override
+        public Recipe getRecipeByTitle(String title) {
+            for (RecipeWithIngredients rwi : recipeList) {
+                if (rwi.getRecipe() != null && rwi.getRecipe().getTitle().equalsIgnoreCase(title)) {
+                    return rwi.getRecipe();
+                }
+            }
+            return null;
+        }
+
+        @Override
         public void deleteAllRecipes() {}
 
         @Override
         public void deleteAllIngredients() {}
+
+        @Override
+        public int purgeExpiredSpoonacularCache(long expiryThresholdMs) {
+            return 0;
+        }
+
+        @Override
+        public int deleteAllSpoonacularRecipes() {
+            return 0;
+        }
+
+        @Override
+        public void updateRecipeImageIfMissing(String title, String imageUrl) {
+            for (RecipeWithIngredients rwi : recipeList) {
+                if (rwi.getRecipe() != null && rwi.getRecipe().getTitle().equalsIgnoreCase(title)) {
+                    if (rwi.getRecipe().getImageUrl() == null || rwi.getRecipe().getImageUrl().isEmpty()) {
+                        rwi.getRecipe().setImageUrl(imageUrl);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void updateRecipeImage(String title, String imageUrl) {
+            for (RecipeWithIngredients rwi : recipeList) {
+                if (rwi.getRecipe() != null && rwi.getRecipe().getTitle().equalsIgnoreCase(title)) {
+                    rwi.getRecipe().setImageUrl(imageUrl);
+                }
+            }
+        }
     }
 }

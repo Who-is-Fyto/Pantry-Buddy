@@ -401,6 +401,59 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Card 4.5: Spoonacular Recipe Cache Management -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/colorSurface"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/colorBorder"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter"
+                    android:text="@string/settings_cache_title"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/inter"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="@string/settings_cache_desc"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="13sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClearSpoonacularCache"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/inter"
+                    android:text="@string/action_clear_spoonacular_cache"
+                    android:textColor="@color/colorAccentAmber"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/colorAccentAmber"
+                    app:strokeWidth="1.5dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- Card 5: Privacy & Device Permissions Audit -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

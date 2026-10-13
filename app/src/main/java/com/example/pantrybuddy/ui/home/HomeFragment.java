@@ -19,6 +19,7 @@ import com.example.pantrybuddy.domain.model.MatchResult;
 import com.example.pantrybuddy.ui.pantry.PantryViewModel;
 import com.example.pantrybuddy.ui.recipes.RecipeViewModel;
 import com.example.pantrybuddy.utils.PreferenceHelper;
+import com.example.pantrybuddy.utils.RecipeImageHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -142,15 +143,7 @@ public class HomeFragment extends Fragment {
             }
 
             // Recipe Photography / Placeholder
-            if (featured.getRecipe().getImageUrl() != null && !featured.getRecipe().getImageUrl().trim().isEmpty()) {
-                com.bumptech.glide.Glide.with(this)
-                        .load(featured.getRecipe().getImageUrl())
-                        .placeholder(R.drawable.ic_restaurant)
-                        .error(R.drawable.ic_restaurant)
-                        .into(binding.ivFeaturedRecipeImage);
-            } else {
-                binding.ivFeaturedRecipeImage.setImageResource(R.drawable.ic_restaurant);
-            }
+            RecipeImageHelper.loadRecipeImage(binding.ivFeaturedRecipeImage, featured.getRecipe().getImageUrl(), RecipeImageHelper.DEFAULT_CARD_PADDING_DP);
 
             binding.btnHomeSeeRecipes.setText(getString(R.string.home_see_recipes_link, cookableList.size()));
             binding.layoutHomeRecipesHeader.setVisibility(View.VISIBLE);

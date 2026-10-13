@@ -3,6 +3,7 @@ package com.example.pantrybuddy.ui.recipes;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
@@ -29,6 +30,7 @@ public class RecipeViewModel extends AndroidViewModel {
     private final MutableLiveData<String> recipeSearchQuery = new MutableLiveData<>("");
     private final MutableLiveData<Integer> maxCookTimeFilter = new MutableLiveData<>(0); // 0 means no time limit
     private final MutableLiveData<Boolean> onlyExpiringSoonFilter = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> onlyMissing1or2Filter = new MutableLiveData<>(false);
 
     private final MediatorLiveData<List<MatchResult>> filteredCookableRecipes = new MediatorLiveData<>();
     private final MediatorLiveData<List<MatchResult>> filteredAlmostThereRecipes = new MediatorLiveData<>();
@@ -54,13 +56,20 @@ public class RecipeViewModel extends AndroidViewModel {
         filteredCookableRecipes.addSource(recipeSearchQuery, query -> applyCookableFilters());
         filteredCookableRecipes.addSource(maxCookTimeFilter, time -> applyCookableFilters());
         filteredCookableRecipes.addSource(onlyExpiringSoonFilter, flag -> applyCookableFilters());
+        filteredCookableRecipes.addSource(onlyMissing1or2Filter, flag -> applyCookableFilters());
 
         filteredAlmostThereRecipes.addSource(almostThereRecipes, list -> applyAlmostThereFilters());
         filteredAlmostThereRecipes.addSource(recipeSearchQuery, query -> applyAlmostThereFilters());
         filteredAlmostThereRecipes.addSource(maxCookTimeFilter, time -> applyAlmostThereFilters());
+        filteredAlmostThereRecipes.addSource(onlyMissing1or2Filter, flag -> applyAlmostThereFilters());
     }
 
     private void applyCookableFilters() {
+        if (Boolean.TRUE.equals(onlyMissing1or2Filter.getValue())) {
+            filteredCookableRecipes.setValue(Collections.emptyList());
+            return;
+        }
+
         List<MatchResult> raw = cookableRecipes.getValue();
         if (raw == null) {
             filteredCookableRecipes.setValue(Collections.emptyList());
@@ -149,6 +158,18 @@ public class RecipeViewModel extends AndroidViewModel {
         onlyExpiringSoonFilter.setValue(onlyExpiringSoon);
     }
 
+    public LiveData<Boolean> getOnlyMissing1or2Filter() {
+        return onlyMissing1or2Filter;
+    }
+
+    public void setOnlyMissing1or2Filter(boolean onlyMissing1or2) {
+        onlyMissing1or2Filter.setValue(onlyMissing1or2);
+    }
+
+    public void clearSpoonacularCache(@Nullable Runnable onCleared) {
+        repository.clearAllSpoonacularCache(onCleared);
+    }
+
     public LiveData<Boolean> getZeroMatchState() {
         return zeroMatchState;
     }
@@ -167,6 +188,34 @@ public class RecipeViewModel extends AndroidViewModel {
 
     public void setMaxCookTimeFilter(int minutes) {
         maxCookTimeFilter.setValue(minutes);
+    }
+
+    private final MutableLiveData<Boolean> isSyncingRecipes = new MutableLiveData<>(false);
+    private final MutableLiveData<String> syncStatusMessage = new MutableLiveData<>(null);
+
+    public LiveData<Boolean> getIsSyncingRecipes() {
+        return isSyncingRecipes;
+    }
+
+    public LiveData<String> getSyncStatusMessage() {
+        return syncStatusMessage;
+    }
+
+    public void syncSpoonacularRecipes() {
+        if (Boolean.TRUE.equals(isSyncingRecipes.getValue())) {
+            return;
+        }
+        isSyncingRecipes.setValue(true);
+        repository.syncSpoonacularRecipes((count, error) -> {
+            isSyncingRecipes.postValue(false);
+            if (error != null) {
+                syncStatusMessage.postValue(error);
+            } else if (count > 0) {
+                syncStatusMessage.postValue("Discovered " + count + " new recipes!");
+            } else {
+                syncStatusMessage.postValue("Recipes up to date");
+            }
+        });
     }
 
     public void refreshMatches() {

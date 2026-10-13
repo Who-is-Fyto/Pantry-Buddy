@@ -14,7 +14,7 @@
 | **Phase FP-2** | **UI/UX Solidification & Layout Audit** | Button listeners, screen fit, keyboard resize, dialogs | Done | `solidified ui layouts, button interactions, and responsive scroll views` |
 | **Phase FP-2.5** | **Figma Design & Missing Features Audit** | Full screen-by-screen Figma audit and gap documentation | Done | `documented figma frontend design gaps and missing features backlog` |
 | **Phase FP-3** | **QR & Barcode Scanning (Open Food Facts API)** | Camera barcode scanner, Open Food Facts REST client, auto-add | Done | `implemented barcode qr scanning with open food facts api integration` |
-| **Phase FP-4** | **Spoonacular Recipe API Integration** | Spoonacular REST client, remote recipes, image loading, offline cache | Pending | `integrated spoonacular api for dynamic recipes and offline cache` |
+| **Phase FP-4** | **Spoonacular Recipe API Integration** | Spoonacular REST client, remote recipes, image loading, offline cache | Done | `integrated spoonacular api for dynamic recipes and offline cache` |
 | **Phase FP-5** | **Backend Robustness, Error Handling & Tests** | Network error resilience, lint cleanup, unit test suite | Pending | `completed backend robustness, offline fallbacks, and test verification` |
 
 ---
@@ -114,8 +114,8 @@
 
 ### Phase FP-4: Spoonacular Recipe API Integration & Image Enrichment
 
-- [ ] **Objective:** Integrate the Spoonacular API to discover dynamic recipes, fetch high-resolution food photography, and cache recipes locally while enforcing 100% strict pantry matching.
-- [ ] **Deliverables:**
+- [x] **Objective:** Integrate the Spoonacular API to discover dynamic recipes, fetch high-resolution food photography, and cache recipes locally while enforcing 100% strict pantry matching.
+- [x] **Deliverables:**
   - **API Configuration & Secure Key Setup:**
     - Configure Spoonacular API endpoint (`https://api.spoonacular.com/recipes/`).
     - Support API key configuration via `local.properties` / `BuildConfig` with fallback demo key or offline mode indicator.
@@ -134,7 +134,7 @@
     - Ensure offline-first functionality: app continues to recommend cached recipes even when device is offline.
   - `app/src/test/java/com/example/pantrybuddy/SpoonacularParserTest.java`:
     - Unit tests validating JSON parsing, ingredient mapping, and strict matcher evaluation of Spoonacular responses.
-- [ ] **Verification:** Fetch remote recipes, verify high-quality images render in Glide, and confirm recipes with missing ingredients are strictly excluded or placed into Almost There.
+- [x] **Verification:** Fetch remote recipes, verify high-quality images render in Glide, and confirm recipes with missing ingredients are strictly excluded or placed into Almost There.
 - [ ] **Commit Command:**
   ```bash
   git add app/src/main/ app/build.gradle.kts app/src/test/ phases_fixing_problems.md
@@ -143,29 +143,38 @@
 
 ---
 
-### Phase FP-5: Backend Robustness, Error Handling & Code Quality
+### Phase FP-5: API Management, Backend Robustness & Frontend Polish
 
-- [ ] **Objective:** Fortify backend resilience with network error boundaries, clean up compiler/lint warnings, and ensure complete test coverage.
-- [ ] **Deliverables:**
-  - **Network Resilience & Offline Status:**
-    - Graceful error handling for API timeouts, HTTP 429 rate limits, and network dropouts.
-    - User-friendly offline banner or snackbar informing user that local pantry inventory and cached recipes are active.
-    - Zero crashes under network failure.
-  - **Code Quality & Lint Cleanup:**
-    - Address unused method warnings in entities and DAOs.
-    - Preserve all Room entity getters and setters required for reflection and serialization.
-    - Clean up unused imports, dead code, and ensure strict compliance with Android Java best practices.
+- [x] **Objective:** Fortify backend resilience, enforce strict Spoonacular free tier compliance (1-hour caching limit, quota handling, publisher attribution), resolve frontend clunkiness, and add Missing 1–2 items filter support.
+- [x] **Deliverables:**
+  - **Spoonacular Free API Quota & Caching Compliance:**
+    - Handled HTTP 402/429 quota exhaustion gracefully with clear UI notification without crashing.
+    - Implemented strict 1-hour cache lifetime for online recipes (`SPOONACULAR_CACHE_MAX_AGE_MS = 3600000L`). Expired records automatically purged upon sync and Room initialization.
+    - Added user-requested cache clearing mechanism in Settings (`btnClearSpoonacularCache`) to delete all online cached recipes on demand.
+    - Added publisher attribution card on recipe detail screens (`"Powered by Spoonacular • Source: [Publisher]"`) with a `"View original recipe"` web link button.
+  - **Frontend Polish & Clunkiness Removal:**
+    - Removed awkward floating recheck footer from the fixed view above bottom navigation in `fragment_recipes.xml`. Replaced with non-intrusive scrollable list footer item (`item_recipes_footer.xml`) inside `RecipesAdapter`.
+    - Added `"Missing 1–2 items"` filter chip (`chipFilterMissing1or2`) allowing users to easily view recipes requiring just 1 or 2 extra ingredients.
+    - Resolved recipe discovery bug where newly discovered recipes missing 1–2 ingredients failed to appear in zero-match state by adding dynamic support in `AlmostThereMatcher`, `RecipesAdapter`, and `view_zero_matches.xml`.
+  - **Recipe Photography & Image Display Fixes:**
+    - Updated all 18 starter seed recipes in `recipes_seed.json` with high-resolution food photography URLs.
+    - Added database image backfill in `DatabaseInitializer` and `AppDatabase` on open to ensure existing local SQLite records are updated with image URLs.
+    - Resolved layout tinting and clipping bugs across `item_recipe_card.xml`, `item_almost_there_card.xml`, `activity_recipe_detail.xml`, and `fragment_home.xml` by removing hardcoded gray tint and padding from XML.
+    - Created `RecipeImageHelper` to manage Glide image loading, clearing filters and padding for photography, and cleanly applying fallback icon styling on empty URL or load failure.
+    - Added `android:usesCleartextTraffic="true"` to `AndroidManifest.xml` to prevent OS-level image blocking from CDN redirects.
+    - Ensured relative image paths in `SpoonacularParser` prepend the official Spoonacular image base URL.
   - **Permissions & Privacy Audit:**
-    - Verify `AndroidManifest.xml` contains only necessary permissions (`VIBRATE`, `POST_NOTIFICATIONS`, `CAMERA`, `INTERNET`).
-    - Verify zero location permissions (`ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION` completely absent).
-  - **Comprehensive Test Suite:**
-    - Run all unit tests across normalizers, unit converters, matchers, diagnostics, workers, and API parsers (`./gradlew test`).
-    - Clean debug build verification (`./gradlew assembleDebug`).
-- [ ] **Verification:** All unit tests pass cleanly in Gradle terminal; app compiles without warnings or errors.
-- [ ] **Commit Command:**
+    - Audited `AndroidManifest.xml` to verify only necessary permissions (`VIBRATE`, `POST_NOTIFICATIONS`, `CAMERA`, `INTERNET`) are present.
+    - Verified zero location permissions (`ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION` completely absent).
+  - **Comprehensive Test Suite & Emoji Verification:**
+    - Verified all unit tests across normalizers, unit converters, matchers, diagnostics, workers, and API parsers (`./gradlew testDebugUnitTest`).
+    - Verified clean build (`./gradlew assembleDebug`).
+    - Verified zero emojis across code, XML, and markdown.
+- [x] **Verification:** All unit tests pass cleanly in Gradle terminal; app compiles without warnings or errors.
+- [x] **Commit Command:**
   ```bash
   git add app/src/main/ app/src/test/ phases_fixing_problems.md
-  git commit -m "completed backend robustness, offline fallbacks, and test verification"
+  git commit -m "completed phase fp-5 api management, cache policy, and frontend polish"
   ```
 
 ---

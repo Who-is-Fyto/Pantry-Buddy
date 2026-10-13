@@ -74,11 +74,9 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:background="@color/colorPillNeutral"
-                android:padding="16dp"
-                android:scaleType="centerInside"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_restaurant"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-                app:tint="@color/colorTextSecondary" />
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
             <LinearLayout
                 android:layout_width="0dp"

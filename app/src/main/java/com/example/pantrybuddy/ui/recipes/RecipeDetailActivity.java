@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.pantrybuddy.R;
+import com.example.pantrybuddy.utils.RecipeImageHelper;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.data.local.entity.Recipe;
 import com.example.pantrybuddy.data.local.entity.RecipeIngredient;
@@ -136,14 +137,34 @@ public class RecipeDetailActivity extends AppCompatActivity {
         binding.tvRecipeDifficulty.setText(recipe.getDifficulty() != null ? recipe.getDifficulty() : "Easy");
         binding.tvRecipeBaseServings.setText(String.format(Locale.US, "Default: %d servings", defaultServings));
 
-        if (recipe.getImageUrl() != null && !recipe.getImageUrl().trim().isEmpty()) {
-            Glide.with(this)
-                    .load(recipe.getImageUrl())
-                    .placeholder(R.drawable.ic_restaurant)
-                    .error(R.drawable.ic_restaurant)
-                    .into(binding.ivRecipeHero);
+        RecipeImageHelper.loadRecipeImage(binding.ivRecipeHero, recipe.getImageUrl(), RecipeImageHelper.HERO_BANNER_PADDING_DP);
+
+        // Publisher Attribution & Source Link (Spoonacular terms compliance)
+        String sourceName = recipe.getSourceName();
+        String sourceUrl = recipe.getSourceUrl();
+        boolean hasSource = (sourceName != null && !sourceName.trim().isEmpty())
+                || "spoonacular".equalsIgnoreCase(recipe.getSource());
+
+        if (hasSource) {
+            String displayName = (sourceName != null && !sourceName.trim().isEmpty()) ? sourceName.trim() : "Spoonacular";
+            binding.tvRecipeAttribution.setText(getString(R.string.recipe_source_attribution, displayName));
+            binding.cardRecipeAttribution.setVisibility(View.VISIBLE);
+
+            if (sourceUrl != null && (sourceUrl.startsWith("http://") || sourceUrl.startsWith("https://"))) {
+                binding.btnViewOriginalRecipe.setVisibility(View.VISIBLE);
+                binding.btnViewOriginalRecipe.setOnClickListener(v -> {
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(sourceUrl));
+                        startActivity(browserIntent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Could not open recipe link", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                binding.btnViewOriginalRecipe.setVisibility(View.GONE);
+            }
         } else {
-            binding.ivRecipeHero.setImageResource(R.drawable.ic_restaurant);
+            binding.cardRecipeAttribution.setVisibility(View.GONE);
         }
     }
 

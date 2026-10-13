@@ -44,11 +44,9 @@
                 android:layout_height="180dp"
                 android:layout_marginTop="4dp"
                 android:background="@color/colorPillNeutral"
-                android:padding="32dp"
-                android:scaleType="centerInside"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_restaurant"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
-                app:tint="@color/colorTextSecondary" />
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large" />
 
             <!-- Title & Description -->
             <TextView
@@ -360,6 +358,50 @@
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="13sp"
                         tools:text="Quantities leave 100 g tomatoes and 20 g spinach for later." />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Attribution & Source Publisher Card (Spoonacular Compliance) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardRecipeAttribution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:cardBackgroundColor="@color/colorPillNeutral"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:id="@+id/tvRecipeAttribution"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="12sp"
+                        tools:text="Powered by Spoonacular • Source: Foodista" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnViewOriginalRecipe"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:padding="0dp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:text="@string/action_view_original_recipe"
+                        android:textColor="@color/colorAccentClay"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

@@ -198,4 +198,16 @@
     <string name="action_scan_barcode">Scan Barcode</string>
     <string name="scan_barcode_or_qr">Scan Barcode / QR</string>
     <string name="scan_barcode_hint">Scan a package barcode to pre-fill name, category and quantity</string>
+    <string name="action_discover_online_recipes">Discover online recipes (Spoonacular)</string>
+    <string name="filter_missing_1_or_2">Missing 1–2 items</string>
+    <string name="action_view_missing_recipes">View recipes missing 1–2 items</string>
+    <string name="settings_cache_title">Spoonacular Recipe Cache</string>
+    <string name="settings_cache_desc">Cached online recipes are retained for up to 1 hour in compliance with API terms. You can clear cached recipes at any time.</string>
+    <string name="action_clear_spoonacular_cache">Clear Spoonacular cache</string>
+    <string name="dialog_clear_cache_title">Clear Spoonacular cache?</string>
+    <string name="dialog_clear_cache_message">This will remove online recipes fetched from Spoonacular. Your local sample recipes and pantry items are not affected.</string>
+    <string name="action_clear">Clear</string>
+    <string name="toast_spoonacular_cache_cleared">Spoonacular recipe cache cleared.</string>
+    <string name="recipe_source_attribution">Powered by Spoonacular • Source: %1$s</string>
+    <string name="action_view_original_recipe">View original recipe</string>
 </resources>

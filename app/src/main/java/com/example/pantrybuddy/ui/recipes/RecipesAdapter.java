@@ -11,8 +11,10 @@ import com.bumptech.glide.Glide;
 import com.example.pantrybuddy.R;
 import com.example.pantrybuddy.data.local.entity.Recipe;
 import com.example.pantrybuddy.data.local.entity.RecipeIngredient;
+import com.example.pantrybuddy.utils.RecipeImageHelper;
 import com.example.pantrybuddy.databinding.ItemAlmostThereCardBinding;
 import com.example.pantrybuddy.databinding.ItemRecipeCardBinding;
+import com.example.pantrybuddy.databinding.ItemRecipesFooterBinding;
 import com.example.pantrybuddy.databinding.ItemRecipesNoticeBinding;
 import com.example.pantrybuddy.databinding.ItemRecipesSectionHeaderBinding;
 import com.example.pantrybuddy.domain.model.MatchResult;
@@ -29,6 +31,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final int VIEW_TYPE_COOKABLE = 1;
     public static final int VIEW_TYPE_ALMOST_THERE = 2;
     public static final int VIEW_TYPE_NOTICE = 3;
+    public static final int VIEW_TYPE_FOOTER = 4;
 
     public interface OnRecipeClickListener {
         void onRecipeClick(MatchResult matchResult);
@@ -52,7 +55,34 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void setData(List<MatchResult> cookableList, List<MatchResult> almostThereList) {
+        setData(cookableList, almostThereList, false);
+    }
+
+    public void setData(List<MatchResult> cookableList, List<MatchResult> almostThereList, boolean showMissingOnly) {
         items.clear();
+
+        if (showMissingOnly) {
+            boolean hasAlmost = (almostThereList != null && !almostThereList.isEmpty());
+            if (hasAlmost) {
+                items.add(new HeaderItem(
+                        "Need 1–2 More Items",
+                        "Recipes you can make by picking up just 1 or 2 ingredients",
+                        almostThereList.size(),
+                        "MISSING 1–2 ITEMS — SHOPPING REQUIRED",
+                        false
+                ));
+                for (MatchResult mr : almostThereList) {
+                    items.add(new AlmostThereItem(mr));
+                }
+            } else {
+                items.add(new NoticeItem(
+                        "No recipes found that only need 1 or 2 more ingredients."
+                ));
+            }
+            items.add(new FooterItem());
+            notifyDataSetChanged();
+            return;
+        }
 
         boolean hasCookable = (cookableList != null && !cookableList.isEmpty());
         boolean hasAlmost = (almostThereList != null && !almostThereList.isEmpty());
@@ -84,14 +114,18 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (hasAlmost) {
             items.add(new HeaderItem(
                     "Almost There",
-                    "You have almost everything. Only 1 ingredient is missing or short.",
+                    "You have almost everything. Only 1 or 2 ingredients are missing or short.",
                     almostThereList.size(),
-                    "MISSING 1 INGREDIENT — SHOPPING REQUIRED",
+                    "MISSING 1–2 INGREDIENTS — SHOPPING REQUIRED",
                     hasCookable || !items.isEmpty()
             ));
             for (MatchResult mr : almostThereList) {
                 items.add(new AlmostThereItem(mr));
             }
+        }
+
+        if (!items.isEmpty()) {
+            items.add(new FooterItem());
         }
 
         notifyDataSetChanged();
@@ -113,6 +147,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 return new AlmostThereViewHolder(ItemAlmostThereCardBinding.inflate(inflater, parent, false));
             case VIEW_TYPE_NOTICE:
                 return new NoticeViewHolder(ItemRecipesNoticeBinding.inflate(inflater, parent, false));
+            case VIEW_TYPE_FOOTER:
+                return new FooterViewHolder(ItemRecipesFooterBinding.inflate(inflater, parent, false));
             case VIEW_TYPE_COOKABLE:
             default:
                 return new CookableViewHolder(ItemRecipeCardBinding.inflate(inflater, parent, false));
@@ -130,6 +166,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((HeaderViewHolder) holder).bind((HeaderItem) item);
         } else if (holder instanceof NoticeViewHolder) {
             ((NoticeViewHolder) holder).bind((NoticeItem) item);
+        } else if (holder instanceof FooterViewHolder) {
+            ((FooterViewHolder) holder).bind();
         }
     }
 
@@ -182,15 +220,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 binding.tvRecipeIngredientsPreview.setVisibility(View.GONE);
             }
 
-            if (recipe.getImageUrl() != null && !recipe.getImageUrl().trim().isEmpty()) {
-                Glide.with(itemView.getContext())
-                        .load(recipe.getImageUrl())
-                        .placeholder(R.drawable.ic_restaurant)
-                        .error(R.drawable.ic_restaurant)
-                        .into(binding.ivRecipeThumbnail);
-            } else {
-                binding.ivRecipeThumbnail.setImageResource(R.drawable.ic_restaurant);
-            }
+            RecipeImageHelper.loadRecipeImage(binding.ivRecipeThumbnail, recipe.getImageUrl());
 
             binding.getRoot().setOnClickListener(v -> {
                 if (listener != null) {
@@ -221,15 +251,27 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             int onHand = Math.max(0, total - result.getMissingCount());
             binding.tvAlmostThereStockBadge.setText(String.format(Locale.US, "%d of %d ingredients at home", onHand, total));
 
+            int missingCount = result.getMissingCount();
             if (result.getMissingIngredients() != null && !result.getMissingIngredients().isEmpty()) {
-                MatchResult.MissingIngredientInfo missing = result.getMissingIngredients().get(0);
-                String missingText = missing.getDisplayText();
-                if (missingText.startsWith("Missing: ")) {
-                    missingText = missingText.substring("Missing: ".length());
+                StringBuilder missingNames = new StringBuilder();
+                for (int i = 0; i < result.getMissingIngredients().size(); i++) {
+                    MatchResult.MissingIngredientInfo missing = result.getMissingIngredients().get(i);
+                    String missingText = missing.getDisplayText();
+                    if (missingText.startsWith("Missing: ")) {
+                        missingText = missingText.substring("Missing: ".length());
+                    }
+                    missingNames.append(missingText);
+                    if (i < result.getMissingIngredients().size() - 1) {
+                        missingNames.append(", ");
+                    }
                 }
-                binding.tvAlmostThereMissingBanner.setText(String.format("Missing 1 Ingredient: %s", missingText));
+                String bannerTitle = (missingCount == 1)
+                        ? String.format("Missing 1 Ingredient: %s", missingNames)
+                        : String.format(Locale.US, "Missing %d Ingredients: %s", missingCount, missingNames);
+                binding.tvAlmostThereMissingBanner.setText(bannerTitle);
             } else {
-                binding.tvAlmostThereMissingBanner.setText("Missing 1 Ingredient");
+                String bannerTitle = (missingCount == 1) ? "Missing 1 Ingredient" : String.format(Locale.US, "Missing %d Ingredients", missingCount);
+                binding.tvAlmostThereMissingBanner.setText(bannerTitle);
             }
 
             if (rwi != null && rwi.getIngredients() != null) {
@@ -252,15 +294,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 binding.tvAlmostThereAtHomePreview.setText(have.toString());
             }
 
-            if (recipe.getImageUrl() != null && !recipe.getImageUrl().trim().isEmpty()) {
-                Glide.with(itemView.getContext())
-                        .load(recipe.getImageUrl())
-                        .placeholder(R.drawable.ic_restaurant)
-                        .error(R.drawable.ic_restaurant)
-                        .into(binding.ivAlmostThereThumbnail);
-            } else {
-                binding.ivAlmostThereThumbnail.setImageResource(R.drawable.ic_restaurant);
-            }
+            RecipeImageHelper.loadRecipeImage(binding.ivAlmostThereThumbnail, recipe.getImageUrl());
 
             binding.getRoot().setOnClickListener(v -> {
                 if (listener != null) {
@@ -371,6 +405,21 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public int getItemType() {
             return VIEW_TYPE_NOTICE;
+        }
+    }
+
+    static class FooterViewHolder extends RecyclerView.ViewHolder {
+        FooterViewHolder(ItemRecipesFooterBinding binding) {
+            super(binding.getRoot());
+        }
+
+        void bind() {}
+    }
+
+    public static class FooterItem extends RecipeListItem {
+        @Override
+        public int getItemType() {
+            return VIEW_TYPE_FOOTER;
         }
     }
 }
