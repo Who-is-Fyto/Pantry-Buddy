@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.pantrybuddy.R;
+import com.example.pantrybuddy.utils.IngredientImageHelper;
 import com.example.pantrybuddy.utils.RecipeImageHelper;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.data.local.entity.Recipe;
@@ -267,7 +268,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 allSufficient = false;
             }
 
-            // Column 1: Name and status icon
+            // Column 1: Photo, Name, and status icon
+            IngredientImageHelper.loadIngredientImage(rowBinding.ivIngredientImage, req.getIngredientName(), req.getNormalizedName());
             rowBinding.tvIngredientName.setText(req.getIngredientName());
             if (sufficient) {
                 rowBinding.ivIngredientStatus.setImageResource(R.drawable.ic_check);

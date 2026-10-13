@@ -8,14 +8,24 @@
     android:orientation="horizontal"
     android:paddingVertical="10dp">
 
-    <!-- Column 1: Ingredient Name with Status Icon -->
+    <!-- Column 1: Ingredient Name with Photo and Status Icon -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_weight="1.4"
+        android:layout_weight="1.6"
         android:gravity="center_vertical"
         android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivIngredientImage"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="6dp"
+            android:background="@color/colorPillNeutral"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_restaurant"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small" />
 
         <ImageView
             android:id="@+id/ivIngredientStatus"
@@ -28,7 +38,7 @@
             android:id="@+id/tvIngredientName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="6dp"
             android:ellipsize="end"
             android:fontFamily="@font/inter"
             android:maxLines="2"

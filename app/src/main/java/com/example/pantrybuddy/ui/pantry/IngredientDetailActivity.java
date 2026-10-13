@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pantrybuddy.R;
+import com.example.pantrybuddy.utils.IngredientImageHelper;
 import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.data.local.entity.RecipeIngredient;
 import com.example.pantrybuddy.databinding.ActivityIngredientDetailBinding;
@@ -117,6 +118,7 @@ public class IngredientDetailActivity extends AppCompatActivity {
     }
 
     private void updateHeroCard(PantryItem item) {
+        IngredientImageHelper.loadIngredientImage(binding.ivDetailIngredientHero, item.getName(), item.getNormalizedName());
         binding.tvDetailIngredientName.setText(item.getName());
 
         String qtyStr = (item.getQuantity() == (long) item.getQuantity())

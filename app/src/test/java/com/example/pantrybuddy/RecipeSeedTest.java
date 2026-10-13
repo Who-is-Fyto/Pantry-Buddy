@@ -39,6 +39,8 @@ public class RecipeSeedTest {
             assertTrue("Default servings must be positive: " + recipe.title, recipe.defaultServings > 0);
             assertNotNull("Instructions cannot be null: " + recipe.title, recipe.instructions);
             assertFalse("Instructions cannot be empty: " + recipe.title, recipe.instructions.isEmpty());
+            assertNotNull("Recipe imageUrl required: " + recipe.title, recipe.imageUrl);
+            assertTrue("Recipe imageUrl must be valid http(s) URL: " + recipe.title, recipe.imageUrl.startsWith("http"));
             assertNotNull("Ingredients cannot be null: " + recipe.title, recipe.ingredients);
             assertTrue("Recipe must have at least 3 itemized ingredients: " + recipe.title, recipe.ingredients.size() >= 3);
 
