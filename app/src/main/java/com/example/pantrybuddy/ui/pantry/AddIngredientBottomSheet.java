@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import com.example.pantrybuddy.data.local.entity.PantryItem;
 import com.example.pantrybuddy.data.remote.openfoodfacts.ScannedProduct;
 import com.example.pantrybuddy.databinding.BottomSheetAddIngredientBinding;
 import com.example.pantrybuddy.domain.engine.IngredientNormalizer;
+import com.example.pantrybuddy.domain.engine.SmartFoodAssistant;
 import com.example.pantrybuddy.ui.scanner.BarcodeScannerActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -46,15 +49,9 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
     private PantryViewModel pantryViewModel;
     private Long selectedExpiryDateMs = null;
     private boolean isSubmitting = false;
-
-    private static final String[] COMMON_INGREDIENTS = {
-            "Eggs", "Tomatoes", "Spinach", "Olive Oil", "Cooking Oil", "Table Salt",
-            "Black Pepper", "Potatoes", "Onions", "Garlic", "White Rice", "Milk",
-            "Cheddar Cheese", "Butter", "Bread", "Spaghetti", "Egg Noodles", "Carrots",
-            "Mushrooms", "Chickpeas", "White Beans", "Canned Tuna", "Sweetcorn",
-            "Mayonnaise", "Lemon Juice", "Soy Sauce", "Curry Powder", "Cinnamon",
-            "Sugar", "Cumin", "Chili Flakes", "Rosemary"
-    };
+    private boolean userModifiedQuantity = false;
+    private boolean userModifiedExpiry = false;
+    private boolean isApplyingSuggestion = false;
 
     private final ActivityResultLauncher<Intent> scanBarcodeLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -129,7 +126,20 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
         setupDatePicker();
         setupScanButton();
         setupSubmitButton();
+        setupQuantityWatcher();
         checkAndApplyArguments();
+    }
+
+    private void setupQuantityWatcher() {
+        binding.etIngredientQuantity.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                if (!isApplyingSuggestion) {
+                    userModifiedQuantity = true;
+                }
+            }
+        });
     }
 
     private void setupScanButton() {
@@ -171,21 +181,35 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void selectUnitChip(@NonNull String unit) {
-        String u = unit.toLowerCase(Locale.US);
+        String u = unit.toLowerCase(Locale.US).trim();
         if (u.equals("g")) binding.chipUnitG.setChecked(true);
         else if (u.equals("kg")) binding.chipUnitKg.setChecked(true);
         else if (u.equals("ml")) binding.chipUnitMl.setChecked(true);
         else if (u.equals("l")) binding.chipUnitL.setChecked(true);
+        else if (u.equals("cup")) binding.chipUnitCup.setChecked(true);
         else if (u.equals("tbsp")) binding.chipUnitTbsp.setChecked(true);
         else if (u.equals("tsp")) binding.chipUnitTsp.setChecked(true);
+        else if (u.equals("oz")) binding.chipUnitOz.setChecked(true);
+        else if (u.equals("can")) binding.chipUnitCan.setChecked(true);
+        else if (u.equals("slice")) binding.chipUnitSlice.setChecked(true);
+        else if (u.equals("clove")) binding.chipUnitClove.setChecked(true);
+        else if (u.equals("bunch")) binding.chipUnitBunch.setChecked(true);
+        else if (u.equals("pinch")) binding.chipUnitPinch.setChecked(true);
         else binding.chipUnitPcs.setChecked(true);
     }
 
     private void selectCategoryChip(@NonNull String category) {
-        if (category.equalsIgnoreCase("Dairy & Eggs")) binding.chipCatDairy.setChecked(true);
-        else if (category.equalsIgnoreCase("Staples")) binding.chipCatStaples.setChecked(true);
-        else if (category.equalsIgnoreCase("Spices & Seasonings")) binding.chipCatSpices.setChecked(true);
-        else if (category.equalsIgnoreCase("Meat & Fish")) binding.chipCatMeat.setChecked(true);
+        String c = category.toLowerCase(Locale.US).trim();
+        if (c.contains("fruit")) binding.chipCatFruits.setChecked(true);
+        else if (c.contains("dairy") || c.contains("egg")) binding.chipCatDairy.setChecked(true);
+        else if (c.contains("meat") || c.contains("fish") || c.contains("seafood")) binding.chipCatMeat.setChecked(true);
+        else if (c.contains("bakery") || c.contains("bread")) binding.chipCatBakery.setChecked(true);
+        else if (c.contains("canned") || c.contains("tin")) binding.chipCatCanned.setChecked(true);
+        else if (c.contains("condiment") || c.contains("sauce") || c.contains("oil")) binding.chipCatCondiments.setChecked(true);
+        else if (c.contains("spice") || c.contains("seasoning") || c.contains("herb")) binding.chipCatSpices.setChecked(true);
+        else if (c.contains("beverage") || c.contains("drink") || c.contains("coffee") || c.contains("tea")) binding.chipCatBeverages.setChecked(true);
+        else if (c.contains("snack") || c.contains("sweet") || c.contains("nut")) binding.chipCatSnacks.setChecked(true);
+        else if (c.contains("staple") || c.contains("grain") || c.contains("rice") || c.contains("pasta")) binding.chipCatStaples.setChecked(true);
         else binding.chipCatVegetables.setChecked(true);
     }
 
@@ -193,40 +217,72 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 requireContext(),
                 android.R.layout.simple_dropdown_item_1line,
-                COMMON_INGREDIENTS
+                SmartFoodAssistant.getComprehensiveCatalogArray()
         );
         binding.actvIngredientName.setAdapter(adapter);
 
         binding.actvIngredientName.setOnItemClickListener((parent, view, position, id) -> {
             String selected = (String) parent.getItemAtPosition(position);
-            suggestCategoryAndUnit(selected);
+            applySmartAssistant(selected);
+        });
+
+        binding.actvIngredientName.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                if (s != null) {
+                    applySmartAssistant(s.toString());
+                }
+            }
         });
     }
 
-    // Auto-selects intuitive category and unit when an ingredient is picked
-    private void suggestCategoryAndUnit(String name) {
-        String lower = name.toLowerCase(Locale.US);
-        if (lower.contains("oil") || lower.contains("rice") || lower.contains("bread") || lower.contains("bean") || lower.contains("chickpea") || lower.contains("noodle") || lower.contains("spaghetti")) {
-            binding.chipCatStaples.setChecked(true);
-            if (lower.contains("oil")) binding.chipUnitMl.setChecked(true);
-            else if (lower.contains("rice") || lower.contains("bean") || lower.contains("chickpea")) binding.chipUnitG.setChecked(true);
-            else if (lower.contains("bread")) binding.chipUnitPcs.setChecked(true);
-        } else if (lower.contains("egg") || lower.contains("milk") || lower.contains("cheese") || lower.contains("butter")) {
-            binding.chipCatDairy.setChecked(true);
-            if (lower.contains("egg")) binding.chipUnitPcs.setChecked(true);
-            else if (lower.contains("milk")) binding.chipUnitMl.setChecked(true);
-            else binding.chipUnitG.setChecked(true);
-        } else if (lower.contains("salt") || lower.contains("pepper") || lower.contains("cumin") || lower.contains("cinnamon") || lower.contains("curry") || lower.contains("chili") || lower.contains("rosemary")) {
-            binding.chipCatSpices.setChecked(true);
-            binding.chipUnitG.setChecked(true);
-        } else if (lower.contains("tuna") || lower.contains("chicken") || lower.contains("beef") || lower.contains("fish")) {
-            binding.chipCatMeat.setChecked(true);
-            binding.chipUnitG.setChecked(true);
-        } else {
-            binding.chipCatVegetables.setChecked(true);
-            if (lower.contains("spinach")) binding.chipUnitG.setChecked(true);
-            else binding.chipUnitPcs.setChecked(true);
+    // Semi-AI powered helper automatically adapts category, unit, quantity and shelf-life
+    private void applySmartAssistant(String name) {
+        if (name == null || name.trim().length() < 2) {
+            if (binding != null) {
+                binding.cardSmartAssistant.setVisibility(View.GONE);
+            }
+            return;
         }
+
+        SmartFoodAssistant.Suggestion suggestion = SmartFoodAssistant.predict(name);
+        if (binding == null) return;
+
+        isApplyingSuggestion = true;
+
+        selectCategoryChip(suggestion.category);
+        selectUnitChip(suggestion.unit);
+
+        if (!userModifiedQuantity) {
+            if (suggestion.defaultQuantity == Math.floor(suggestion.defaultQuantity)) {
+                binding.etIngredientQuantity.setText(String.format(Locale.US, "%.0f", suggestion.defaultQuantity));
+            } else {
+                binding.etIngredientQuantity.setText(String.format(Locale.US, "%.1f", suggestion.defaultQuantity));
+            }
+        }
+
+        if (!userModifiedExpiry) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_YEAR, suggestion.shelfLifeDays);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            selectedExpiryDateMs = cal.getTimeInMillis();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("d MMMM yyyy", Locale.US);
+            binding.tvAddSelectedExpiry.setText(sdf.format(cal.getTime()) + " (Estimated)");
+            binding.tvAddSelectedExpiry.setTextColor(
+                    ContextCompat.getColor(requireContext(), R.color.colorTextPrimary)
+            );
+            binding.btnClearSelectedExpiry.setVisibility(View.VISIBLE);
+        }
+
+        binding.cardSmartAssistant.setVisibility(View.VISIBLE);
+        binding.tvSmartSuggestionSummary.setText(suggestion.getSummaryText());
+        binding.tvSmartSuggestionExpiryTag.setText("+" + suggestion.shelfLifeDays + " days");
+
+        isApplyingSuggestion = false;
     }
 
     private void setupDatePicker() {
@@ -241,6 +297,7 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
                         Calendar chosen = Calendar.getInstance();
                         chosen.set(year, month, dayOfMonth, 23, 59, 59);
                         selectedExpiryDateMs = chosen.getTimeInMillis();
+                        userModifiedExpiry = true;
 
                         SimpleDateFormat sdf = new SimpleDateFormat("d MMMM yyyy", Locale.US);
                         binding.tvAddSelectedExpiry.setText(sdf.format(chosen.getTime()));
@@ -258,6 +315,7 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
 
         binding.btnClearSelectedExpiry.setOnClickListener(v -> {
             selectedExpiryDateMs = null;
+            userModifiedExpiry = true;
             binding.tvAddSelectedExpiry.setText("No expiration date set");
             binding.tvAddSelectedExpiry.setTextColor(
                     ContextCompat.getColor(requireContext(), R.color.colorTextSecondary)
@@ -319,17 +377,30 @@ public class AddIngredientBottomSheet extends BottomSheetDialogFragment {
         if (checkedId == R.id.chipUnitKg) return "kg";
         if (checkedId == R.id.chipUnitMl) return "ml";
         if (checkedId == R.id.chipUnitL) return "l";
+        if (checkedId == R.id.chipUnitCup) return "cup";
         if (checkedId == R.id.chipUnitTbsp) return "tbsp";
         if (checkedId == R.id.chipUnitTsp) return "tsp";
+        if (checkedId == R.id.chipUnitOz) return "oz";
+        if (checkedId == R.id.chipUnitCan) return "can";
+        if (checkedId == R.id.chipUnitSlice) return "slice";
+        if (checkedId == R.id.chipUnitClove) return "clove";
+        if (checkedId == R.id.chipUnitBunch) return "bunch";
+        if (checkedId == R.id.chipUnitPinch) return "pinch";
         return "pcs";
     }
 
     private String getSelectedCategory() {
         int checkedId = binding.chipGroupAddCategory.getCheckedChipId();
+        if (checkedId == R.id.chipCatFruits) return "Fruits";
         if (checkedId == R.id.chipCatDairy) return "Dairy & Eggs";
-        if (checkedId == R.id.chipCatStaples) return "Staples";
-        if (checkedId == R.id.chipCatSpices) return "Spices & Seasonings";
         if (checkedId == R.id.chipCatMeat) return "Meat & Fish";
+        if (checkedId == R.id.chipCatBakery) return "Bakery & Bread";
+        if (checkedId == R.id.chipCatStaples) return "Staples & Grains";
+        if (checkedId == R.id.chipCatCanned) return "Canned Goods";
+        if (checkedId == R.id.chipCatCondiments) return "Condiments & Sauces";
+        if (checkedId == R.id.chipCatSpices) return "Spices & Seasonings";
+        if (checkedId == R.id.chipCatBeverages) return "Beverages";
+        if (checkedId == R.id.chipCatSnacks) return "Snacks & Sweets";
         return "Vegetables";
     }
 

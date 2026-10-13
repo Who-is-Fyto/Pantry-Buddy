@@ -38,7 +38,7 @@ public class OpenFoodFactsParserTest {
         assertEquals("Ferrero", product.getBrand());
         assertEquals(400.0, product.getQuantity(), 0.001);
         assertEquals("g", product.getUnit());
-        assertEquals("Staples", product.getCategory());
+        assertEquals("Snacks & Sweets", product.getCategory());
         assertEquals("https://images.openfoodfacts.org/nutella.jpg", product.getImageUrl());
         assertEquals("Nutella (Ferrero)", product.getDisplayTitle());
     }
@@ -140,27 +140,37 @@ public class OpenFoodFactsParserTest {
                 Collections.singletonList("en:fishes"), "Canned tuna", "Skipjack Tuna"
         ));
 
+        // Condiments & Sauces
+        assertEquals("Condiments & Sauces", OpenFoodFactsParser.mapCategory(
+                Collections.singletonList("en:condiments"), "Condiments", "Ketchup"
+        ));
+        assertEquals("Condiments & Sauces", OpenFoodFactsParser.mapCategory(
+                Collections.singletonList("en:sauces"), "Salad dressings", "Mustard Sauce"
+        ));
+
         // Spices & Seasonings
         assertEquals("Spices & Seasonings", OpenFoodFactsParser.mapCategory(
-                Collections.singletonList("en:condiments"), "Condiments, Spices", "Black Pepper"
+                Collections.singletonList("en:spices"), "Spices", "Black Pepper"
         ));
         assertEquals("Spices & Seasonings", OpenFoodFactsParser.mapCategory(
-                Collections.singletonList("en:sauces"), "Salad dressings", "Mustard Sauce"
+                Collections.singletonList("en:herbs"), "Dried herbs", "Oregano"
+        ));
+
+        // Fruits
+        assertEquals("Fruits", OpenFoodFactsParser.mapCategory(
+                Collections.singletonList("en:fruits"), "Fresh fruits", "Red Apples"
         ));
 
         // Vegetables
         assertEquals("Vegetables", OpenFoodFactsParser.mapCategory(
                 Collections.singletonList("en:vegetables"), "Fresh vegetables", "Baby Spinach"
         ));
-        assertEquals("Vegetables", OpenFoodFactsParser.mapCategory(
-                Collections.singletonList("en:fruits"), "Fresh fruits", "Red Apples"
-        ));
 
-        // Staples
-        assertEquals("Staples", OpenFoodFactsParser.mapCategory(
+        // Staples & Grains
+        assertEquals("Staples & Grains", OpenFoodFactsParser.mapCategory(
                 Collections.singletonList("en:pastas"), "Italian pasta", "Spaghetti"
         ));
-        assertEquals("Staples", OpenFoodFactsParser.mapCategory(
+        assertEquals("Staples & Grains", OpenFoodFactsParser.mapCategory(
                 Arrays.asList("en:cereals", "en:grains"), "Rice", "Basmati Rice"
         ));
     }

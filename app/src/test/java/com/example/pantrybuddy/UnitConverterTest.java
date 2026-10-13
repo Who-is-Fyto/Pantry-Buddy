@@ -91,4 +91,37 @@ public class UnitConverterTest {
         // Cross unit: Need 100g, have 0.5kg (500g) -> leftover is 400g
         assertEquals(400.0, UnitConverter.calculateLeftover(0.5, "kg", 100.0, "g", "potato"), 0.001);
     }
+
+    @Test
+    public void testExpandedUnits_massAndVolume() {
+        // mg conversion
+        assertEquals(0.5, UnitConverter.convertToBase(500.0, "mg"), 0.001);
+        assertEquals(1.0, UnitConverter.convertToBase(1000.0, "mg"), 0.001);
+
+        // oz conversion (1 oz = 28.3495 g)
+        assertEquals(28.3495, UnitConverter.convertToBase(1.0, "oz"), 0.01);
+        assertEquals(56.699, UnitConverter.convertToBase(2.0, "oz"), 0.01);
+
+        // pinch and dash conversions
+        assertEquals(0.36, UnitConverter.convertToBase(1.0, "pinch"), 0.001);
+        assertEquals(0.60, UnitConverter.convertToBase(1.0, "dash"), 0.001);
+
+        // Cup to ml
+        assertEquals(240.0, UnitConverter.convertToBase(1.0, "cup"), 0.001);
+        assertEquals(480.0, UnitConverter.convertToBase(2.0, "cup"), 0.001);
+    }
+
+    @Test
+    public void testExpandedUnits_countAndPieceWeight() {
+        // can, slice, clove, bunch
+        assertEquals(1.0, UnitConverter.convertToBase(1.0, "can"), 0.001);
+        assertEquals(2.0, UnitConverter.convertToBase(2.0, "slice"), 0.001);
+        assertEquals(4.0, UnitConverter.convertToBase(4.0, "clove"), 0.001);
+        assertEquals(1.0, UnitConverter.convertToBase(1.0, "bunch"), 0.001);
+
+        // Heuristic piece weights: apple (180g), banana (120g), avocado (150g)
+        assertTrue(UnitConverter.isSufficient(1.0, "pcs", 150.0, "g", "apple"));
+        assertTrue(UnitConverter.isSufficient(2.0, "pcs", 200.0, "g", "banana"));
+        assertTrue(UnitConverter.isSufficient(1.0, "pcs", 120.0, "g", "avocado"));
+    }
 }

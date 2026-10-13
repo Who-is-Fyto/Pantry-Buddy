@@ -128,17 +128,35 @@ public class PantryFragment extends Fragment {
             } else if (checkedIds.contains(R.id.chipVegetables)) {
                 pantryViewModel.setCategoryFilter("Vegetables");
                 pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipFruits)) {
+                pantryViewModel.setCategoryFilter("Fruits");
+                pantryViewModel.setUseSoonOnly(false);
             } else if (checkedIds.contains(R.id.chipDairy)) {
                 pantryViewModel.setCategoryFilter("Dairy & Eggs");
                 pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipMeat)) {
+                pantryViewModel.setCategoryFilter("Meat & Fish");
+                pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipBakery)) {
+                pantryViewModel.setCategoryFilter("Bakery & Bread");
+                pantryViewModel.setUseSoonOnly(false);
             } else if (checkedIds.contains(R.id.chipStaples)) {
-                pantryViewModel.setCategoryFilter("Staples");
+                pantryViewModel.setCategoryFilter("Staples & Grains");
+                pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipCanned)) {
+                pantryViewModel.setCategoryFilter("Canned Goods");
+                pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipCondiments)) {
+                pantryViewModel.setCategoryFilter("Condiments & Sauces");
                 pantryViewModel.setUseSoonOnly(false);
             } else if (checkedIds.contains(R.id.chipSpices)) {
                 pantryViewModel.setCategoryFilter("Spices & Seasonings");
                 pantryViewModel.setUseSoonOnly(false);
-            } else if (checkedIds.contains(R.id.chipMeat)) {
-                pantryViewModel.setCategoryFilter("Meat & Fish");
+            } else if (checkedIds.contains(R.id.chipBeverages)) {
+                pantryViewModel.setCategoryFilter("Beverages");
+                pantryViewModel.setUseSoonOnly(false);
+            } else if (checkedIds.contains(R.id.chipSnacks)) {
+                pantryViewModel.setCategoryFilter("Snacks & Sweets");
                 pantryViewModel.setUseSoonOnly(false);
             } else if (checkedIds.contains(R.id.chipUseSoon)) {
                 pantryViewModel.setCategoryFilter("All");
@@ -165,7 +183,7 @@ public class PantryFragment extends Fragment {
     private void updateSortButtonText() {
         switch (currentSort) {
             case NAME_ASC:
-                binding.btnSortOrder.setText("Name A–Z ↑");
+                binding.btnSortOrder.setText("Name A-Z ↑");
                 break;
             case DATE_ADDED_DESC:
                 binding.btnSortOrder.setText("Recently added ↓");

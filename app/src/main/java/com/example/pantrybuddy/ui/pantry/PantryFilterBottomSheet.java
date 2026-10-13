@@ -77,10 +77,16 @@ public class PantryFilterBottomSheet extends BottomSheetDialogFragment {
     private String getSelectedCategory() {
         int checkedId = binding.chipGroupDrawerCategories.getCheckedChipId();
         if (checkedId == R.id.chipDrawerCatVegetables) return "Vegetables";
+        if (checkedId == R.id.chipDrawerCatFruits) return "Fruits";
         if (checkedId == R.id.chipDrawerCatDairy) return "Dairy & Eggs";
-        if (checkedId == R.id.chipDrawerCatStaples) return "Staples";
-        if (checkedId == R.id.chipDrawerCatSpices) return "Spices & Seasonings";
         if (checkedId == R.id.chipDrawerCatMeat) return "Meat & Fish";
+        if (checkedId == R.id.chipDrawerCatBakery) return "Bakery & Bread";
+        if (checkedId == R.id.chipDrawerCatStaples) return "Staples & Grains";
+        if (checkedId == R.id.chipDrawerCatCanned) return "Canned Goods";
+        if (checkedId == R.id.chipDrawerCatCondiments) return "Condiments & Sauces";
+        if (checkedId == R.id.chipDrawerCatSpices) return "Spices & Seasonings";
+        if (checkedId == R.id.chipDrawerCatBeverages) return "Beverages";
+        if (checkedId == R.id.chipDrawerCatSnacks) return "Snacks & Sweets";
         return "All";
     }
 
@@ -96,7 +102,8 @@ public class PantryFilterBottomSheet extends BottomSheetDialogFragment {
 
             for (PantryItem item : allItems) {
                 boolean matchesCategory = "All".equalsIgnoreCase(category)
-                        || (item.getCategory() != null && item.getCategory().equalsIgnoreCase(category));
+                        || (item.getCategory() != null && (item.getCategory().equalsIgnoreCase(category)
+                        || (category.startsWith("Staples") && item.getCategory().startsWith("Staples"))));
 
                 boolean matchesUrgency = !useSoon
                         || (item.getExpiryDate() != null && item.getExpiryDate() <= soonThreshold);

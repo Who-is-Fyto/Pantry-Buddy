@@ -79,7 +79,7 @@ public class OpenFoodFactsParser {
         );
     }
 
-    // Maps Open Food Facts taxonomy tags and category strings to PantryBuddy 5 core categories
+    // Maps Open Food Facts taxonomy tags and category strings to PantryBuddy 11 core categories
     @NonNull
     public static String mapCategory(@Nullable List<String> categoryTags,
                                      @Nullable String categoriesString,
@@ -97,47 +97,103 @@ public class OpenFoodFactsParser {
 
         String text = combined.toString();
 
-        // 1. Dairy & Eggs
+        // 1. Beverages
+        if (text.contains("beverage") || text.contains("drink") || text.contains("boisson")
+                || text.contains("juice") || text.contains("jus") || text.contains("soda")
+                || text.contains("coffee") || text.contains("cafe") || text.contains("tea")
+                || text.contains("eau") || text.contains("water")) {
+            return "Beverages";
+        }
+
+        // 2. Snacks & Sweets
+        if (text.contains("snack") || text.contains("sweet") || text.contains("candy")
+                || text.contains("chocolate") || text.contains("chocolat") || text.contains("biscuit")
+                || text.contains("cookie") || text.contains("chips") || text.contains("crisps")
+                || text.contains("bonbon") || text.contains("confectionery")) {
+            return "Snacks & Sweets";
+        }
+
+        // 3. Bakery & Bread
+        if (text.contains("bakery") || text.contains("bread") || text.contains("pain")
+                || text.contains("boulangerie") || text.contains("croissant") || text.contains("brioche")
+                || text.contains("baguette") || text.contains("tortilla") || text.contains("bun")
+                || text.contains("pastry") || text.contains("patisserie")) {
+            return "Bakery & Bread";
+        }
+
+        // 4. Dairy & Eggs
         if (text.contains("dairy") || text.contains("lait") || text.contains("milk")
                 || text.contains("cheese") || text.contains("fromage") || text.contains("egg")
                 || text.contains("oeuf") || text.contains("butter") || text.contains("beurre")
-                || text.contains("yogurt") || text.contains("yaourt") || text.contains("cream")) {
+                || text.contains("yogurt") || text.contains("yaourt") || text.contains("cream")
+                || text.contains("creme")) {
             return "Dairy & Eggs";
         }
 
-        // 2. Meat & Fish
+        // 5. Meat & Fish
         if (text.contains("meat") || text.contains("viande") || text.contains("poultry")
                 || text.contains("chicken") || text.contains("poulet") || text.contains("beef")
                 || text.contains("boeuf") || text.contains("pork") || text.contains("porc")
                 || text.contains("fish") || text.contains("poisson") || text.contains("seafood")
                 || text.contains("tuna") || text.contains("thon") || text.contains("salmon")
-                || text.contains("saumon") || text.contains("sausage") || text.contains("saucisse")) {
+                || text.contains("saumon") || text.contains("sausage") || text.contains("saucisse")
+                || text.contains("ham") || text.contains("jambon") || text.contains("bacon")) {
             return "Meat & Fish";
         }
 
-        // 3. Spices & Seasonings
+        // 6. Canned Goods
+        if (text.contains("canned") || text.contains("conserve") || text.contains("tin")
+                || text.contains("canned-foods") || text.contains("conserves")) {
+            return "Canned Goods";
+        }
+
+        // 7. Condiments & Sauces
+        if (text.contains("sauce") || text.contains("condiment") || text.contains("ketchup")
+                || text.contains("mustard") || text.contains("moutarde") || text.contains("mayonnaise")
+                || text.contains("mayo") || text.contains("vinegar") || text.contains("vinaigre")
+                || text.contains("oil") || text.contains("huile") || text.contains("dressing")
+                || text.contains("pesto")) {
+            return "Condiments & Sauces";
+        }
+
+        // 8. Spices & Seasonings
         if (text.contains("spice") || text.contains("epice") || text.contains("herb")
-                || text.contains("seasoning") || text.contains("assaisonnement") || text.contains("salt")
-                || text.contains("sel") || text.contains("pepper") || text.contains("poivre")
-                || text.contains("sauce") || text.contains("condiment") || text.contains("vinegar")
-                || text.contains("vinaigre") || text.contains("mustard") || text.contains("moutarde")
-                || text.contains("mayonnaise") || text.contains("curry") || text.contains("cinnamon")) {
+                || text.contains("herbe") || text.contains("seasoning") || text.contains("assaisonnement")
+                || text.contains("salt") || text.contains("sel") || text.contains("pepper")
+                || text.contains("poivre") || text.contains("curry") || text.contains("cinnamon")
+                || text.contains("paprika") || text.contains("oregano") || text.contains("cumin")) {
             return "Spices & Seasonings";
         }
 
-        // 4. Vegetables & Fruits
-        if (text.contains("vegetable") || text.contains("legume") || text.contains("fruit")
-                || text.contains("salad") || text.contains("salade") || text.contains("tomato")
-                || text.contains("tomate") || text.contains("potato") || text.contains("pomme de terre")
-                || text.contains("onion") || text.contains("oignon") || text.contains("carrot")
-                || text.contains("carotte") || text.contains("spinach") || text.contains("epinard")
-                || text.contains("mushroom") || text.contains("champignon") || text.contains("apple")
-                || text.contains("pomme") || text.contains("banana") || text.contains("banane")) {
+        // 9. Fruits
+        if (text.contains("fruit") || text.contains("apple") || text.contains("pomme")
+                || text.contains("banana") || text.contains("banane") || text.contains("berry")
+                || text.contains("fraise") || text.contains("strawberry") || text.contains("grape")
+                || text.contains("raisin") || text.contains("orange") || text.contains("lemon")
+                || text.contains("citron") || text.contains("avocado") || text.contains("avocat")
+                || text.contains("mango") || text.contains("peach") || text.contains("melon")) {
+            return "Fruits";
+        }
+
+        // 10. Vegetables
+        if (text.contains("vegetable") || text.contains("legume") || text.contains("salad")
+                || text.contains("salade") || text.contains("tomato") || text.contains("tomate")
+                || text.contains("potato") || text.contains("pomme de terre") || text.contains("onion")
+                || text.contains("oignon") || text.contains("carrot") || text.contains("carotte")
+                || text.contains("spinach") || text.contains("epinard") || text.contains("mushroom")
+                || text.contains("champignon") || text.contains("garlic") || text.contains("ail")
+                || text.contains("cucumber") || text.contains("poivron") || text.contains("broccoli")) {
             return "Vegetables";
         }
 
-        // 5. Staples (Cereals, Grains, Pasta, Bakery, Oils, Canned pantry staples)
-        return "Staples";
+        // 11. Fallback to SmartFoodAssistant or Staples & Grains
+        com.example.pantrybuddy.domain.engine.SmartFoodAssistant.Suggestion suggestion =
+                com.example.pantrybuddy.domain.engine.SmartFoodAssistant.predict(productName);
+        if (suggestion != null && suggestion.category != null && !suggestion.category.isEmpty()) {
+            return suggestion.category;
+        }
+
+        return "Staples & Grains";
     }
 
     // Parses raw quantity text into numeric value and normalized unit (g, kg, ml, l, pcs)
@@ -185,11 +241,32 @@ public class OpenFoodFactsParser {
         if (unit.equals("ml") || unit.equals("milliliter") || unit.equals("milliliters") || unit.equals("cl")) {
             return "ml";
         }
-        if (unit.equals("tbsp") || unit.equals("tablespoon")) {
+        if (unit.equals("tbsp") || unit.equals("tablespoon") || unit.equals("tablespoons")) {
             return "tbsp";
         }
-        if (unit.equals("tsp") || unit.equals("teaspoon")) {
+        if (unit.equals("tsp") || unit.equals("teaspoon") || unit.equals("teaspoons")) {
             return "tsp";
+        }
+        if (unit.equals("cup") || unit.equals("cups")) {
+            return "cup";
+        }
+        if (unit.equals("oz") || unit.equals("ounce") || unit.equals("ounces")) {
+            return "oz";
+        }
+        if (unit.equals("can") || unit.equals("cans") || unit.equals("tin") || unit.equals("tins")) {
+            return "can";
+        }
+        if (unit.equals("slice") || unit.equals("slices")) {
+            return "slice";
+        }
+        if (unit.equals("clove") || unit.equals("cloves")) {
+            return "clove";
+        }
+        if (unit.equals("bunch") || unit.equals("bunches")) {
+            return "bunch";
+        }
+        if (unit.equals("pinch") || unit.equals("pinches")) {
+            return "pinch";
         }
 
         return "pcs";

@@ -223,6 +223,10 @@ public class IngredientDetailActivity extends AppCompatActivity {
             step = 50.0;
         } else if ("kg".equalsIgnoreCase(unit) || "l".equalsIgnoreCase(unit)) {
             step = 0.5;
+        } else if ("oz".equalsIgnoreCase(unit)) {
+            step = 1.0;
+        } else if ("cup".equalsIgnoreCase(unit)) {
+            step = 0.25;
         }
 
         val = Math.max(0.0, val + (direction * step));
@@ -329,13 +333,20 @@ public class IngredientDetailActivity extends AppCompatActivity {
 
     private void selectUnitChip(String unit) {
         if (unit == null) return;
-        String u = unit.toLowerCase(Locale.US);
+        String u = unit.toLowerCase(Locale.US).trim();
         if ("g".equals(u)) binding.chipDetailUnitG.setChecked(true);
         else if ("kg".equals(u)) binding.chipDetailUnitKg.setChecked(true);
         else if ("ml".equals(u)) binding.chipDetailUnitMl.setChecked(true);
         else if ("l".equals(u)) binding.chipDetailUnitL.setChecked(true);
+        else if ("cup".equals(u)) binding.chipDetailUnitCup.setChecked(true);
         else if ("tbsp".equals(u)) binding.chipDetailUnitTbsp.setChecked(true);
         else if ("tsp".equals(u)) binding.chipDetailUnitTsp.setChecked(true);
+        else if ("oz".equals(u)) binding.chipDetailUnitOz.setChecked(true);
+        else if ("can".equals(u)) binding.chipDetailUnitCan.setChecked(true);
+        else if ("slice".equals(u)) binding.chipDetailUnitSlice.setChecked(true);
+        else if ("clove".equals(u)) binding.chipDetailUnitClove.setChecked(true);
+        else if ("bunch".equals(u)) binding.chipDetailUnitBunch.setChecked(true);
+        else if ("pinch".equals(u)) binding.chipDetailUnitPinch.setChecked(true);
         else binding.chipDetailUnitPcs.setChecked(true);
     }
 
@@ -345,26 +356,46 @@ public class IngredientDetailActivity extends AppCompatActivity {
         if (checkedId == R.id.chipDetailUnitKg) return "kg";
         if (checkedId == R.id.chipDetailUnitMl) return "ml";
         if (checkedId == R.id.chipDetailUnitL) return "l";
+        if (checkedId == R.id.chipDetailUnitCup) return "cup";
         if (checkedId == R.id.chipDetailUnitTbsp) return "tbsp";
         if (checkedId == R.id.chipDetailUnitTsp) return "tsp";
+        if (checkedId == R.id.chipDetailUnitOz) return "oz";
+        if (checkedId == R.id.chipDetailUnitCan) return "can";
+        if (checkedId == R.id.chipDetailUnitSlice) return "slice";
+        if (checkedId == R.id.chipDetailUnitClove) return "clove";
+        if (checkedId == R.id.chipDetailUnitBunch) return "bunch";
+        if (checkedId == R.id.chipDetailUnitPinch) return "pinch";
         return "pcs";
     }
 
     private void selectCategoryChip(String category) {
         if (category == null) return;
-        if ("Dairy & Eggs".equalsIgnoreCase(category)) binding.chipDetailCatDairy.setChecked(true);
-        else if ("Staples".equalsIgnoreCase(category)) binding.chipDetailCatStaples.setChecked(true);
-        else if ("Spices & Seasonings".equalsIgnoreCase(category)) binding.chipDetailCatSpices.setChecked(true);
-        else if ("Meat & Fish".equalsIgnoreCase(category)) binding.chipDetailCatMeat.setChecked(true);
+        String c = category.toLowerCase(Locale.US).trim();
+        if (c.contains("fruit")) binding.chipDetailCatFruits.setChecked(true);
+        else if (c.contains("dairy") || c.contains("egg")) binding.chipDetailCatDairy.setChecked(true);
+        else if (c.contains("meat") || c.contains("fish") || c.contains("seafood")) binding.chipDetailCatMeat.setChecked(true);
+        else if (c.contains("bakery") || c.contains("bread")) binding.chipDetailCatBakery.setChecked(true);
+        else if (c.contains("canned") || c.contains("tin")) binding.chipDetailCatCanned.setChecked(true);
+        else if (c.contains("condiment") || c.contains("sauce") || c.contains("oil")) binding.chipDetailCatCondiments.setChecked(true);
+        else if (c.contains("spice") || c.contains("seasoning") || c.contains("herb")) binding.chipDetailCatSpices.setChecked(true);
+        else if (c.contains("beverage") || c.contains("drink") || c.contains("coffee") || c.contains("tea")) binding.chipDetailCatBeverages.setChecked(true);
+        else if (c.contains("snack") || c.contains("sweet") || c.contains("nut")) binding.chipDetailCatSnacks.setChecked(true);
+        else if (c.contains("staple") || c.contains("grain") || c.contains("rice") || c.contains("pasta")) binding.chipDetailCatStaples.setChecked(true);
         else binding.chipDetailCatVegetables.setChecked(true);
     }
 
     private String getSelectedCategory() {
         int checkedId = binding.chipGroupDetailCategory.getCheckedChipId();
+        if (checkedId == R.id.chipDetailCatFruits) return "Fruits";
         if (checkedId == R.id.chipDetailCatDairy) return "Dairy & Eggs";
-        if (checkedId == R.id.chipDetailCatStaples) return "Staples";
-        if (checkedId == R.id.chipDetailCatSpices) return "Spices & Seasonings";
         if (checkedId == R.id.chipDetailCatMeat) return "Meat & Fish";
+        if (checkedId == R.id.chipDetailCatBakery) return "Bakery & Bread";
+        if (checkedId == R.id.chipDetailCatStaples) return "Staples & Grains";
+        if (checkedId == R.id.chipDetailCatCanned) return "Canned Goods";
+        if (checkedId == R.id.chipDetailCatCondiments) return "Condiments & Sauces";
+        if (checkedId == R.id.chipDetailCatSpices) return "Spices & Seasonings";
+        if (checkedId == R.id.chipDetailCatBeverages) return "Beverages";
+        if (checkedId == R.id.chipDetailCatSnacks) return "Snacks & Sweets";
         return "Vegetables";
     }
 }
