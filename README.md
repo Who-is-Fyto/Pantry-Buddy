@@ -13,6 +13,10 @@
   <a href="https://play.google.com/store/apps/details?id=com.example.pantrybuddy">
     <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="58">
   </a>
+  <br>
+  <a href="https://github.com/Who-is-Fyto/Pantry-Buddy">
+    <img alt="View on GitHub" src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" height="36">
+  </a>
 </p>
 
 <p align="center">
@@ -173,8 +177,8 @@ Pantry Buddy works the other way around:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/username/PantryBuddy.git
-   cd PantryBuddy
+   git clone https://github.com/Who-is-Fyto/Pantry-Buddy.git
+   cd Pantry-Buddy
    ```
 
 2. **Open in Android Studio**:
